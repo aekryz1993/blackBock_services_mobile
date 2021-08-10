@@ -4,7 +4,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 import AdminCountainer from '@components/Administration/AdminContainer';
 import Login from '@components/Login';
-import User from '@components/User';
+import Client from '@components/Client/ClientContainer';
 import Loading from '@components/Loading';
 
 const Stack = createStackNavigator();
@@ -51,8 +51,8 @@ const Auth = ({
           />
         ) : (
           <Stack.Screen
-            name="User"
-            component={User}
+            name="Client"
+            component={Client}
             // options={{
             //   animationTypeForReplace: isSignout ? 'pop' : 'push',
             // }}
