@@ -2,8 +2,8 @@ import React from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 
 import Loading from '@components/Loading';
+import DrawerWithLogoutButton from '@components/DrawerWithLogoutButton';
 import UsersContainer from './users/UsersContainer';
-import DrawerWithLogoutButton from '../DrawerWithLogoutButton';
 
 const Drawer = createDrawerNavigator();
 

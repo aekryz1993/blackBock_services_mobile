@@ -10,54 +10,52 @@
 import React, {useState, useRef, useCallback, memo} from 'react';
 import {
   View,
-  Text,
   Dimensions,
   Image,
   FlatList,
   StyleSheet,
   TouchableOpacity,
+  TouchableHighlight,
 } from 'react-native';
-import {createDrawerNavigator} from '@react-navigation/drawer';
+import {API_HOSTA} from '@env';
 
-import Loading from '@components/Loading';
-import DrawerWithLogoutButton from '@components/DrawerWithLogoutButton';
-import ServiceContainer from './Services/ServiceContainer';
-
-const Drawer = createDrawerNavigator();
 const {width: windowWidth, height: windowHeight} = Dimensions.get('window');
 
-const slideList = Array.from({length: 15}).map((_, i) => {
-  return {
-    id: i,
-    image: `https://picsum.photos/1440/2842?random=${i}`,
-    title: `This is the title ${i + 1}!`,
-    subtitle: `This is the subtitle ${i + 1}!`,
-  };
-});
+const slideList = services =>
+  Array.from(services).map((service, i) => {
+    const url = service.Image.url.split('/').slice(7).join('/');
+    return {
+      id: service.id,
+      image: `http://${API_HOSTA}/${url}`,
+    };
+  });
 
 const Slide = memo(function Slide({data}) {
   return (
     <View style={styles.slide}>
-      <Image source={{uri: data.image}} style={styles.slideImage} />
-      <Text style={styles.slideTitle}>{data.title}</Text>
-      <Text style={styles.slideSubtitle}>{data.subtitle}</Text>
+      <TouchableHighlight
+        underlayColor="#555555"
+        style={styles.slideImage}
+        onPress={() => console.warn(data.id)}>
+        <Image source={{uri: data.image}} style={styles.slideImage} />
+      </TouchableHighlight>
     </View>
   );
 });
 
 const swipe = (index, setIndex, flatlistRef) => {
   setIndex(index);
-  flatlistRef.current.scrollToIndex({index, animated: true});
+  flatlistRef.current.scrollToIndex({index});
 };
 
-function Pagination({index, setIndex, flatlistRef}) {
+function Pagination({index, setIndex, flatlistRef, services}) {
   return (
     <View style={styles.pagination}>
-      {slideList.map((_, i) => {
+      {slideList(services).map((service, i) => {
         return (
           <TouchableOpacity
             onPress={() => swipe(i, setIndex, flatlistRef)}
-            key={i}
+            key={service.id}
             style={[
               styles.paginationDot,
               index === i
@@ -71,7 +69,7 @@ function Pagination({index, setIndex, flatlistRef}) {
   );
 }
 
-function Carousel() {
+const Carousel = ({services}) => {
   const [index, setIndex] = useState(0);
   const indexRef = useRef(index);
   const flatlistRef = useRef(index);
@@ -116,7 +114,7 @@ function Carousel() {
       <View style={{height: windowHeight * 0.3}}>
         <FlatList
           ref={flatlistRef}
-          data={slideList}
+          data={slideList(services)}
           style={styles.carousel}
           renderItem={renderItem}
           pagingEnabled
@@ -127,42 +125,31 @@ function Carousel() {
           {...flatListOptimizationProps}
         />
       </View>
-      <Pagination index={index} setIndex={setIndex} flatlistRef={flatlistRef} />
+      <Pagination
+        index={index}
+        setIndex={setIndex}
+        flatlistRef={flatlistRef}
+        services={services}
+      />
     </>
-  );
-}
-
-const Client = ({loading, logoutrequest}) => {
-  if (loading) {
-    return <Loading />;
-  }
-  return (
-    <Drawer.Navigator
-      drawerContent={props => {
-        return (
-          <DrawerWithLogoutButton {...props} logoutrequest={logoutrequest} />
-        );
-      }}>
-      <Drawer.Screen name="Services" component={ServiceContainer} />
-    </Drawer.Navigator>
   );
 };
 
 const styles = StyleSheet.create({
+  sliderContainer: {
+    height: windowHeight * 0.3,
+  },
   slide: {
     height: windowHeight,
     width: windowWidth,
     alignItems: 'center',
   },
   slideImage: {width: windowWidth * 0.9, height: windowHeight * 0.3},
-  slideTitle: {fontSize: 5},
-  slideSubtitle: {fontSize: 2},
 
   pagination: {
     position: 'relative',
-    top: 25,
-    // width: windowWidth * 0.5,
-    flexWrap: 'wrap',
+    top: 0,
+    width: '100%',
     justifyContent: 'center',
     flexDirection: 'row',
   },
@@ -180,4 +167,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Client;
+export default Carousel;
