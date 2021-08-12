@@ -1,37 +1,14 @@
 import React, {useEffect} from 'react';
 import {
   SafeAreaView,
-  //   View,
   StyleSheet,
-  //   Text,
   StatusBar,
-  //   Image,
+  View,
+  ScrollView,
 } from 'react-native';
 
-// import {API_HOSTA} from '@env';
 import Carousel from '@components/Carousel';
-
-// const addNewItems = (currentUsers, fetchUsersRequest, _nextPage) => {
-//   if (_nextPage >= 0) {
-//     fetchUsersRequest(_nextPage, currentUsers);
-//   }
-//   return;
-// };
-
-// const Item = ({username, image}) => {
-//   const url = image.split('/').slice(7).join('/');
-//   return (
-//     <View style={styles.item}>
-//       <Image
-//         style={styles.tinyLogo}
-//         source={{
-//           uri: `http://${API_HOSTA}/${url}`,
-//         }}
-//       />
-//       <Text style={styles.username}>{username}</Text>
-//     </View>
-//   );
-// };
+import Bar from '@components/Bar';
 
 const Users = ({
   topUpServices,
@@ -44,13 +21,19 @@ const Users = ({
     fetchCodeServicesRequest();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  //   const renderItem = ({item}) => {
-  //     return <Item username={item.username} image={item.image} />;
-  //   };
+
   return (
     <SafeAreaView style={styles.container}>
-      <Carousel services={topUpServices} />
-      <Carousel services={codeServices} />
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.carousel}>
+          <Bar title={'Top Up'} />
+          <Carousel services={topUpServices} />
+        </View>
+        <View style={styles.carousel}>
+          <Bar title={'Card'} />
+          <Carousel services={codeServices} />
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -58,21 +41,11 @@ const Users = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
+    marginTop: StatusBar.currentHeight || 15,
   },
-  //   tinyLogo: {
-  //     width: 100,
-  //     height: 100,
-  //   },
-  //   item: {
-  //     // backgroundColor: '#f9c2ff',
-  //     padding: 50,
-  //     marginVertical: 10,
-  //     marginHorizontal: 10,
-  //   },
-  //   title: {
-  //     fontSize: 15,
-  //   },
+  carousel: {
+    marginBottom: StatusBar.currentHeight * 2 || 30,
+  },
 });
 
 export default Users;

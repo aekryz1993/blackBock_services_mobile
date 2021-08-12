@@ -16,6 +16,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   TouchableHighlight,
+  StatusBar,
 } from 'react-native';
 import {API_HOSTA} from '@env';
 
@@ -136,9 +137,6 @@ const Carousel = ({services}) => {
 };
 
 const styles = StyleSheet.create({
-  sliderContainer: {
-    height: windowHeight * 0.3,
-  },
   slide: {
     height: windowHeight,
     width: windowWidth,
@@ -148,7 +146,7 @@ const styles = StyleSheet.create({
 
   pagination: {
     position: 'relative',
-    top: 0,
+    top: StatusBar.currentHeight || 25,
     width: '100%',
     justifyContent: 'center',
     flexDirection: 'row',
