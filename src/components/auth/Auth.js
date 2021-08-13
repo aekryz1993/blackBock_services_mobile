@@ -6,6 +6,7 @@ import AdminCountainer from '@components/Administration/AdminContainer';
 import Login from '@components/Login';
 import Client from '@components/Client/ClientContainer';
 import Loading from '@components/Loading';
+import TitleHeader from '@components/Client/Header/TitleHeader';
 
 const Stack = createStackNavigator();
 
@@ -23,7 +24,10 @@ const Auth = ({
   }
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}>
         {!isAuth || !isActive ? (
           <Stack.Screen
             name="Login"
@@ -50,13 +54,7 @@ const Auth = ({
             // }}
           />
         ) : (
-          <Stack.Screen
-            name="Client"
-            component={Client}
-            // options={{
-            //   animationTypeForReplace: isSignout ? 'pop' : 'push',
-            // }}
-          />
+          <Stack.Screen name="Client" component={Client} />
         )}
       </Stack.Navigator>
     </NavigationContainer>

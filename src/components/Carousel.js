@@ -19,25 +19,61 @@ import {
   StatusBar,
 } from 'react-native';
 import {API_HOSTA} from '@env';
+import Code from './Client/Services/Code';
 
 const {width: windowWidth, height: windowHeight} = Dimensions.get('window');
 
 const slideList = services =>
   Array.from(services).map((service, i) => {
+    const products =
+      service.category === 'id'
+        ? service.ProductIDs
+        : service.ProductCategories;
     const url = service.Image.url.split('/').slice(7).join('/');
     return {
+      products,
+      category: service.category,
       id: service.id,
       image: `http://${API_HOSTA}/${url}`,
     };
   });
 
-const Slide = memo(function Slide({data}) {
+const navigateToNext = ({
+  navigation,
+  category,
+  products,
+  setModalVisible,
+  setProducts,
+}) => {
+  if (category === 'id') {
+    navigation.navigate('TopUp', {products});
+  } else if (category === 'code') {
+    setModalVisible(true);
+    setProducts(products);
+  }
+  return;
+};
+
+const Slide = memo(function Slide({
+  data,
+  navigation,
+  setModalVisible,
+  setProducts,
+}) {
   return (
     <View style={styles.slide}>
       <TouchableHighlight
         underlayColor="#555555"
         style={styles.slideImage}
-        onPress={() => console.warn(data.id)}>
+        onPress={() =>
+          navigateToNext({
+            navigation,
+            category: data.category,
+            products: data.products,
+            setModalVisible,
+            setProducts,
+          })
+        }>
         <Image source={{uri: data.image}} style={styles.slideImage} />
       </TouchableHighlight>
     </View>
@@ -70,7 +106,9 @@ function Pagination({index, setIndex, flatlistRef, services}) {
   );
 }
 
-const Carousel = ({services}) => {
+const Carousel = ({services, navigation}) => {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [products, setProducts] = useState([]);
   const [index, setIndex] = useState(0);
   const indexRef = useRef(index);
   const flatlistRef = useRef(index);
@@ -107,12 +145,25 @@ const Carousel = ({services}) => {
   };
 
   const renderItem = useCallback(function renderItem({item}) {
-    return <Slide data={item} />;
+    return (
+      <Slide
+        data={item}
+        navigation={navigation}
+        setModalVisible={setModalVisible}
+        setProducts={setProducts}
+      />
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <>
-      <View style={{height: windowHeight * 0.3}}>
+      <Code
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        products={products}
+      />
+      <View style={{height: windowHeight * 0.2}}>
         <FlatList
           ref={flatlistRef}
           data={slideList(services)}
@@ -138,11 +189,11 @@ const Carousel = ({services}) => {
 
 const styles = StyleSheet.create({
   slide: {
-    height: windowHeight,
+    // height: windowHeight,
     width: windowWidth,
     alignItems: 'center',
   },
-  slideImage: {width: windowWidth * 0.9, height: windowHeight * 0.3},
+  slideImage: {width: windowWidth * 0.9, height: windowHeight * 0.2},
 
   pagination: {
     position: 'relative',

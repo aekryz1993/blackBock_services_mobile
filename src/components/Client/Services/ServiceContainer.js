@@ -13,6 +13,7 @@ const mapStateToProps = (state, ownProps) => {
     codeServices,
     topUpMessage,
     codeMessage,
+    navigation: ownProps.navigation,
   };
 };
 
