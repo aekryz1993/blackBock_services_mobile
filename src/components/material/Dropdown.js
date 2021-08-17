@@ -1,14 +1,20 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
-import {Text, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  TouchableHighlight,
+} from 'react-native';
 import IconAntDesign from 'react-native-vector-icons/AntDesign';
 import IconFontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MyModal from './CustomModal';
 
-const Dropdown = ({text, dispatch}) => {
+const Dropdown = ({text, dispatch, currentCurrency}) => {
   const [modalVisible, setModalVisible] = useState(false);
 
-  const _onChangeCurrency = (currency, setModalVisible, modalVisible) => {
+  const _onChangeCurrency = currency => {
     dispatch({type: currency});
     setModalVisible(!modalVisible);
   };
@@ -16,6 +22,7 @@ const Dropdown = ({text, dispatch}) => {
   return (
     <>
       <TouchableOpacity
+        activeOpacity={0.9}
         style={[styles.container]}
         onPress={() => setModalVisible(!modalVisible)}>
         <IconFontAwesome5 name="wallet" size={15} color="#ffff" />
@@ -28,19 +35,22 @@ const Dropdown = ({text, dispatch}) => {
         visible={modalVisible}
         dismiss={() => setModalVisible(!modalVisible)}>
         <View style={styles.modalView}>
-          {['EUR', 'USD', 'DZD'].map((currency, i) => (
-            <>
-              <TouchableOpacity
-                key={i}
-                style={styles.currencyItem}
-                onPress={() =>
-                  _onChangeCurrency(currency, setModalVisible, modalVisible)
-                }>
-                <Text>{currency}</Text>
-              </TouchableOpacity>
-              <View style={styles.line} />
-            </>
-          ))}
+          {['EUR', 'USD', 'DZD'].map((currency, i) => {
+            if (currency !== currentCurrency) {
+              return (
+                <View key={i}>
+                  <TouchableHighlight
+                    activeOpacity={1}
+                    underlayColor="#999999"
+                    style={styles.currencyItem}
+                    onPress={() => _onChangeCurrency(currency)}>
+                    <Text>{currency}</Text>
+                  </TouchableHighlight>
+                  <View style={styles.line} />
+                </View>
+              );
+            }
+          })}
         </View>
       </MyModal>
     </>

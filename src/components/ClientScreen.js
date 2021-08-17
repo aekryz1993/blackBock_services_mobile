@@ -1,20 +1,20 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet, StatusBar} from 'react-native';
+import {SafeAreaView, StyleSheet, ScrollView} from 'react-native';
 import Header from './Client/Header/Header';
 
 const ClientScreen = ({children, navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
-      <Header navigation={navigation} />
-      {children}
+      <ScrollView>
+        <Header navigation={navigation} />
+        {children}
+      </ScrollView>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  carousel: {
-    marginBottom: StatusBar.currentHeight * 2 || 30,
-  },
+  container: {},
 });
 
 export default ClientScreen;

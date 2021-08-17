@@ -14,7 +14,7 @@ import {API_HOSTA} from '@env';
 const {width: windowWidth, height: windowHeight} = Dimensions.get('window');
 
 const slideList = services =>
-  Array.from(services).map((service, i) => {
+  Array.from(services).map(service => {
     const products =
       service.category === 'id'
         ? service.ProductIDs
@@ -28,8 +28,8 @@ const slideList = services =>
     };
   });
 
-const navigateToNext = ({navigation, products}) => {
-  navigation.navigate('ProductScreen', {products});
+const navigateToNext = ({navigation, products, category}) => {
+  navigation.navigate('ProductScreen', {products, category});
   return;
 };
 
@@ -42,6 +42,7 @@ const Slide = memo(function Slide({data, navigation, setProducts}) {
         onPress={() =>
           navigateToNext({
             navigation,
+            category: data.category,
             products: data.products,
             setProducts,
           })

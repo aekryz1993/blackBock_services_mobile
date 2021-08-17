@@ -1,26 +1,16 @@
-import React, {useReducer} from 'react';
+import React, {useContext} from 'react';
 import Dropdown from '@components/material/Dropdown';
-
-const initialState = {currency: 'USD'};
-
-function reducer(_, action) {
-  switch (action.type) {
-    case 'EUR':
-      return {currency: 'EUR'};
-    case 'USD':
-      return {currency: 'USD'};
-    case 'DZD':
-      return {currency: 'DZD'};
-    default:
-      throw new Error();
-  }
-}
+import {CurrencyContext} from '@components/contexts/CurrencyProvider';
 
 const Currency = () => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useContext(CurrencyContext);
   return (
     <>
-      <Dropdown text={`Wallet ${state.currency}`} dispatch={dispatch} />
+      <Dropdown
+        text={`Wallet ${state.currency}`}
+        dispatch={dispatch}
+        currentCurrency={state.currency}
+      />
     </>
   );
 };

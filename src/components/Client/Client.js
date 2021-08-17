@@ -6,6 +6,7 @@ import Loading from '@components/Loading';
 import DrawerWithLogoutButton from '@components/DrawerWithLogoutButton';
 import ServiceContainer from './Services/ServiceContainer';
 import ProductScreen from './Services/ProductScreen';
+import {CurrencyProvider} from '@components/contexts/CurrencyProvider';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -25,13 +26,15 @@ const Client = ({loading, logoutrequest}) => {
     return <Loading />;
   }
   return (
-    <Drawer.Navigator
-      drawerPosition="right"
-      drawerContent={props => (
-        <DrawerWithLogoutButton {...props} logoutrequest={logoutrequest} />
-      )}>
-      <Drawer.Screen name="Products" component={Service} />
-    </Drawer.Navigator>
+    <CurrencyProvider>
+      <Drawer.Navigator
+        drawerPosition="right"
+        drawerContent={props => (
+          <DrawerWithLogoutButton {...props} logoutrequest={logoutrequest} />
+        )}>
+        <Drawer.Screen name="Products" component={Service} />
+      </Drawer.Navigator>
+    </CurrencyProvider>
   );
 };
 
