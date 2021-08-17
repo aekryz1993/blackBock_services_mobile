@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {View, Text, StyleSheet, Dimensions, StatusBar} from 'react-native';
 
-const {width: windowWidth, height: windowHeight} = Dimensions.get('window');
+const {height: windowHeight} = Dimensions.get('window');
 
 const Bar = ({title}) => {
   return (

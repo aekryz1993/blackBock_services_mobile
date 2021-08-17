@@ -6,6 +6,7 @@ import Loading from '@components/Loading';
 import DrawerWithLogoutButton from '@components/DrawerWithLogoutButton';
 import ServiceContainer from './Services/ServiceContainer';
 import TopUp from './Services/TopUp';
+import Code from './Services/Code';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -17,6 +18,7 @@ const Service = () => (
     }}>
     <Stack.Screen name="Services" component={ServiceContainer} />
     <Stack.Screen name="TopUp" component={TopUp} />
+    <Stack.Screen name="Code" component={Code} />
   </Stack.Navigator>
 );
 
@@ -26,12 +28,7 @@ const Client = ({loading, logoutrequest}) => {
   }
   return (
     <Drawer.Navigator
-      // drawerType="front"
       drawerPosition="right"
-      // screenOptions={{
-      //   headerTitle: props => <TitleHeader {...props} />,
-      //   // headerShown: true,
-      // }}
       drawerContent={props => (
         <DrawerWithLogoutButton {...props} logoutrequest={logoutrequest} />
       )}>

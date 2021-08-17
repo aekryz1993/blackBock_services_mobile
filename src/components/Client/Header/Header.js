@@ -16,7 +16,7 @@ const Header = ({navigation}) => {
   return (
     <View style={styles.container}>
       <View style={styles.left}>
-        <Text>MY LOGO</Text>
+        <Text style={styles.logo}>MY LOGO</Text>
       </View>
       <View style={styles.right}>
         <Currency />
@@ -48,6 +48,13 @@ const styles = StyleSheet.create({
   },
   navbutton: {
     paddingLeft: 10,
+  },
+  logo: {
+    color: '#000000',
+    padding: 5,
+    backgroundColor: '#696969',
+    fontWeight: 'bold',
+    borderRadius: 20,
   },
 });
 

@@ -5,12 +5,12 @@ const initialState = {currency: 'USD'};
 
 function reducer(_, action) {
   switch (action.type) {
-    case 'dollar':
-      return {currency: 'USD'};
-    case 'euro':
+    case 'EUR':
       return {currency: 'EUR'};
-    case 'dinnar':
-      return {currency: 'DNZ'};
+    case 'USD':
+      return {currency: 'USD'};
+    case 'DZD':
+      return {currency: 'DZD'};
     default:
       throw new Error();
   }
@@ -20,7 +20,7 @@ const Currency = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   return (
     <>
-      <Dropdown text={`Wallet ${state.currency}`} />
+      <Dropdown text={`Wallet ${state.currency}`} dispatch={dispatch} />
     </>
   );
 };

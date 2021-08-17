@@ -1,15 +1,9 @@
 import React, {useEffect} from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  StatusBar,
-  View,
-  ScrollView,
-} from 'react-native';
+import {StyleSheet, StatusBar, View, ScrollView} from 'react-native';
 
 import Carousel from '@components/Carousel';
 import Bar from '@components/Bar';
-import Header from '../Header/Header';
+import ClientScreen from '@components/ClientScreen';
 
 const Service = ({
   topUpServices,
@@ -25,8 +19,7 @@ const Service = ({
   }, []);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Header navigation={navigation} />
+    <ClientScreen navigation={navigation}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.carousel}>
           <Bar title={'Top Up'} />
@@ -45,14 +38,13 @@ const Service = ({
           />
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </ClientScreen>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // marginTop: StatusBar.currentHeight || 15,
   },
   carousel: {
     marginBottom: StatusBar.currentHeight * 2 || 30,

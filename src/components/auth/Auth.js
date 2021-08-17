@@ -6,7 +6,6 @@ import AdminCountainer from '@components/Administration/AdminContainer';
 import Login from '@components/Login';
 import Client from '@components/Client/ClientContainer';
 import Loading from '@components/Loading';
-import TitleHeader from '@components/Client/Header/TitleHeader';
 
 const Stack = createStackNavigator();
 
@@ -29,12 +28,7 @@ const Auth = ({
           headerShown: false,
         }}>
         {!isAuth || !isActive ? (
-          <Stack.Screen
-            name="Login"
-            // options={{
-            //   animationTypeForReplace: isSignout ? 'pop' : 'push',
-            // }}
-          >
+          <Stack.Screen name="Login">
             {props => (
               <Login
                 loginRequest={loginRequest}
@@ -46,13 +40,7 @@ const Auth = ({
             )}
           </Stack.Screen>
         ) : isAdmin ? (
-          <Stack.Screen
-            name="AdminCountainer"
-            component={AdminCountainer}
-            // options={{
-            //   animationTypeForReplace: isSignout ? 'pop' : 'push',
-            // }}
-          />
+          <Stack.Screen name="AdminCountainer" component={AdminCountainer} />
         ) : (
           <Stack.Screen name="Client" component={Client} />
         )}

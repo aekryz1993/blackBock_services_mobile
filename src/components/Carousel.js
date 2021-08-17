@@ -1,12 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
 import React, {useState, useRef, useCallback, memo} from 'react';
 import {
   View,
@@ -19,7 +10,6 @@ import {
   StatusBar,
 } from 'react-native';
 import {API_HOSTA} from '@env';
-import Code from './Client/Services/Code';
 
 const {width: windowWidth, height: windowHeight} = Dimensions.get('window');
 
@@ -48,18 +38,12 @@ const navigateToNext = ({
   if (category === 'id') {
     navigation.navigate('TopUp', {products});
   } else if (category === 'code') {
-    setModalVisible(true);
-    setProducts(products);
+    navigation.navigate('Code', {products});
   }
   return;
 };
 
-const Slide = memo(function Slide({
-  data,
-  navigation,
-  setModalVisible,
-  setProducts,
-}) {
+const Slide = memo(function Slide({data, navigation, setProducts}) {
   return (
     <View style={styles.slide}>
       <TouchableHighlight
@@ -70,7 +54,6 @@ const Slide = memo(function Slide({
             navigation,
             category: data.category,
             products: data.products,
-            setModalVisible,
             setProducts,
           })
         }>
@@ -107,8 +90,6 @@ function Pagination({index, setIndex, flatlistRef, services}) {
 }
 
 const Carousel = ({services, navigation}) => {
-  const [modalVisible, setModalVisible] = useState(false);
-  const [products, setProducts] = useState([]);
   const [index, setIndex] = useState(0);
   const indexRef = useRef(index);
   const flatlistRef = useRef(index);
@@ -145,24 +126,12 @@ const Carousel = ({services, navigation}) => {
   };
 
   const renderItem = useCallback(function renderItem({item}) {
-    return (
-      <Slide
-        data={item}
-        navigation={navigation}
-        setModalVisible={setModalVisible}
-        setProducts={setProducts}
-      />
-    );
+    return <Slide data={item} navigation={navigation} />;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <>
-      <Code
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
-        products={products}
-      />
       <View style={{height: windowHeight * 0.2}}>
         <FlatList
           ref={flatlistRef}
