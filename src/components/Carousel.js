@@ -28,18 +28,8 @@ const slideList = services =>
     };
   });
 
-const navigateToNext = ({
-  navigation,
-  category,
-  products,
-  setModalVisible,
-  setProducts,
-}) => {
-  if (category === 'id') {
-    navigation.navigate('TopUp', {products});
-  } else if (category === 'code') {
-    navigation.navigate('Code', {products});
-  }
+const navigateToNext = ({navigation, products}) => {
+  navigation.navigate('ProductScreen', {products});
   return;
 };
 
@@ -52,7 +42,6 @@ const Slide = memo(function Slide({data, navigation, setProducts}) {
         onPress={() =>
           navigateToNext({
             navigation,
-            category: data.category,
             products: data.products,
             setProducts,
           })
@@ -132,7 +121,7 @@ const Carousel = ({services, navigation}) => {
 
   return (
     <>
-      <View style={{height: windowHeight * 0.2}}>
+      <View style={{height: windowHeight * 0.2, marginTop: 25}}>
         <FlatList
           ref={flatlistRef}
           data={slideList(services)}

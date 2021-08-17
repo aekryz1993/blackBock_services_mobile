@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import ClientScreen from '@components/ClientScreen';
 
-const TopUp = ({route, navigation}) => {
+const ProductScreen = ({route, navigation}) => {
   const {products} = route.params;
   return (
     <ClientScreen navigation={navigation}>
@@ -32,4 +32,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TopUp;
+export default ProductScreen;
