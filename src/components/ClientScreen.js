@@ -5,10 +5,8 @@ import Header from './Client/Header/Header';
 const ClientScreen = ({children, navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
-        <Header navigation={navigation} />
-        {children}
-      </ScrollView>
+      <Header navigation={navigation} />
+      {children}
     </SafeAreaView>
   );
 };

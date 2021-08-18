@@ -10,6 +10,8 @@ import {
   StatusBar,
 } from 'react-native';
 import {API_HOSTA} from '@env';
+import {useEffect} from 'react';
+import {isPortrait, isTablet} from '../Platform';
 
 const {width: windowWidth, height: windowHeight} = Dimensions.get('window');
 
@@ -28,12 +30,12 @@ const slideList = services =>
     };
   });
 
-const navigateToNext = ({navigation, products, category}) => {
-  navigation.navigate('ProductScreen', {products, category});
+const navigateToNext = ({navigation, products, category, image}) => {
+  navigation.navigate('ProductScreen', {products, category, image});
   return;
 };
 
-const Slide = memo(function Slide({data, navigation, setProducts}) {
+const Slide = memo(function Slide({data, navigation, setProducts, styles}) {
   return (
     <View style={styles.slide}>
       <TouchableHighlight
@@ -44,6 +46,7 @@ const Slide = memo(function Slide({data, navigation, setProducts}) {
             navigation,
             category: data.category,
             products: data.products,
+            image: data.image,
             setProducts,
           })
         }>
@@ -58,7 +61,7 @@ const swipe = (index, setIndex, flatlistRef) => {
   flatlistRef.current.scrollToIndex({index});
 };
 
-function Pagination({index, setIndex, flatlistRef, services}) {
+function Pagination({index, setIndex, flatlistRef, services, styles}) {
   return (
     <View style={styles.pagination}>
       {slideList(services).map((service, i) => {
@@ -80,10 +83,29 @@ function Pagination({index, setIndex, flatlistRef, services}) {
 }
 
 const Carousel = ({services, navigation}) => {
+  const [layout, setlayout] = useState({
+    orientation: isPortrait('window') ? 'portrait' : 'landscape',
+    devicetype: isTablet('window') ? 'tablet' : 'phone',
+  });
+
   const [index, setIndex] = useState(0);
   const indexRef = useRef(index);
   const flatlistRef = useRef(index);
   indexRef.current = index;
+
+  useEffect(() => {
+    const subscription = Dimensions.addEventListener('change', () => {
+      setlayout({
+        orientation: isPortrait('window') ? 'portrait' : 'landscape',
+        devicetype: isTablet('window') ? 'tablet' : 'phone',
+      });
+    });
+    return () => subscription?.remove();
+  });
+
+  const styles =
+    layout.orientation === 'portrait' ? portraitStyles : landscapeStyles;
+
   const onScroll = useCallback(event => {
     const slideSize = event.nativeEvent.layoutMeasurement.width;
     const index = event.nativeEvent.contentOffset.x / slideSize;
@@ -116,7 +138,14 @@ const Carousel = ({services, navigation}) => {
   };
 
   const renderItem = useCallback(function renderItem({item}) {
-    return <Slide data={item} navigation={navigation} />;
+    return (
+      <Slide
+        data={item}
+        navigation={navigation}
+        layout={layout}
+        styles={styles}
+      />
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -138,6 +167,7 @@ const Carousel = ({services, navigation}) => {
       </View>
       <Pagination
         index={index}
+        styles={styles}
         setIndex={setIndex}
         flatlistRef={flatlistRef}
         services={services}
@@ -146,13 +176,17 @@ const Carousel = ({services, navigation}) => {
   );
 };
 
-const styles = StyleSheet.create({
+const portraitStyles = StyleSheet.create({
   slide: {
     // height: windowHeight,
     width: windowWidth,
     alignItems: 'center',
   },
-  slideImage: {width: windowWidth * 0.9, height: windowHeight * 0.2},
+
+  slideImage: {
+    width: windowWidth * 0.9,
+    height: windowHeight * 0.2,
+  },
 
   pagination: {
     position: 'relative',
@@ -169,6 +203,39 @@ const styles = StyleSheet.create({
   },
   paginationDotActive: {backgroundColor: 'lightblue'},
   paginationDotInactive: {backgroundColor: 'gray'},
+
+  carousel: {
+    flex: 1,
+  },
+});
+
+const landscapeStyles = StyleSheet.create({
+  slide: {
+    // height: windowWidth,
+    width: windowHeight,
+    alignItems: 'center',
+  },
+
+  slideImage: {
+    width: windowHeight * 0.9,
+    height: windowWidth * 0.8,
+  },
+
+  pagination: {
+    position: 'relative',
+    top: StatusBar.currentHeight || 25,
+    width: '100%',
+    justifyContent: 'center',
+    flexDirection: 'row',
+  },
+  paginationDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    marginHorizontal: 2,
+  },
+  paginationDotActive: {backgroundColor: 'red'},
+  paginationDotInactive: {backgroundColor: 'black'},
 
   carousel: {
     flex: 1,

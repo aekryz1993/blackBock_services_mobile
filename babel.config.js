@@ -20,6 +20,7 @@ module.exports = {
         root: ['./src'],
         alias: {
           src: './src',
+          '@src': './src',
           '@apis': './src/apis',
           '@actions': './src/store/actions',
           '@components': './src/components',
