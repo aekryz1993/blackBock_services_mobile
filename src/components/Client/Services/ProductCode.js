@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import {
   StyleSheet,
   View,
@@ -10,10 +10,38 @@ import {
 } from 'react-native';
 import {CurrencyContext} from '@components/contexts/CurrencyProvider';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+// import {fetchProductCodesOrder} from '@apis/products';
 
-const ProductItem = ({product, lastProduct, idx}) => {
-  const [state] = useContext(CurrencyContext);
+const ProductItem = ({
+  product,
+  lastProduct,
+  idx,
+  getOrder,
+  state,
+  clear,
+  setclear,
+}) => {
   const [quantity, setQuantity] = useState(0);
+
+  useEffect(() => {
+    getOrder(
+      {
+        label: product.label,
+        id: product.id,
+        quantity: Number(quantity),
+        price: product.Price[state.attribute],
+      },
+      Number(quantity),
+    );
+  });
+
+  useEffect(() => {
+    if (clear) {
+      setQuantity(0);
+      setclear(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [clear]);
 
   const onQuantityChange = op => {
     switch (op) {
@@ -31,7 +59,7 @@ const ProductItem = ({product, lastProduct, idx}) => {
   };
 
   return (
-    <View key={product.id} style={styles.itemContainer}>
+    <>
       <View style={styles.productItemContainer}>
         <View style={styles.leftFlex}>
           <TouchableOpacity
@@ -69,30 +97,76 @@ const ProductItem = ({product, lastProduct, idx}) => {
         </View>
       </View>
       {lastProduct !== idx && <View style={styles.line} />}
-    </View>
+    </>
   );
 };
 
 const ProductCode = ({route, image}) => {
+  const [state] = useContext(CurrencyContext);
+  const [clear, setclear] = useState(false);
   const {products} = route.params;
+  let order = [];
+
+  const getOrder = (product, quantity) => {
+    if (order.length === 0) {
+      order = [product];
+    }
+    order.forEach((item, i) => {
+      if (product.id === item.id) {
+        order[i].quantity = quantity;
+      } else {
+        const existProduct = order.filter(val => val.id === product.id);
+        if (existProduct.length === 0) {
+          order = [...order, product];
+        }
+      }
+    });
+    return;
+  };
+
+  const onConfirm = () => {
+    // fetchProductCodesOrder({
+    //   order: JSON.stringify(order),
+    //   currency: state.attribute,
+    // });
+    console.log(order);
+  };
+  const onClear = () => {
+    setclear(true);
+  };
+
   return (
-    <View style={styles.container}>
-      <View style={styles.imageContainer}>
-        <Image source={{uri: image}} style={styles.image} />
+    <>
+      <TouchableOpacity style={styles.actionbutton} onPress={onConfirm}>
+        <Text>confirm</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.actionbutton} onPress={onClear}>
+        <Text>clear</Text>
+      </TouchableOpacity>
+      <View style={styles.container}>
+        <View style={styles.imageContainer}>
+          <Image source={{uri: image}} style={styles.image} />
+        </View>
+        <View style={styles.productsContainer}>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            {products.map((product, idx) => (
+              <View key={product.id} style={styles.itemContainer}>
+                <ProductItem
+                  product={product}
+                  lastProduct={products.length - 1}
+                  idx={idx}
+                  getOrder={getOrder}
+                  state={state}
+                  clear={clear}
+                  setclear={setclear}
+                />
+              </View>
+            ))}
+          </ScrollView>
+        </View>
+        <View style={styles.bottomContainer} />
       </View>
-      <View style={styles.productsContainer}>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          {products.map((product, idx) => (
-            <ProductItem
-              product={product}
-              lastProduct={products.length - 1}
-              idx={idx}
-            />
-          ))}
-        </ScrollView>
-      </View>
-      <View style={styles.bottomContainer} />
-    </View>
+    </>
   );
 };
 
@@ -101,18 +175,21 @@ const styles = StyleSheet.create({
     borderWidth: 0.25,
     borderColor: '#aaa',
     marginHorizontal: 20,
+    height: '100%',
   },
   imageContainer: {
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
+    height: '20%',
   },
   image: {
     width: '60%',
-    height: '50%',
+    height: '65%',
   },
   productsContainer: {
     backgroundColor: '#ddd',
+    height: '29%',
   },
   productItemContainer: {
     flexDirection: 'row',
@@ -158,6 +235,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     width: '95%',
     borderColor: '#777',
+  },
+  actionbutton: {
+    marginBottom: 10,
   },
 });
 
