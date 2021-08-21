@@ -2,19 +2,20 @@ export const ORDER_REQUEST = 'ORDER_REQUEST';
 export const ORDER_SUCCEED = 'ORDER_SUCCEED';
 export const ORDER_FAILED = 'ORDER_FAILED';
 
-export const orderRequest = ({currency, order}) => ({
+export const orderRequest = ({currency, order, amount}) => ({
   type: ORDER_REQUEST,
   payload: {
     currency,
     order,
+    amount,
   },
 });
 
 export const orderSucced = response => ({
   type: ORDER_SUCCEED,
   payload: {
-    order: response.data.order,
-    currency: response.data.currency,
+    codes: response.data.codes,
+    commands: response.data.commands,
   },
 });
 

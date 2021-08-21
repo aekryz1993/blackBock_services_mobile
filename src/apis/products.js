@@ -1,10 +1,10 @@
 import {API_HOSTA} from '@env';
 
-export const fetchProductCodesOrder = async ({currency, order}) => {
+export const fetchProductCodesOrder = async ({currency, order, amount}) => {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await fetch(
-        `http://${API_HOSTA}/api/userSession/productCode/get/${currency}/${order}`,
+        `http://${API_HOSTA}/api/userSession/productCode/get/${currency}/${amount}/${order}`,
         {
           method: 'GET',
           headers: {
@@ -13,6 +13,9 @@ export const fetchProductCodesOrder = async ({currency, order}) => {
         },
       );
       const data = await response.text();
+      if (!JSON.parse(data).success) {
+        reject(JSON.parse(data));
+      }
       resolve({
         data: JSON.parse(data),
       });

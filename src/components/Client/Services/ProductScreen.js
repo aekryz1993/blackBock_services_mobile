@@ -9,11 +9,11 @@ import {
 import ClientScreen from '@components/ClientScreen';
 import ProductRadio from '@components/material/ProductRadio';
 import {CurrencyContext} from '@components/contexts/CurrencyProvider';
-import ProductCode from './ProductCode';
+import ProductCodeContainer from './productCode.js/ProductCodeContainer';
 
 const ProductScreen = ({route, navigation}) => {
   const [state] = useContext(CurrencyContext);
-  const {products, category, image} = route.params;
+  const {products, category} = route.params;
   const firstProductLabel = products.length > 0 ? products[0].label : '';
   const [current, setCurrent] = useState(firstProductLabel);
 
@@ -52,7 +52,7 @@ const ProductScreen = ({route, navigation}) => {
         products.length !== 0 && (
           <View style={styles.container}>
             <View style={styles.itemsContainer}>
-              <ProductCode route={route} image={image} />
+              <ProductCodeContainer route={route} />
             </View>
           </View>
         )
