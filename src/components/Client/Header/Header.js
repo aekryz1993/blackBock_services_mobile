@@ -8,15 +8,22 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/EvilIcons';
+import MaterialIconsIcon from 'react-native-vector-icons/MaterialIcons';
 import Currency from './Currency';
 
 const {height: windowHeight} = Dimensions.get('window');
 
-const Header = ({navigation}) => {
+const Header = ({navigation, back}) => {
   return (
     <View style={styles.container}>
       <View style={styles.left}>
-        <Text style={styles.logo}>MY LOGO</Text>
+        {!back ? (
+          <Text style={styles.logo}>MY LOGO</Text>
+        ) : (
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <MaterialIconsIcon name="arrow-back" size={25} color="#fff" />
+          </TouchableOpacity>
+        )}
       </View>
       <View style={styles.right}>
         <Currency />

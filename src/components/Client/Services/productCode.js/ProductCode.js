@@ -44,10 +44,8 @@ const ProductItem = ({
   useEffect(() => {
     if (idx === 0) {
       amount.current = Number(quantity) * product.Price[state.attribute];
-      console.log('first: ', amount);
     } else if (idx < lastProduct) {
       amount.current += Number(quantity) * product.Price[state.attribute];
-      console.log('second: ', amount);
     } else {
       settotalAmount(
         amount.current + Number(quantity) * product.Price[state.attribute],
@@ -165,10 +163,6 @@ const ProductCode = ({route, codes, commands, message, orderRequest}) => {
   const {products, image} = route.params;
   let order = [];
   let amount = useRef(0);
-
-  // useEffect(() => {
-  //   settotalAmount(0);
-  // }, [state]);
 
   const getOrder = (product, quantity) => {
     if (order.length === 0) {

@@ -1,11 +1,5 @@
 import React, {useContext, useState} from 'react';
-import {
-  StyleSheet,
-  View,
-  TouchableOpacity,
-  Text,
-  ScrollView,
-} from 'react-native';
+import {StyleSheet, View, ScrollView} from 'react-native';
 import ClientScreen from '@components/ClientScreen';
 import ProductRadio from '@components/material/ProductRadio';
 import {CurrencyContext} from '@components/contexts/CurrencyProvider';
@@ -22,12 +16,7 @@ const ProductScreen = ({route, navigation}) => {
   };
 
   return (
-    <ClientScreen navigation={navigation}>
-      <View>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Text>GO BACK</Text>
-        </TouchableOpacity>
-      </View>
+    <ClientScreen navigation={navigation} back={true}>
       {category === 'id' ? (
         <View style={styles.container()}>
           <View style={styles.itemsContainer}>
