@@ -2,10 +2,23 @@ import React from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
 import Header from './Client/Header/Header';
 
-const ClientScreen = ({children, navigation, back, backAction}) => {
+const ClientScreen = ({
+  children,
+  navigation,
+  back,
+  backAction,
+  fetchcreditRequest,
+  walletCredit,
+}) => {
   return (
     <SafeAreaView style={styles.container}>
-      <Header navigation={navigation} back={back} backAction={backAction} />
+      <Header
+        navigation={navigation}
+        back={back}
+        backAction={backAction}
+        walletCredit={walletCredit}
+        fetchcreditRequest={fetchcreditRequest}
+      />
       {children}
     </SafeAreaView>
   );

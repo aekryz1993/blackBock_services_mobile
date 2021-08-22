@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -13,7 +13,13 @@ import Currency from './Currency';
 
 const {height: windowHeight} = Dimensions.get('window');
 
-const Header = ({navigation, back, backAction}) => {
+const Header = ({
+  navigation,
+  back,
+  backAction,
+  fetchcreditRequest,
+  walletCredit,
+}) => {
   const onPressBack = () => {
     backAction();
     navigation.goBack();
@@ -31,7 +37,10 @@ const Header = ({navigation, back, backAction}) => {
         )}
       </View>
       <View style={styles.right}>
-        <Currency />
+        <Currency
+          walletCredit={walletCredit}
+          fetchcreditRequest={fetchcreditRequest}
+        />
         <TouchableOpacity
           onPress={() => navigation.toggleDrawer()}
           style={styles.navbutton}>

@@ -30,15 +30,29 @@ const slideList = services =>
     };
   });
 
-const navigateToNext = ({navigation, products, category, image}) => {
+const navigateToNext = ({
+  navigation,
+  products,
+  category,
+  image,
+  fetchcreditRequest,
+  walletCredit,
+}) => {
   navigation.navigate('Products', {
     screen: 'ProductScreen',
-    params: {products, category, image},
+    params: {products, category, image, fetchcreditRequest, walletCredit},
   });
   return;
 };
 
-const Slide = memo(function Slide({data, navigation, setProducts, styles}) {
+const Slide = memo(function Slide({
+  data,
+  navigation,
+  setProducts,
+  styles,
+  fetchcreditRequest,
+  walletCredit,
+}) {
   return (
     <View style={styles.slide}>
       <TouchableHighlight
@@ -51,6 +65,8 @@ const Slide = memo(function Slide({data, navigation, setProducts, styles}) {
             products: data.products,
             image: data.image,
             setProducts,
+            fetchcreditRequest,
+            walletCredit,
           })
         }>
         <Image source={{uri: data.image}} style={styles.slideImage} />
@@ -85,7 +101,7 @@ function Pagination({index, setIndex, flatlistRef, services, styles}) {
   );
 }
 
-const Carousel = ({services, navigation}) => {
+const Carousel = ({services, navigation, fetchcreditRequest, walletCredit}) => {
   const [layout, setlayout] = useState({
     orientation: isPortrait('window') ? 'portrait' : 'landscape',
     devicetype: isTablet('window') ? 'tablet' : 'phone',
@@ -147,6 +163,8 @@ const Carousel = ({services, navigation}) => {
         navigation={navigation}
         layout={layout}
         styles={styles}
+        fetchcreditRequest={fetchcreditRequest}
+        walletCredit={walletCredit}
       />
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps

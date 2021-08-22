@@ -5,7 +5,15 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import ClientScreen from '@components/ClientScreen';
 
 const DisplayCodes = ({route}) => {
-  const {commands, codes, navigation, orderFinished, message} = route.params;
+  const {
+    commands,
+    codes,
+    navigation,
+    orderFinished,
+    message,
+    fetchcreditRequest,
+    walletCredit,
+  } = route.params;
   const renderItem = ({item}) => {
     return (
       <View style={styles.item}>
@@ -21,7 +29,9 @@ const DisplayCodes = ({route}) => {
     <ClientScreen
       navigation={navigation}
       back={true}
-      backAction={orderFinished}>
+      backAction={orderFinished}
+      fetchcreditRequest={fetchcreditRequest}
+      walletCredit={walletCredit}>
       <View style={styles.container}>
         <View style={styles.success}>
           <Icon name="check-circle" size={50} color="#32cd32" />

@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Text,
   StyleSheet,
@@ -11,13 +11,25 @@ import IconAntDesign from 'react-native-vector-icons/AntDesign';
 import IconFontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MyModal from './CustomModal';
 
-const Dropdown = ({text, dispatch, currentCurrency}) => {
+const Dropdown = ({
+  text,
+  dispatch,
+  currentCurrency,
+  fetchcreditRequest,
+  walletCredit,
+  state,
+}) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const _onChangeCurrency = currency => {
     dispatch({type: currency});
     setModalVisible(!modalVisible);
   };
+
+  useEffect(() => {
+    fetchcreditRequest();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -26,7 +38,9 @@ const Dropdown = ({text, dispatch, currentCurrency}) => {
         style={[styles.container]}
         onPress={() => setModalVisible(!modalVisible)}>
         <IconFontAwesome5 name="wallet" size={15} color="#ffff" />
-        <Text style={styles.text}>{text}</Text>
+        <Text style={styles.text}>{`${walletCredit[state.attribute]} ${
+          state.currency
+        }`}</Text>
         <IconAntDesign name="down" size={10} color="#ffff" />
       </TouchableOpacity>
       <MyModal
@@ -44,7 +58,9 @@ const Dropdown = ({text, dispatch, currentCurrency}) => {
                     underlayColor="#999999"
                     style={styles.currencyItem}
                     onPress={() => _onChangeCurrency(currency)}>
-                    <Text>{currency}</Text>
+                    <Text>{`${
+                      walletCredit[state.attribute]
+                    } ${currency}`}</Text>
                   </TouchableHighlight>
                   <View style={styles.line} />
                 </View>
