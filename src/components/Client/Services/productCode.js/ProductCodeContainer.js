@@ -3,12 +3,9 @@ import ProductCode from './ProductCode';
 import {orderRequest, orderFinished} from '@actions/productCode';
 
 const mapStateToProps = (state, ownProps) => {
-  const {codes, commands, message, success} = state.orderReducer;
+  const {message} = state.orderReducer;
   return {
-    codes,
-    commands,
     message,
-    success,
   };
 };
 

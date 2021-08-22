@@ -155,13 +155,10 @@ const ProductItem = ({
 
 const ProductCode = ({
   route,
-  codes,
-  commands,
   message,
   orderRequest,
   orderFinished,
   navigation,
-  success,
 }) => {
   const [state] = useContext(CurrencyContext);
   const [clear, setclear] = useState(false);
