@@ -7,9 +7,20 @@ import DrawerWithLogoutButton from '@components/DrawerWithLogoutButton';
 import ServiceContainer from './Services/ServiceContainer';
 import ProductScreen from './Services/ProductScreen';
 import {CurrencyProvider} from '@components/contexts/CurrencyProvider';
+import DisplayCodes from './Services/productCode.js/DisplayCodes';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
+
+const Products = () => (
+  <Stack.Navigator
+    screenOptions={{
+      headerShown: false,
+    }}>
+    <Stack.Screen name="ProductScreen" component={ProductScreen} />
+    <Stack.Screen name="DisplayCodes" component={DisplayCodes} />
+  </Stack.Navigator>
+);
 
 const Service = () => (
   <Stack.Navigator
@@ -17,7 +28,7 @@ const Service = () => (
       headerShown: false,
     }}>
     <Stack.Screen name="Services" component={ServiceContainer} />
-    <Stack.Screen name="ProductScreen" component={ProductScreen} />
+    <Stack.Screen name="Products" component={Products} />
   </Stack.Navigator>
 );
 

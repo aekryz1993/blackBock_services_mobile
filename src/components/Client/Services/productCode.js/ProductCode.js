@@ -7,8 +7,8 @@ import {
   Image,
   ScrollView,
   TextInput,
-  FlatList,
   KeyboardAvoidingView,
+  Button,
 } from 'react-native';
 import {CurrencyContext} from '@components/contexts/CurrencyProvider';
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -30,16 +30,14 @@ const ProductItem = ({
   const [prevQuantity, setPrevQuantity] = useState(Number(quantity));
 
   useEffect(() => {
-    getOrder(
-      {
-        label: product.label,
-        id: product.id,
-        quantity: Number(quantity),
-        price: product.Price[state.attribute],
-      },
-      Number(quantity),
-    );
-  });
+    getOrder({
+      label: product.label,
+      id: product.id,
+      quantity: Number(quantity),
+      price: product.Price[state.attribute],
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [quantity]);
 
   useEffect(() => {
     if (idx === 0) {
@@ -155,30 +153,45 @@ const ProductItem = ({
   );
 };
 
-const ProductCode = ({route, codes, commands, message, orderRequest}) => {
+const ProductCode = ({
+  route,
+  codes,
+  commands,
+  message,
+  orderRequest,
+  orderFinished,
+  navigation,
+  success,
+}) => {
   const [state] = useContext(CurrencyContext);
   const [clear, setclear] = useState(false);
   const [totalAmount, settotalAmount] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
-  const {products, image} = route.params;
-  let order = [];
+  const [order, setorder] = useState([]);
   let amount = useRef(0);
+  const {products, image} = route.params;
 
-  const getOrder = (product, quantity) => {
+  const getOrder = product => {
     if (order.length === 0) {
-      order = [product];
+      setorder([product]);
     }
     order.forEach((item, i) => {
       if (product.id === item.id) {
-        order[i].quantity = quantity;
+        order[i].quantity = product.quantity;
       } else {
         const existProduct = order.filter(val => val.id === product.id);
         if (existProduct.length === 0) {
-          order = [...order, product];
+          setorder([...order, product]);
         }
       }
     });
     return;
+  };
+  const openModal = () => {
+    setModalVisible(!modalVisible);
+  };
+  const onClear = () => {
+    setclear(true);
   };
 
   const onConfirm = () => {
@@ -187,26 +200,22 @@ const ProductCode = ({route, codes, commands, message, orderRequest}) => {
       order: JSON.stringify(order),
       currency: state.attribute,
       amount: totalAmount,
+      navigation: props =>
+        navigation.navigate('Products', {
+          screen: 'DisplayCodes',
+          params: {
+            navigation,
+            orderFinished,
+            ...props,
+          },
+        }),
     });
     setModalVisible(!modalVisible);
   };
-  const onClear = () => {
-    setclear(true);
-  };
 
-  const renderItem = ({item}) => {
-    return (
-      <View style={styles.item}>
-        <Text style={styles.title}>{item}</Text>
-        {codes[item].map(codeItem => (
-          <Text key={codeItem.id}>{codeItem.code}</Text>
-        ))}
-      </View>
-    );
-  };
   return (
     <>
-      <TouchableOpacity style={styles.actionbutton} onPress={onConfirm}>
+      <TouchableOpacity style={styles.actionbutton} onPress={openModal}>
         <Text>confirm</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.actionbutton} onPress={onClear}>
@@ -239,22 +248,8 @@ const ProductCode = ({route, codes, commands, message, orderRequest}) => {
             </ScrollView>
           </View>
           <Modal modalVisible={modalVisible} setModalVisible={setModalVisible}>
-            {message ? (
-              <Text>{message}</Text>
-            ) : (
-              <>
-                {/* <Text>COMMANDS</Text> */}
-                {/* <Text>{}</Text> */}
-                <Text>CODES</Text>
-                <FlatList
-                  data={Object.keys(codes)}
-                  // style={styles.carousel}
-                  renderItem={renderItem}
-                  showsVerticalScrollIndicator={false}
-                  // bounces={false}
-                />{' '}
-              </>
-            )}
+            {message && <Text>{message}</Text>}
+            <Button title="Confirm" onPress={onConfirm} />
           </Modal>
         </View>
       </KeyboardAvoidingView>

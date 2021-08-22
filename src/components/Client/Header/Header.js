@@ -13,14 +13,19 @@ import Currency from './Currency';
 
 const {height: windowHeight} = Dimensions.get('window');
 
-const Header = ({navigation, back}) => {
+const Header = ({navigation, back, backAction}) => {
+  const onPressBack = () => {
+    backAction();
+    navigation.goBack();
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.left}>
         {!back ? (
           <Text style={styles.logo}>MY LOGO</Text>
         ) : (
-          <TouchableOpacity onPress={() => navigation.goBack()}>
+          <TouchableOpacity onPress={onPressBack}>
             <MaterialIconsIcon name="arrow-back" size={25} color="#fff" />
           </TouchableOpacity>
         )}

@@ -1,20 +1,22 @@
 import {connect} from 'react-redux';
 import ProductCode from './ProductCode';
-import {orderRequest} from '@actions/productCode';
+import {orderRequest, orderFinished} from '@actions/productCode';
 
 const mapStateToProps = (state, ownProps) => {
-  const {codes, commands, message} = state.orderReducer;
+  const {codes, commands, message, success} = state.orderReducer;
   return {
     codes,
     commands,
     message,
+    success,
   };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    orderRequest: ({currency, order, amount}) =>
-      dispatch(orderRequest({currency, order, amount})),
+    orderRequest: ({currency, order, amount, navigation}) =>
+      dispatch(orderRequest({currency, order, amount, navigation})),
+    orderFinished: () => dispatch(orderFinished()),
   };
 };
 

@@ -1,6 +1,11 @@
 import {API_HOSTA} from '@env';
 
-export const fetchProductCodesOrder = async ({currency, order, amount}) => {
+export const fetchProductCodesOrder = async ({
+  currency,
+  order,
+  amount,
+  navigation,
+}) => {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await fetch(
@@ -18,6 +23,7 @@ export const fetchProductCodesOrder = async ({currency, order, amount}) => {
       }
       resolve({
         data: JSON.parse(data),
+        navigation,
       });
     } catch (e) {
       reject({

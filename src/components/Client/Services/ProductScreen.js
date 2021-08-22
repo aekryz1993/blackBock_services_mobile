@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react';
-import {StyleSheet, View, ScrollView} from 'react-native';
+import {StyleSheet, View, ScrollView, Button} from 'react-native';
 import ClientScreen from '@components/ClientScreen';
 import ProductRadio from '@components/material/ProductRadio';
 import {CurrencyContext} from '@components/contexts/CurrencyProvider';
@@ -16,7 +16,7 @@ const ProductScreen = ({route, navigation}) => {
   };
 
   return (
-    <ClientScreen navigation={navigation} back={true}>
+    <ClientScreen navigation={navigation} back={true} backAction={() => {}}>
       {category === 'id' ? (
         <View style={styles.container()}>
           <View style={styles.itemsContainer}>
@@ -41,7 +41,7 @@ const ProductScreen = ({route, navigation}) => {
         products.length !== 0 && (
           <View style={styles.container}>
             <View style={styles.itemsContainer}>
-              <ProductCodeContainer route={route} />
+              <ProductCodeContainer route={route} navigation={navigation} />
             </View>
           </View>
         )

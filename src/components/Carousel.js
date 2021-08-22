@@ -31,7 +31,10 @@ const slideList = services =>
   });
 
 const navigateToNext = ({navigation, products, category, image}) => {
-  navigation.navigate('ProductScreen', {products, category, image});
+  navigation.navigate('Products', {
+    screen: 'ProductScreen',
+    params: {products, category, image},
+  });
   return;
 };
 

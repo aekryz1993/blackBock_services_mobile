@@ -1,10 +1,17 @@
-import {ORDER_SUCCEED, ORDER_FAILED, ORDER_REQUEST} from '@actions/productCode';
+import {
+  ORDER_SUCCEED,
+  ORDER_FAILED,
+  ORDER_REQUEST,
+  ORDER_FINISHED,
+} from '@actions/productCode';
 
 const orderReducer = (
   state = {
     codes: {},
-    commands: {},
+    commands: [],
     message: null,
+    success: false,
+    navigation: () => {},
   },
   action,
 ) => {
@@ -19,6 +26,11 @@ const orderReducer = (
         ...action.payload,
       };
     case ORDER_FAILED:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case ORDER_FINISHED:
       return {
         ...state,
         ...action.payload,

@@ -8,8 +8,16 @@ function* orderProductcode($action) {
       currency: $action.payload.currency,
       order: $action.payload.order,
       amount: $action.payload.amount,
+      navigation: $action.payload.navigation,
     });
-    yield put(orderSucced(token));
+    const _action = yield put(orderSucced(token));
+    if (_action.payload.success) {
+      yield _action.payload.navigation({
+        codes: _action.payload.codes,
+        commands: _action.payload.commands,
+        message: _action.payload.message,
+      });
+    }
   } catch (error) {
     yield put(orderFailed(error));
   }
