@@ -10,11 +10,10 @@ const mapStateToProps = (state, ownProps) => {
   const {topUpServices} = state.fetchTopUpReducer;
   const {codeServices} = state.fetchCodeReducer;
   const {wallet} = state.fetchCreditReducer;
-  console.log(wallet);
   return {
     topUpServices,
     codeServices,
-    wallet,
+    walletCredit: wallet,
     navigation: ownProps.navigation,
   };
 };

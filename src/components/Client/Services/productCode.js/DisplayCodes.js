@@ -4,16 +4,9 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 
 import ClientScreen from '@components/ClientScreen';
 
-const DisplayCodes = ({route}) => {
-  const {
-    commands,
-    codes,
-    navigation,
-    orderFinished,
-    message,
-    fetchcreditRequest,
-    walletCredit,
-  } = route.params;
+const DisplayCodes = ({route, fetchcreditRequest, walletCredit}) => {
+  const {commands, codes, navigation, orderFinished, message} = route.params;
+
   const renderItem = ({item}) => {
     return (
       <View style={styles.item}>
@@ -67,6 +60,14 @@ const DisplayCodes = ({route}) => {
 const styles = StyleSheet.create({
   container: {
     height: '65%',
+  },
+  commands: {
+    height: '20%',
+    marginBottom: 30,
+  },
+  title: {
+    marginBottom: 10,
+    marginTop: 10,
   },
 });
 

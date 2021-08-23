@@ -5,9 +5,14 @@ import ProductRadio from '@components/material/ProductRadio';
 import {CurrencyContext} from '@components/contexts/CurrencyProvider';
 import ProductCodeContainer from './productCode.js/ProductCodeContainer';
 
-const ProductScreen = ({route, navigation}) => {
+const ProductScreen = ({
+  route,
+  navigation,
+  walletCredit,
+  fetchcreditRequest,
+}) => {
   const [state] = useContext(CurrencyContext);
-  const {products, category, fetchcreditRequest, walletCredit} = route.params;
+  const {products, category} = route.params;
   const firstProductLabel = products.length > 0 ? products[0].label : '';
   const [current, setCurrent] = useState(firstProductLabel);
 
@@ -46,12 +51,7 @@ const ProductScreen = ({route, navigation}) => {
         products.length !== 0 && (
           <View style={styles.container}>
             <View style={styles.itemsContainer}>
-              <ProductCodeContainer
-                route={route}
-                navigation={navigation}
-                fetchcreditRequest={fetchcreditRequest}
-                walletCredit={walletCredit}
-              />
+              <ProductCodeContainer route={route} navigation={navigation} />
             </View>
           </View>
         )

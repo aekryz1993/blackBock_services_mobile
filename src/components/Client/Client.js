@@ -5,9 +5,9 @@ import {createStackNavigator} from '@react-navigation/stack';
 import Loading from '@components/Loading';
 import DrawerWithLogoutButton from '@components/DrawerWithLogoutButton';
 import ServiceContainer from './Services/ServiceContainer';
-import ProductScreen from './Services/ProductScreen';
+import ProductScreenContainer from './Services/ProductScreenContainer';
 import {CurrencyProvider} from '@components/contexts/CurrencyProvider';
-import DisplayCodes from './Services/productCode.js/DisplayCodes';
+import DisplayCodeContainer from './Services/productCode.js/DisplayCodeContainer';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -17,8 +17,8 @@ const Products = () => (
     screenOptions={{
       headerShown: false,
     }}>
-    <Stack.Screen name="ProductScreen" component={ProductScreen} />
-    <Stack.Screen name="DisplayCodes" component={DisplayCodes} />
+    <Stack.Screen name="ProductScreen" component={ProductScreenContainer} />
+    <Stack.Screen name="DisplayCodes" component={DisplayCodeContainer} />
   </Stack.Navigator>
 );
 

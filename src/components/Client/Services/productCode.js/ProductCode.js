@@ -159,8 +159,6 @@ const ProductCode = ({
   orderRequest,
   orderFinished,
   navigation,
-  fetchcreditRequest,
-  walletCredit,
 }) => {
   const [state] = useContext(CurrencyContext);
   const [clear, setclear] = useState(false);
@@ -205,8 +203,6 @@ const ProductCode = ({
           params: {
             navigation,
             orderFinished,
-            fetchcreditRequest,
-            walletCredit,
             ...props,
           },
         }),

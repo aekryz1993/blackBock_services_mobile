@@ -11,7 +11,7 @@ const Service = ({
   fetchTopUpServicesRequest,
   fetchCodeServicesRequest,
   fetchcreditRequest,
-  wallet,
+  walletCredit,
   navigation,
 }) => {
   useEffect(() => {
@@ -24,7 +24,7 @@ const Service = ({
     <ClientScreen
       navigation={navigation}
       fetchcreditRequest={fetchcreditRequest}
-      walletCredit={wallet}>
+      walletCredit={walletCredit}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.carousel}>
           <Bar title={'Top Up'} />
@@ -33,7 +33,7 @@ const Service = ({
             navigation={navigation}
             category={'id'}
             fetchcreditRequest={fetchcreditRequest}
-            walletCredit={wallet}
+            walletCredit={walletCredit}
           />
         </View>
         <View style={styles.carousel}>
@@ -43,7 +43,7 @@ const Service = ({
             navigation={navigation}
             category={'code'}
             fetchcreditRequest={fetchcreditRequest}
-            walletCredit={wallet}
+            walletCredit={walletCredit}
           />
         </View>
       </ScrollView>
