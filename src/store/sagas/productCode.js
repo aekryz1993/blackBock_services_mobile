@@ -16,7 +16,7 @@ function* orderProductcode($action) {
       yield _action.payload.navigation({
         codes: _action.payload.codes,
         commands: _action.payload.commands,
-        savedFile: _action.payload.savedFile,
+        fileCodes: _action.payload.fileCodes,
         message: _action.payload.message,
       });
     }

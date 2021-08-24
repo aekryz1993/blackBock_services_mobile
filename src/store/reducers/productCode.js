@@ -10,7 +10,7 @@ const orderReducer = (
     codes: {},
     commands: [],
     message: null,
-    savedFile: null,
+    fileCodes: null,
     success: false,
     navigation: () => {},
   },

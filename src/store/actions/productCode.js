@@ -26,7 +26,7 @@ export const orderSucced = response => ({
     codes: response.data.codes,
     commands: response.data.commands,
     message: response.data.message,
-    savedFile: response.data.savedFile,
+    fileCodes: response.data.savedFile,
     success: response.data.success,
     navigation: response.navigation,
   },
