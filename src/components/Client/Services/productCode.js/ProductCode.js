@@ -166,7 +166,7 @@ const ProductCode = ({
   const [modalVisible, setModalVisible] = useState(false);
   const [order, setorder] = useState([]);
   let amount = useRef(0);
-  const {products, image} = route.params;
+  const {products, image, serviceName} = route.params;
 
   const getOrder = product => {
     if (order.length === 0) {
@@ -197,6 +197,7 @@ const ProductCode = ({
       order: JSON.stringify(order),
       currency: state.attribute,
       amount: totalAmount,
+      serviceName,
       navigation: props =>
         navigation.navigate('Products', {
           screen: 'DisplayCodes',

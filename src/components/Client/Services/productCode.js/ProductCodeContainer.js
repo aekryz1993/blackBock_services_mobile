@@ -11,8 +11,10 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    orderRequest: ({currency, order, amount, navigation}) =>
-      dispatch(orderRequest({currency, order, amount, navigation})),
+    orderRequest: ({currency, order, amount, serviceName, navigation}) =>
+      dispatch(
+        orderRequest({currency, order, amount, serviceName, navigation}),
+      ),
     orderFinished: () => dispatch(orderFinished()),
   };
 };

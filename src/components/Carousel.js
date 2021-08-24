@@ -26,14 +26,21 @@ const slideList = services =>
       products,
       category: service.category,
       id: service.id,
+      serviceName: service.label,
       image: `http://${API_HOSTA}/${url}`,
     };
   });
 
-const navigateToNext = ({navigation, products, category, image}) => {
+const navigateToNext = ({
+  navigation,
+  products,
+  category,
+  image,
+  serviceName,
+}) => {
   navigation.navigate('Products', {
     screen: 'ProductScreen',
-    params: {products, category, image},
+    params: {products, category, image, serviceName},
   });
   return;
 };
@@ -50,6 +57,7 @@ const Slide = memo(function Slide({data, navigation, setProducts, styles}) {
             category: data.category,
             products: data.products,
             image: data.image,
+            serviceName: data.serviceName,
             setProducts,
           })
         }>

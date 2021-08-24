@@ -12,7 +12,7 @@ const ProductScreen = ({
   fetchcreditRequest,
 }) => {
   const [state] = useContext(CurrencyContext);
-  const {products, category} = route.params;
+  const {products, category, serviceName} = route.params;
   const firstProductLabel = products.length > 0 ? products[0].label : '';
   const [current, setCurrent] = useState(firstProductLabel);
 
@@ -41,6 +41,7 @@ const ProductScreen = ({
                     onChoix={() => selectItem(product.label)}
                     current={current}
                     item={product.label}
+                    serviceName={serviceName}
                   />
                 );
               })}
@@ -51,7 +52,11 @@ const ProductScreen = ({
         products.length !== 0 && (
           <View style={styles.container}>
             <View style={styles.itemsContainer}>
-              <ProductCodeContainer route={route} navigation={navigation} />
+              <ProductCodeContainer
+                route={route}
+                navigation={navigation}
+                serviceName={serviceName}
+              />
             </View>
           </View>
         )

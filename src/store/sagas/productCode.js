@@ -8,6 +8,7 @@ function* orderProductcode($action) {
       currency: $action.payload.currency,
       order: $action.payload.order,
       amount: $action.payload.amount,
+      serviceName: $action.payload.serviceName,
       navigation: $action.payload.navigation,
     });
     const _action = yield put(orderSucced(token));
@@ -15,6 +16,7 @@ function* orderProductcode($action) {
       yield _action.payload.navigation({
         codes: _action.payload.codes,
         commands: _action.payload.commands,
+        savedFile: _action.payload.savedFile,
         message: _action.payload.message,
       });
     }
