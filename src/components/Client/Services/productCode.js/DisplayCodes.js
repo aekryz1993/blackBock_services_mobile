@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import RNFetchBlob from 'rn-fetch-blob';
+import Clipboard from '@react-native-clipboard/clipboard';
 
 import ClientScreen from '@components/Client/ClientScreen';
 import {API_HOSTA} from '@env';
@@ -60,9 +61,7 @@ const DisplayCodes = ({route, fetchcreditRequest, walletCredit}) => {
     };
     RNFetchBlob.config(options)
       .fetch('GET', url)
-      .then(response => {
-        console.log('response -> ', JSON.stringify(response));
-        console.log('The file saved to ', response.path());
+      .then(() => {
         Alert.alert('File Downloaded Successfully.');
       })
       .catch(error => console.log(error));
@@ -70,13 +69,24 @@ const DisplayCodes = ({route, fetchcreditRequest, walletCredit}) => {
 
   const renderItem = ({item}) => {
     return (
-      <View style={styles.item}>
-        <Text style={styles.title}>{item}</Text>
-        {codes[item].map(codeItem => (
-          <Text key={codeItem.id}>{codeItem.code}</Text>
-        ))}
+      <View key={item.id} style={styles.codeitem}>
+        <Text>{item.category}</Text>
+        <Text>{item.code}</Text>
       </View>
     );
+  };
+
+  const copyToClipboard = async _codes => {
+    let text = '';
+    _codes.forEach((code, index) => {
+      if (index === 0) {
+        text = `${code.category} \t ${code.code}`;
+      } else {
+        text = text + '\n' + `${code.category} \t ${code.code}`;
+      }
+    });
+    Clipboard.setString(text);
+    Alert.alert('Text Copied Successfully');
   };
 
   return (
@@ -110,12 +120,17 @@ const DisplayCodes = ({route, fetchcreditRequest, walletCredit}) => {
           </ScrollView>
         </View>
         <View style={styles.codes}>
-          <Text>Codes</Text>
+          <Text style={styles.headerCode}>
+            <Text>Codes</Text>
+            <TouchableOpacity onPress={() => copyToClipboard(codes)}>
+              <Icon name="clipboard" size={20} color="#222" />
+            </TouchableOpacity>
+          </Text>
           <FlatList
-            data={Object.keys(codes)}
+            data={codes}
             style={styles.carousel}
             renderItem={renderItem}
-            keyExtractor={(_, idx) => idx}
+            keyExtractor={item => item.id}
             showsVerticalScrollIndicator={false}
             bounces={false}
           />
@@ -130,12 +145,24 @@ const styles = StyleSheet.create({
     height: '65%',
   },
   commands: {
-    height: '30%',
+    height: '40%',
     marginBottom: 30,
+  },
+  codes: {
+    height: '80%',
   },
   title: {
     marginBottom: 10,
     marginTop: 10,
+  },
+  headerCode: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  codeitem: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
   },
 });
 
