@@ -3,7 +3,7 @@ import {StyleSheet, StatusBar, View, ScrollView} from 'react-native';
 
 import Carousel from '@components/Carousel';
 import Bar from '@components/Bar';
-import ClientScreen from '@components/ClientScreen';
+import ClientScreen from '@components/Client/ClientScreen';
 
 const Service = ({
   topUpServices,

@@ -13,7 +13,7 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import RNFetchBlob from 'rn-fetch-blob';
 
-import ClientScreen from '@components/ClientScreen';
+import ClientScreen from '@components/Client/ClientScreen';
 import {API_HOSTA} from '@env';
 
 const DisplayCodes = ({route, fetchcreditRequest, walletCredit}) => {

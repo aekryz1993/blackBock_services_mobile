@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -39,7 +40,11 @@ const Client = ({loading, logoutrequest}) => {
   return (
     <CurrencyProvider>
       <Drawer.Navigator
+        drawerStyle={{
+          backgroundColor: '#222',
+        }}
         drawerPosition="right"
+        drawerType={'back'}
         drawerContent={props => (
           <DrawerWithLogoutButton {...props} logoutrequest={logoutrequest} />
         )}>

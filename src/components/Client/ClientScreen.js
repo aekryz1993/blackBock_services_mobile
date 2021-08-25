@@ -1,6 +1,6 @@
 import React from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
-import Header from './Client/Header/Header';
+import Header from './Header/Header';
 
 const ClientScreen = ({
   children,

@@ -20,7 +20,7 @@ const DrawerWithLogoutButton = props => (
       <TouchableOpacity
         style={styles.item}
         onPress={() => props.logoutrequest()}>
-        <Text style={styles.label}>Sign Out</Text>
+        <Text style={styles.label}>Logout</Text>
       </TouchableOpacity>
     </TouchableOpacity>
   </DrawerContentScrollView>
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   label: {
     margin: 16,
     fontWeight: 'bold',
-    color: '#fff',
+    color: 'rgba(0, 0, 0, .87)',
   },
 });
 
