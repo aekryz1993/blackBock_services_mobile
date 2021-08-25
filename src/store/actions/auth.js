@@ -20,8 +20,8 @@ export const loginSucced = response => ({
   payload: {
     message: response.message,
     isAuth: response.auth,
-    isActive: response.isActive,
-    isAdmin: response.isAdmin,
+    currentUser: response.currentUser,
+    profilePic: response.profilePic,
   },
 });
 
@@ -30,8 +30,6 @@ export const loginFailed = response => ({
   payload: {
     message: response.message,
     isAuth: response.auth,
-    isActive: false,
-    isAdmin: false,
   },
 });
 
@@ -44,8 +42,8 @@ export const logoutSucced = response => ({
   payload: {
     message: null,
     isAuth: response.auth,
-    isActive: false,
-    isAdmin: false,
+    currentUser: {},
+    profilePic: null,
   },
 });
 

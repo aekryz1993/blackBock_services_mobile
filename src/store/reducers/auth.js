@@ -14,8 +14,8 @@ const loginReducer = (
     loading: false,
     isAuth: false,
     message: null,
-    isActive: false,
-    isAdmin: false,
+    currentUser: {},
+    profilePic: false,
   },
   action,
 ) => {

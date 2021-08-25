@@ -46,11 +46,7 @@ const DisplayCodes = ({route, fetchcreditRequest, walletCredit}) => {
   };
 
   const downloadFile = () => {
-    const fileUrl = fileCodes
-      .split('/')
-      .slice(fileCodes.split('/').findIndex(ele => ele === 'resources') + 1)
-      .join('/');
-    const url = `http://${API_HOSTA}/${fileUrl}`;
+    const url = `http://${API_HOSTA}/${fileCodes}`;
     const options = {
       fileCache: true,
       addAndroidDownloads: {

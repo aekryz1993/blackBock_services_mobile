@@ -3,13 +3,16 @@ import {loginRequest, loginRequestEnded} from '@actions/auth';
 import Auth from './Auth';
 
 const mapStateToProps = (state, ownProps) => {
-  const {loading, isAuth, message, isActive, isAdmin} = state.loginReducer;
+  const {loading, isAuth, message, currentUser, profilePic} =
+    state.loginReducer;
   return {
     loading: loading,
     isAuth: isAuth,
     message: message,
-    isActive: isActive,
-    isAdmin: isAdmin,
+    isActive: currentUser.isActive,
+    isAdmin: currentUser.isAdmin,
+    currentUser: currentUser,
+    profilePic: profilePic,
   };
 };
 

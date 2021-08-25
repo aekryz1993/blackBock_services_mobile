@@ -2,7 +2,7 @@
 import React, {useState} from 'react';
 import {Button, View, Text, TextInput} from 'react-native';
 
-const Login = ({loginRequest, message, isAuth, isActive, isAdmin}) => {
+const Login = ({loginRequest, message, isAuth, isActive}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 

@@ -16,7 +16,8 @@ const Auth = ({
   isActive,
   isAdmin,
   loginRequest,
-  loginRequestEnded,
+  currentUser,
+  profilePic,
 }) => {
   if (loading) {
     return <Loading />;
@@ -40,9 +41,25 @@ const Auth = ({
             )}
           </Stack.Screen>
         ) : isAdmin ? (
-          <Stack.Screen name="AdminCountainer" component={AdminCountainer} />
+          <Stack.Screen name="AdminCountainer">
+            {props => (
+              <AdminCountainer
+                {...props}
+                profilePic={profilePic}
+                currentUser={currentUser}
+              />
+            )}
+          </Stack.Screen>
         ) : (
-          <Stack.Screen name="Client" component={Client} />
+          <Stack.Screen name="Client">
+            {props => (
+              <Client
+                {...props}
+                profilePic={profilePic}
+                currentUser={currentUser}
+              />
+            )}
+          </Stack.Screen>
         )}
       </Stack.Navigator>
     </NavigationContainer>

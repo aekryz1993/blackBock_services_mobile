@@ -33,7 +33,7 @@ const Service = () => (
   </Stack.Navigator>
 );
 
-const Client = ({loading, logoutrequest}) => {
+const Client = ({loading, logoutrequest, currentUser, profilePic}) => {
   if (loading) {
     return <Loading />;
   }
@@ -46,7 +46,12 @@ const Client = ({loading, logoutrequest}) => {
         drawerPosition="right"
         drawerType={'back'}
         drawerContent={props => (
-          <DrawerWithLogoutButton {...props} logoutrequest={logoutrequest} />
+          <DrawerWithLogoutButton
+            {...props}
+            logoutrequest={logoutrequest}
+            currentUser={currentUser}
+            profilePic={profilePic}
+          />
         )}>
         <Drawer.Screen name="Products" component={Service} />
       </Drawer.Navigator>
