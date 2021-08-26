@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
-import {Button, View, Text, TextInput} from 'react-native';
+import {Button, SafeAreaView, Text, TextInput} from 'react-native';
 
 const Login = ({loginRequest, message, isAuth, isActive}) => {
   const [username, setUsername] = useState('');
@@ -13,7 +13,8 @@ const Login = ({loginRequest, message, isAuth, isActive}) => {
   };
 
   return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+    <SafeAreaView
+      style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
       <Text>Login Screen</Text>
       <TextInput
         style={{
@@ -41,7 +42,7 @@ const Login = ({loginRequest, message, isAuth, isActive}) => {
         onPress={() => login(username, password, loginRequest)}
       />
       {(!isAuth || !isActive) && <Text>{message}</Text>}
-    </View>
+    </SafeAreaView>
   );
 };
 

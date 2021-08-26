@@ -4,7 +4,7 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import Loading from '@components/Loading';
-import DrawerWithLogoutButton from '@components/DrawerWithLogoutButton';
+import CustomDrawerItems from '@components/CustomDrawerItems';
 import ServiceContainer from './Services/ServiceContainer';
 import ProductScreenContainer from './Services/ProductScreenContainer';
 import {CurrencyProvider} from '@components/contexts/CurrencyProvider';
@@ -46,7 +46,7 @@ const Client = ({loading, logoutrequest, currentUser, profilePic}) => {
         drawerPosition="right"
         drawerType={'back'}
         drawerContent={props => (
-          <DrawerWithLogoutButton
+          <CustomDrawerItems
             {...props}
             logoutrequest={logoutrequest}
             currentUser={currentUser}

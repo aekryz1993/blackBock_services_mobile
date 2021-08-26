@@ -5,8 +5,9 @@ import {
   DrawerItemList,
 } from '@react-navigation/drawer';
 import {Text, SafeAreaView, TouchableOpacity, StyleSheet} from 'react-native';
+import ProfileDrawerItem from './drowerItems/ProfileDrawerItem';
 
-const DrawerWithLogoutButton = props => (
+const CustomDrawerItems = props => (
   <DrawerContentScrollView
     contentContainerStyle={{
       flex: 1,
@@ -14,13 +15,14 @@ const DrawerWithLogoutButton = props => (
       justifyContent: 'space-between',
     }}>
     <SafeAreaView forceInset={{top: 'always', horizontal: 'never'}}>
+      <ProfileDrawerItem currentUser={props.currentUser} />
       <DrawerItemList {...props} />
     </SafeAreaView>
     <TouchableOpacity>
       <TouchableOpacity
         style={styles.item}
         onPress={() => props.logoutrequest()}>
-        <Text style={styles.label}>Logout</Text>
+        <Text style={styles.label}>Sign Out</Text>
       </TouchableOpacity>
     </TouchableOpacity>
   </DrawerContentScrollView>
@@ -33,8 +35,8 @@ const styles = StyleSheet.create({
   label: {
     margin: 16,
     fontWeight: 'bold',
-    color: 'rgba(0, 0, 0, .87)',
+    color: '#fff',
   },
 });
 
-export default DrawerWithLogoutButton;
+export default CustomDrawerItems;
