@@ -50,6 +50,12 @@ const Dropdown = ({
         dismiss={() => setModalVisible(!modalVisible)}>
         <View style={styles.modalView}>
           {['EUR', 'USD', 'DZD'].map((currency, i) => {
+            const currencyProp =
+              currency === 'EUR'
+                ? 'euro'
+                : currency === 'USD'
+                ? 'dollar'
+                : 'dinnar';
             if (currency !== currentCurrency) {
               return (
                 <View key={i}>
@@ -58,9 +64,7 @@ const Dropdown = ({
                     underlayColor="#999999"
                     style={styles.currencyItem}
                     onPress={() => _onChangeCurrency(currency)}>
-                    <Text>{`${
-                      walletCredit[state.attribute]
-                    } ${currency}`}</Text>
+                    <Text>{`${walletCredit[currencyProp]} ${currency}`}</Text>
                   </TouchableHighlight>
                   <View style={styles.line} />
                 </View>

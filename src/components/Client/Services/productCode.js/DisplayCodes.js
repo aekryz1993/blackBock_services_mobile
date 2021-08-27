@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   StyleSheet,
   View,
@@ -15,11 +15,12 @@ import RNFetchBlob from 'rn-fetch-blob';
 import Clipboard from '@react-native-clipboard/clipboard';
 
 import ClientScreen from '@components/Client/ClientScreen';
+import {OrderContext} from '@components/contexts/OrderProvider';
 import {API_HOSTA} from '@env';
 
-const DisplayCodes = ({route, fetchcreditRequest, walletCredit}) => {
-  const {commands, codes, navigation, orderFinished, message, fileCodes} =
-    route.params;
+const DisplayCodes = ({fetchcreditRequest, walletCredit, orderFinished}) => {
+  const [orderState, orderDispatch] = useContext(OrderContext);
+  const {commands, codes, navigation, message, fileCodes} = orderState;
 
   const checkPermissions = async () => {
     if (Platform.OS === 'ios') {
@@ -65,11 +66,25 @@ const DisplayCodes = ({route, fetchcreditRequest, walletCredit}) => {
 
   const renderItem = ({item}) => {
     return (
-      <View key={item.id} style={styles.codeitem}>
+      <View style={styles.codeitem}>
         <Text>{item.category}</Text>
         <Text>{item.code}</Text>
       </View>
     );
+  };
+
+  const clearStates = () => {
+    orderFinished();
+    orderDispatch({
+      type: 'ENDED',
+      payload: {
+        navigation: () => {},
+        codes: [],
+        commands: [],
+        fileCodes: '',
+        message: '',
+      },
+    });
   };
 
   const copyToClipboard = async _codes => {
@@ -89,7 +104,7 @@ const DisplayCodes = ({route, fetchcreditRequest, walletCredit}) => {
     <ClientScreen
       navigation={navigation}
       back={true}
-      backAction={orderFinished}
+      backAction={clearStates}
       fetchcreditRequest={fetchcreditRequest}
       walletCredit={walletCredit}>
       <View style={styles.container}>
@@ -108,10 +123,10 @@ const DisplayCodes = ({route, fetchcreditRequest, walletCredit}) => {
           <Text style={styles.title}>Commands</Text>
           <ScrollView>
             {commands.map(command => (
-              <>
+              <View key={command.id}>
                 <Text style={styles.command_name}>{command.category}</Text>
                 <Text style={styles.command_quantity}>{command.quantity}</Text>
-              </>
+              </View>
             ))}
           </ScrollView>
         </View>

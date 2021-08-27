@@ -1,6 +1,7 @@
 import {connect} from 'react-redux';
 import DisplayCodes from './DisplayCodes';
 import {fetchcreditRequest} from '@actions/wallet';
+import {orderFinished} from '@actions/productCode';
 
 const mapStateToProps = (state, ownProps) => {
   const {wallet} = state.fetchCreditReducer;
@@ -12,6 +13,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     fetchcreditRequest: () => dispatch(fetchcreditRequest()),
+    orderFinished: () => dispatch(orderFinished()),
   };
 };
 

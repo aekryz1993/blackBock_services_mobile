@@ -13,6 +13,7 @@ import {
 import {CurrencyContext} from '@components/contexts/CurrencyProvider';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Modal from '@components/material/Modal';
+import {OrderContext} from '@components/contexts/OrderProvider';
 
 const ProductItem = ({
   product,
@@ -153,13 +154,8 @@ const ProductItem = ({
   );
 };
 
-const ProductCode = ({
-  route,
-  message,
-  orderRequest,
-  orderFinished,
-  navigation,
-}) => {
+const ProductCode = ({route, message, orderRequest, navigation}) => {
+  const [orderState, orderDispatch] = useContext(OrderContext);
   const [state] = useContext(CurrencyContext);
   const [clear, setclear] = useState(false);
   const [totalAmount, settotalAmount] = useState(0);
@@ -198,14 +194,11 @@ const ProductCode = ({
       currency: state.attribute,
       amount: totalAmount,
       serviceName,
-      navigation: props =>
+      orderDispatch,
+      navigation,
+      navigate: () =>
         navigation.navigate('Products', {
           screen: 'DisplayCodes',
-          params: {
-            navigation,
-            orderFinished,
-            ...props,
-          },
         }),
     });
     setModalVisible(!modalVisible);

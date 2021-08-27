@@ -10,15 +10,22 @@ function* orderProductcode($action) {
       amount: $action.payload.amount,
       serviceName: $action.payload.serviceName,
       navigation: $action.payload.navigation,
+      orderDispatch: $action.payload.orderDispatch,
+      navigate: $action.payload.navigate,
     });
     const _action = yield put(orderSucced(token));
     if (_action.payload.success) {
-      yield _action.payload.navigation({
-        codes: _action.payload.codes,
-        commands: _action.payload.commands,
-        fileCodes: _action.payload.fileCodes,
-        message: _action.payload.message,
+      yield _action.payload.orderDispatch({
+        type: 'SUCCESS',
+        payload: {
+          codes: _action.payload.codes,
+          commands: _action.payload.commands,
+          fileCodes: _action.payload.fileCodes,
+          message: _action.payload.message,
+          navigation: _action.payload.navigation,
+        },
       });
+      yield _action.payload.navigate();
     }
   } catch (error) {
     yield put(orderFailed(error));

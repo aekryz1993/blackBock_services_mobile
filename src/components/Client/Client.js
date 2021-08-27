@@ -2,6 +2,7 @@
 import React from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createStackNavigator} from '@react-navigation/stack';
+import FeatherIcon from 'react-native-vector-icons/Feather';
 
 import Loading from '@components/Loading';
 import CustomDrawerItems from '@components/CustomDrawerItems';
@@ -9,18 +10,21 @@ import ServiceContainer from './Services/ServiceContainer';
 import ProductScreenContainer from './Services/ProductScreenContainer';
 import {CurrencyProvider} from '@components/contexts/CurrencyProvider';
 import DisplayCodeContainer from './Services/productCode.js/DisplayCodeContainer';
+import {OrderProvider} from '@components/contexts/OrderProvider';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
 const Products = () => (
-  <Stack.Navigator
-    screenOptions={{
-      headerShown: false,
-    }}>
-    <Stack.Screen name="ProductScreen" component={ProductScreenContainer} />
-    <Stack.Screen name="DisplayCodes" component={DisplayCodeContainer} />
-  </Stack.Navigator>
+  <OrderProvider>
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}>
+      <Stack.Screen name="ProductScreen" component={ProductScreenContainer} />
+      <Stack.Screen name="DisplayCodes" component={DisplayCodeContainer} />
+    </Stack.Navigator>
+  </OrderProvider>
 );
 
 const Service = () => (
@@ -53,7 +57,15 @@ const Client = ({loading, logoutrequest, currentUser, profilePic}) => {
             profilePic={profilePic}
           />
         )}>
-        <Drawer.Screen name="Products" component={Service} />
+        <Drawer.Screen
+          name="Products"
+          component={Service}
+          options={{
+            drawerIcon: ({color, size}) => (
+              <FeatherIcon name="shopping-bag" size={size} color={color} />
+            ),
+          }}
+        />
       </Drawer.Navigator>
     </CurrencyProvider>
   );

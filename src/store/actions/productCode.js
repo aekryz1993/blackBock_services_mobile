@@ -9,6 +9,8 @@ export const orderRequest = ({
   amount,
   serviceName,
   navigation,
+  orderDispatch,
+  navigate,
 }) => ({
   type: ORDER_REQUEST,
   payload: {
@@ -17,6 +19,8 @@ export const orderRequest = ({
     amount,
     navigation,
     serviceName,
+    orderDispatch,
+    navigate,
   },
 });
 
@@ -29,6 +33,8 @@ export const orderSucced = response => ({
     fileCodes: response.data.savedFile,
     success: response.data.success,
     navigation: response.navigation,
+    navigate: response.navigate,
+    orderDispatch: response.orderDispatch,
   },
 });
 
@@ -42,9 +48,11 @@ export const orderFailed = response => ({
 export const orderFinished = () => ({
   type: ORDER_FINISHED,
   payload: {
-    codes: {},
+    codes: [],
     commands: [],
     message: null,
     success: false,
+    navigation: () => {},
+    navigate: () => {},
   },
 });

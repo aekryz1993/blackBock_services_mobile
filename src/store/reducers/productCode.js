@@ -7,12 +7,13 @@ import {
 
 const orderReducer = (
   state = {
-    codes: {},
+    codes: [],
     commands: [],
     message: null,
     fileCodes: null,
     success: false,
     navigation: () => {},
+    navigate: () => {},
   },
   action,
 ) => {

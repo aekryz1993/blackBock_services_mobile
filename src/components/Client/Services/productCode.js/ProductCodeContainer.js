@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import ProductCode from './ProductCode';
-import {orderRequest, orderFinished} from '@actions/productCode';
+import {orderRequest} from '@actions/productCode';
 
 const mapStateToProps = (state, ownProps) => {
   const {message} = state.orderReducer;
@@ -11,11 +11,26 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    orderRequest: ({currency, order, amount, serviceName, navigation}) =>
+    orderRequest: ({
+      currency,
+      order,
+      amount,
+      serviceName,
+      navigation,
+      orderDispatch,
+      navigate,
+    }) =>
       dispatch(
-        orderRequest({currency, order, amount, serviceName, navigation}),
+        orderRequest({
+          currency,
+          order,
+          amount,
+          serviceName,
+          navigation,
+          orderDispatch,
+          navigate,
+        }),
       ),
-    orderFinished: () => dispatch(orderFinished()),
   };
 };
 

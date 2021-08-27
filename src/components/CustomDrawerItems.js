@@ -16,7 +16,14 @@ const CustomDrawerItems = props => (
     }}>
     <SafeAreaView forceInset={{top: 'always', horizontal: 'never'}}>
       <ProfileDrawerItem currentUser={props.currentUser} />
-      <DrawerItemList {...props} />
+      <DrawerItemList
+        {...props}
+        activeBackgroundColor="transparent"
+        activeTintColor="#fff"
+        inactiveBackgroundColor="transparent"
+        labelStyle={styles.drawerlabelitems}
+        style={styles.drawerViewitems}
+      />
     </SafeAreaView>
     <TouchableOpacity>
       <TouchableOpacity
@@ -36,6 +43,9 @@ const styles = StyleSheet.create({
     margin: 16,
     fontWeight: 'bold',
     color: '#fff',
+  },
+  drawerlabelitems: {
+    fontSize: 16,
   },
 });
 
