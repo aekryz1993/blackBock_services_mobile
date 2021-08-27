@@ -11,6 +11,7 @@ import ProductScreenContainer from './Services/ProductScreenContainer';
 import {CurrencyProvider} from '@components/contexts/CurrencyProvider';
 import DisplayCodeContainer from './Services/productCode.js/DisplayCodeContainer';
 import {OrderProvider} from '@components/contexts/OrderProvider';
+import CommandsContainer from './Commands/CommandsContainer';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -63,6 +64,15 @@ const Client = ({loading, logoutrequest, currentUser, profilePic}) => {
           options={{
             drawerIcon: ({color, size}) => (
               <FeatherIcon name="shopping-bag" size={size} color={color} />
+            ),
+          }}
+        />
+        <Drawer.Screen
+          name="Commands"
+          component={CommandsContainer}
+          options={{
+            drawerIcon: ({color, size}) => (
+              <FeatherIcon name="shopping-cart" size={size} color={color} />
             ),
           }}
         />

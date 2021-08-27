@@ -18,9 +18,10 @@ const CustomDrawerItems = props => (
       <ProfileDrawerItem currentUser={props.currentUser} />
       <DrawerItemList
         {...props}
-        activeBackgroundColor="transparent"
+        activeBackgroundColor="rgba(0, 0, 0, 0.7)"
         activeTintColor="#fff"
         inactiveBackgroundColor="transparent"
+        inactiveTintColor="#fff"
         labelStyle={styles.drawerlabelitems}
         style={styles.drawerViewitems}
       />
@@ -45,7 +46,7 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   drawerlabelitems: {
-    fontSize: 16,
+    fontSize: 14,
   },
 });
 
