@@ -69,13 +69,14 @@ const Client = ({loading, logoutrequest, currentUser, profilePic}) => {
         />
         <Drawer.Screen
           name="Commands"
-          component={CommandsContainer}
+          // component={() => <CommandsContainer render={true} />}
           options={{
             drawerIcon: ({color, size}) => (
               <FeatherIcon name="shopping-cart" size={size} color={color} />
             ),
-          }}
-        />
+          }}>
+          {props => <CommandsContainer {...props} />}
+        </Drawer.Screen>
       </Drawer.Navigator>
     </CurrencyProvider>
   );
