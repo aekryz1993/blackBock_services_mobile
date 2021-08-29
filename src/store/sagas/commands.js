@@ -6,9 +6,12 @@ import {
   FETCHCOMMANDS_REQUEST,
 } from '@actions/commands';
 
-function* fetchingCommands() {
+function* fetchingCommands($action) {
   try {
-    const data = yield call(fetchCommands);
+    const data = yield call(fetchCommands, {
+      page: $action.payload.page,
+      isTreated: $action.payload.isTreated,
+    });
     yield put(fetchCommandsSucced(data));
   } catch (error) {
     yield put(fetchCommandsFailed(error));

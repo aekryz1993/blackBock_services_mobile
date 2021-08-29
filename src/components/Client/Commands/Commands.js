@@ -18,11 +18,21 @@ const Commands = ({
   commandsTreated,
   commandsWaiting,
   fetchCommandsRequest,
+  totalItems,
+  nextPage,
+  totalPages,
+  fetchCommandsFinished,
 }) => {
   const [activeFilter, setactiveFilter] = useState('right');
 
   useEffect(
-    () => navigation.addListener('focus', () => fetchCommandsRequest()),
+    () =>
+      navigation.addListener('focus', () => {
+        activeFilter === 'right'
+          ? fetchCommandsRequest({page: 0, isTreated: false})
+          : fetchCommandsRequest({page: 0, isTreated: true});
+        return;
+      }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
@@ -48,7 +58,13 @@ const Commands = ({
   };
 
   const onChangeFilter = item => {
-    setactiveFilter(item);
+    if (item !== activeFilter) {
+      setactiveFilter(item);
+      fetchCommandsFinished();
+      item === 'right'
+        ? fetchCommandsRequest({page: 0, isTreated: false})
+        : fetchCommandsRequest({page: 0, isTreated: true});
+    }
   };
 
   return (
@@ -73,9 +89,19 @@ const Commands = ({
             <Text style={textStyle('right')}>لم تعالج بعد</Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.bottom}>
-          <Table header={tableHeader} data={data()} />
-        </View>
+        <>
+          <Table
+            header={tableHeader}
+            data={data()}
+            totalData={totalItems}
+            totalPages={totalPages}
+            nextPage={nextPage}
+            currentPage={nextPage + 1}
+            activeFilter={activeFilter}
+            fetchCommandsRequest={fetchCommandsRequest}
+            navigation={navigation}
+          />
+        </>
       </View>
     </ClientScreen>
   );
@@ -138,9 +164,6 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: '600',
-  },
-  bottom: {
-    height: '75%',
   },
   tableheader: {
     flexDirection: 'row',
