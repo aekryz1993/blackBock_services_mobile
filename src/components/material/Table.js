@@ -56,9 +56,23 @@ const Footer = ({
     }
   };
 
+  const goToFirstPage = () => {
+    if (pageStat > 1) {
+      setPageStat(1);
+      setcomPageStat(0);
+    }
+  };
+
+  const goToLastPage = () => {
+    if (pageStat < totalPages) {
+      setPageStat(totalPages);
+      setcomPageStat(totalPages - 1);
+    }
+  };
+
   return (
     <View style={styles.footer}>
-      <TouchableOpacity style={styles.paginationbutton}>
+      <TouchableOpacity style={styles.paginationbutton} onPress={goToFirstPage}>
         <AntDesignIcon name="verticleright" size={16} color="#000" />
       </TouchableOpacity>
       <TouchableOpacity style={styles.paginationbutton} onPress={goToPrevPage}>
@@ -68,7 +82,7 @@ const Footer = ({
       <TouchableOpacity style={styles.paginationbutton} onPress={goToNextPage}>
         <AntDesignIcon name="right" size={16} color="#000" />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.paginationbutton}>
+      <TouchableOpacity style={styles.paginationbutton} onPress={goToLastPage}>
         <AntDesignIcon name="verticleleft" size={16} color="#000" />
       </TouchableOpacity>
     </View>
