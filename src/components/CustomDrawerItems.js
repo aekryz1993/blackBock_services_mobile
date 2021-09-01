@@ -27,9 +27,7 @@ const CustomDrawerItems = props => (
       />
     </SafeAreaView>
     <TouchableOpacity>
-      <TouchableOpacity
-        style={styles.item}
-        onPress={() => props.logoutrequest()}>
+      <TouchableOpacity style={styles.item} onPress={props.logout}>
         <Text style={styles.label}>Sign Out</Text>
       </TouchableOpacity>
     </TouchableOpacity>

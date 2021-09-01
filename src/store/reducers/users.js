@@ -2,6 +2,7 @@ import {
   FETCHUSERS_SUCCEED,
   FETCHUSERS_FAILED,
   FETCHUSERS_REQUEST,
+  FETCHUSERS_REQUEST_ENDED,
 } from '@actions/users';
 
 const fetchUsersReducer = (
@@ -25,6 +26,11 @@ const fetchUsersReducer = (
         ...action.payload,
       };
     case FETCHUSERS_FAILED:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case FETCHUSERS_REQUEST_ENDED:
       return {
         ...state,
         ...action.payload,

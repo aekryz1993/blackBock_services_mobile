@@ -32,14 +32,28 @@ const Item = ({username, image}) => {
   );
 };
 
-const Users = ({users, nextPage, fetchUsersRequest}) => {
+const Users = ({
+  users,
+  nextPage,
+  fetchUsersRequest,
+  navigation,
+  fetchUsersFinished,
+}) => {
   useEffect(() => {
     fetchUsersRequest(nextPage, users);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    navigation.addListener('blur', () => {
+      fetchUsersFinished();
+    });
+  });
+
   const renderItem = ({item}) => {
     return <Item username={item.username} image={item.image} />;
   };
+
   return (
     <SafeAreaView style={styles.container}>
       <FlatList

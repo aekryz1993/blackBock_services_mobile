@@ -27,3 +27,14 @@ export const fetchUsersFailed = response => ({
     message: response.message,
   },
 });
+
+export const fetchUsersFinished = () => ({
+  type: FETCHUSERS_REQUEST_ENDED,
+  payload: {
+    users: [],
+    totalPages: 0,
+    message: null,
+    nextPage: 0,
+    totalUsers: 0,
+  },
+});

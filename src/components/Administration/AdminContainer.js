@@ -1,5 +1,6 @@
 import {connect} from 'react-redux';
 import {logoutrequest} from '@actions/auth';
+import {fetchUsersFinished} from '@actions/users';
 import Admin from './Admin';
 
 const mapStateToProps = (state, ownProps) => {
@@ -11,6 +12,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   logoutrequest: () => dispatch(logoutrequest()),
+  fetchUsersFinished: () => dispatch(fetchUsersFinished()),
 });
 
 const AdminContainer = connect(mapStateToProps, mapDispatchToProps)(Admin);

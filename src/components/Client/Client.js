@@ -11,7 +11,7 @@ import ProductScreenContainer from './Services/ProductScreenContainer';
 import {CurrencyProvider} from '@components/contexts/CurrencyProvider';
 import DisplayCodeContainer from './Services/productCode.js/DisplayCodeContainer';
 import {OrderProvider} from '@components/contexts/OrderProvider';
-import CommandsContainer from './Commands/CommandsContainer';
+import CommandsContainer from '@components/Client/Commands/CommandsContainer';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -42,6 +42,11 @@ const Client = ({loading, logoutrequest, currentUser, profilePic}) => {
   if (loading) {
     return <Loading />;
   }
+
+  const logout = () => {
+    logoutrequest();
+  };
+
   return (
     <CurrencyProvider>
       <Drawer.Navigator
@@ -53,7 +58,7 @@ const Client = ({loading, logoutrequest, currentUser, profilePic}) => {
         drawerContent={props => (
           <CustomDrawerItems
             {...props}
-            logoutrequest={logoutrequest}
+            logout={logout}
             currentUser={currentUser}
             profilePic={profilePic}
           />
@@ -69,7 +74,6 @@ const Client = ({loading, logoutrequest, currentUser, profilePic}) => {
         />
         <Drawer.Screen
           name="Commands"
-          // component={() => <CommandsContainer render={true} />}
           options={{
             drawerIcon: ({color, size}) => (
               <FeatherIcon name="shopping-cart" size={size} color={color} />

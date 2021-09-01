@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import {fetchUsersRequest} from '@actions/users';
+import {fetchUsersRequest, fetchUsersFinished} from '@actions/users';
 import Users from './Users';
 
 const mapStateToProps = (state, ownProps) => {
@@ -8,6 +8,7 @@ const mapStateToProps = (state, ownProps) => {
     users,
     nextPage,
     message,
+    navigation: ownProps.navigation,
   };
 };
 
@@ -15,6 +16,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     fetchUsersRequest: (page, currentUsers) =>
       dispatch(fetchUsersRequest(page, currentUsers)),
+    fetchUsersFinished: () => dispatch(fetchUsersFinished()),
   };
 };
 
