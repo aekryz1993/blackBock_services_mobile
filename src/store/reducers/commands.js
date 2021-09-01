@@ -7,8 +7,7 @@ import {
 
 const commandsReducer = (
   state = {
-    commandsTreated: [],
-    commandsWaiting: [],
+    commands: [],
     totalItems: 0,
     totalPages: 0,
     nextPage: 0,

@@ -14,8 +14,7 @@ export const fetchCommandsRequest = ({page, isTreated}) => ({
 export const fetchCommandsSucced = response => ({
   type: FETCHCOMMANDS_SUCCEED,
   payload: {
-    commandsTreated: response.data.commandsTreated,
-    commandsWaiting: response.data.commandsWaiting,
+    commands: response.data.commands,
     totalItems: response.data.totalItems,
     totalPages: response.data.totalPages,
     nextPage: response.data.nextPage,
@@ -32,8 +31,7 @@ export const fetchCommandsFailed = response => ({
 export const fetchCommandsFinished = () => ({
   type: FETCHCOMMANDS_ENDED,
   payload: {
-    commandsTreated: [],
-    commandsWaiting: [],
+    commands: [],
     totalItems: 0,
     totalPages: 0,
     nextPage: 0,

@@ -5,12 +5,11 @@ import {fetchCommandsRequest, fetchCommandsFinished} from '@actions/commands';
 
 const mapStateToProps = (state, ownProps) => {
   const {wallet} = state.fetchCreditReducer;
-  const {commandsTreated, commandsWaiting, totalItems, nextPage, totalPages} =
-    state.commandsReducer;
+  const {commands, totalItems, nextPage, totalPages} = state.commandsReducer;
+
   return {
     walletCredit: wallet,
-    commandsTreated: commandsTreated,
-    commandsWaiting: commandsWaiting,
+    commands: commands,
     totalItems,
     nextPage,
     totalPages,

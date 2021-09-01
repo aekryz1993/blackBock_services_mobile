@@ -15,8 +15,7 @@ const Commands = ({
   navigation,
   walletCredit,
   fetchcreditRequest,
-  commandsTreated,
-  commandsWaiting,
+  commands,
   fetchCommandsRequest,
   totalItems,
   nextPage,
@@ -51,10 +50,6 @@ const Commands = ({
 
   const textStyle = item => {
     return item === activeFilter ? styles.filtertext_active : styles.filtertext;
-  };
-
-  const data = () => {
-    return activeFilter === 'right' ? commandsWaiting : commandsTreated;
   };
 
   const onChangeFilter = item => {
@@ -92,7 +87,7 @@ const Commands = ({
         <>
           <Table
             header={tableHeader}
-            data={data()}
+            data={commands}
             totalData={totalItems}
             totalPages={totalPages}
             nextPage={nextPage}
