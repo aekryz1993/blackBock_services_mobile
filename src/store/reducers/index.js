@@ -4,7 +4,7 @@ import fetchUsersReducer from './users';
 import service from './service';
 import orderReducer from './productCode';
 import fetchCreditReducer from './wallet';
-import commandsReducer from './commands';
+import commands from './commands';
 
 const rootReducer = combineReducers({
   loginReducer,
@@ -12,7 +12,7 @@ const rootReducer = combineReducers({
   ...service,
   orderReducer,
   fetchCreditReducer,
-  commandsReducer,
+  ...commands,
 });
 
 export default rootReducer;

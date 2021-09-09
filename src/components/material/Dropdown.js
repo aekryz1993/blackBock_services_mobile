@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   View,
   TouchableHighlight,
+  StatusBar,
 } from 'react-native';
 import IconAntDesign from 'react-native-vector-icons/AntDesign';
 import IconFontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -47,6 +48,10 @@ const Dropdown = ({
         animationType="none"
         transparent={true}
         visible={modalVisible}
+        modalStyles={{
+          modalContent: styles.modalContent,
+          modalOverlay: styles.modalOverlay,
+        }}
         dismiss={() => setModalVisible(!modalVisible)}>
         <View style={styles.modalView}>
           {['EUR', 'USD', 'DZD'].map((currency, i) => {
@@ -102,6 +107,18 @@ const styles = StyleSheet.create({
   line: {
     borderWidth: 0.5,
     borderColor: '#ccc',
+  },
+  modalContent: {
+    position: 'absolute',
+    right: 50,
+    marginTop: StatusBar.currentHeight * 2,
+  },
+  modalOverlay: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
   },
 });
 

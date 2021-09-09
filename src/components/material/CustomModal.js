@@ -14,6 +14,7 @@ const CustomModal = ({
   visible,
   transparent,
   animationType,
+  modalStyles,
 }) => {
   return (
     <Modal
@@ -22,26 +23,11 @@ const CustomModal = ({
       onRequestClose={dismiss}
       animationType={animationType}>
       <TouchableWithoutFeedback onPress={dismiss}>
-        <View style={styles.modalOverlay} />
+        <View style={modalStyles.modalOverlay} />
       </TouchableWithoutFeedback>
-      <View style={[styles.modalContent]}>{children}</View>
+      <View style={modalStyles.modalContent}>{children}</View>
     </Modal>
   );
 };
-
-const styles = StyleSheet.create({
-  modalContent: {
-    position: 'absolute',
-    right: 50,
-    marginTop: StatusBar.currentHeight * 2,
-  },
-  modalOverlay: {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-  },
-});
 
 export default CustomModal;

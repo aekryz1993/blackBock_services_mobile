@@ -10,17 +10,10 @@ import {
 import Icon from 'react-native-vector-icons/EvilIcons';
 import MaterialIconsIcon from 'react-native-vector-icons/MaterialIcons';
 import IoniconsIcon from 'react-native-vector-icons/Ionicons';
-import Currency from './Currency';
 
 const {height: windowHeight} = Dimensions.get('window');
 
-const Header = ({
-  navigation,
-  back,
-  backAction,
-  fetchcreditRequest,
-  walletCredit,
-}) => {
+const Header = ({navigation, back, backAction}) => {
   const onPressBack = () => {
     backAction();
     navigation.goBack();
@@ -38,10 +31,6 @@ const Header = ({
         )}
       </View>
       <View style={styles.right}>
-        <Currency
-          walletCredit={walletCredit}
-          fetchcreditRequest={fetchcreditRequest}
-        />
         <TouchableOpacity activeOpacity={0.9}>
           <IoniconsIcon
             name="md-notifications-outline"

@@ -1,12 +1,31 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {useEffect} from 'react';
+import {io} from 'socket.io-client';
 import {createDrawerNavigator} from '@react-navigation/drawer';
+import {createStackNavigator} from '@react-navigation/stack';
 
 import Loading from '@components/Loading';
 import CustomDrawerItems from '@components/CustomDrawerItems';
 import UsersContainer from './users/UsersContainer';
+import CommandsContainer from './Commands/CommandsContainer';
+import {API_HOSTA} from '@env';
 
 const Drawer = createDrawerNavigator();
+const Stack = createStackNavigator();
+
+const Products = () => (
+  <Stack.Navigator
+    screenOptions={{
+      headerShown: false,
+    }}>
+    <Stack.Group>
+      <Stack.Screen name="CommandsScreen" component={CommandsContainer} />
+    </Stack.Group>
+    {/* <Stack.Group screenOptions={{presentation: 'modal'}}>
+      <Stack.Screen name="CommandDetail" component={CommandDetail} />
+    </Stack.Group> */}
+  </Stack.Navigator>
+);
 
 const Admin = ({
   loading,
@@ -15,6 +34,16 @@ const Admin = ({
   profilePic,
   fetchUsersFinished,
 }) => {
+  useEffect(() => {
+    const socket = io(`${API_HOSTA}/orderCommands`);
+    socket.on('connect', () => {
+      socket.on('send_command_order', command => {
+        console.log(command);
+      });
+    });
+    return () => socket.disconnect();
+  });
+
   if (loading) {
     return <Loading />;
   }
@@ -43,6 +72,9 @@ const Admin = ({
       }}>
       <Drawer.Screen name="Users">
         {props => <UsersContainer {...props} />}
+      </Drawer.Screen>
+      <Drawer.Screen name="Commands">
+        {props => <CommandsContainer {...props} />}
       </Drawer.Screen>
     </Drawer.Navigator>
   );

@@ -1,8 +1,9 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {useEffect} from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createStackNavigator} from '@react-navigation/stack';
 import FeatherIcon from 'react-native-vector-icons/Feather';
+import {io} from 'socket.io-client';
 
 import Loading from '@components/Loading';
 import CustomDrawerItems from '@components/CustomDrawerItems';
@@ -12,6 +13,7 @@ import {CurrencyProvider} from '@components/contexts/CurrencyProvider';
 import DisplayCodeContainer from './Services/productCode.js/DisplayCodeContainer';
 import {OrderProvider} from '@components/contexts/OrderProvider';
 import CommandsContainer from '@components/Client/Commands/CommandsContainer';
+import {API_HOSTA} from '@env';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -39,6 +41,16 @@ const Service = () => (
 );
 
 const Client = ({loading, logoutrequest, currentUser, profilePic}) => {
+  useEffect(() => {
+    const socket = io(`${API_HOSTA}/treatedCommands`);
+    socket.on('connect', () => {
+      socket.on('send_command', command => {
+        console.log(command);
+      });
+    });
+    return () => socket.disconnect();
+  });
+
   if (loading) {
     return <Loading />;
   }

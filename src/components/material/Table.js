@@ -7,14 +7,15 @@ import {
   ScrollView,
 } from 'react-native';
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
+import CommandDetailContainer from '@components/Administration/Commands/CommandDetailContainer';
 
-const dataForm = (command, property) => {
+const dataForm = (dataItem, property) => {
   if (property === 'createdAt') {
-    return command[property].split('T')[0].split('-').reverse().join('/');
+    return dataItem[property].split('T')[0].split('-').reverse().join('/');
   } else if (property === 'treated') {
-    return command[property] ? 'YES' : 'NO';
+    return dataItem[property] ? 'YES' : 'NO';
   }
-  return command[property];
+  return dataItem[property];
 };
 
 const Footer = ({
@@ -89,6 +90,120 @@ const Footer = ({
   );
 };
 
+const Content = ({
+  contentData,
+  headerData,
+  touchable,
+  setopenModal,
+  openModal,
+}) => {
+  const [currentRow, setcurrentRow] = useState({});
+
+  const submitRow = ({selectedRow}) => {
+    setcurrentRow(selectedRow);
+    setopenModal(!openModal);
+  };
+
+  return (
+    <View style={styles.contentContainer}>
+      {touchable ? (
+        <>
+          {contentData.map((row, rowIndex) => (
+            <View key={row.id}>
+              <TouchableOpacity
+                activeOpacity={0.7}
+                style={
+                  rowIndex !== contentData.length - 1
+                    ? [
+                        styles.contentRow,
+                        {
+                          borderBottomWidth: 0.5,
+                        },
+                      ]
+                    : styles.contentRow
+                }
+                onPress={() => submitRow({selectedRow: row})}>
+                {headerData.map((property, propertyIndex) => (
+                  <View key={propertyIndex} style={styles.rowItem}>
+                    <Text
+                      style={
+                        propertyIndex === 0
+                          ? [styles.rowText, {paddingLeft: 16}]
+                          : typeof row[property.property] === 'number'
+                          ? [
+                              styles.rowText,
+                              {textAlign: 'center', paddingRight: 20},
+                            ]
+                          : styles.rowText
+                      }>
+                      {dataForm(row, property.property)}
+                    </Text>
+                  </View>
+                ))}
+              </TouchableOpacity>
+              <CommandDetailContainer
+                setopenModal={setopenModal}
+                openModal={openModal}
+                row={currentRow}
+              />
+            </View>
+          ))}
+        </>
+      ) : (
+        <>
+          {contentData.map((row, rowIndex) => (
+            <View
+              key={row.id}
+              style={
+                rowIndex !== contentData.length - 1
+                  ? [
+                      styles.contentRow,
+                      {
+                        borderBottomWidth: 0.5,
+                      },
+                    ]
+                  : styles.contentRow
+              }>
+              {headerData.map((property, propertyIndex) => (
+                <View key={propertyIndex} style={styles.rowItem}>
+                  <Text
+                    style={
+                      propertyIndex === 0
+                        ? [styles.rowText, {paddingLeft: 16}]
+                        : typeof row[property.property] === 'number'
+                        ? [
+                            styles.rowText,
+                            {textAlign: 'center', paddingRight: 20},
+                          ]
+                        : styles.rowText
+                    }>
+                    {dataForm(row, property.property)}
+                  </Text>
+                </View>
+              ))}
+            </View>
+          ))}
+        </>
+      )}
+    </View>
+  );
+};
+
+const Header = ({headerData}) => (
+  <View style={styles.headerRow}>
+    {headerData.map((item, index) => (
+      <View key={index} style={styles.rowItem}>
+        <Text
+          style={
+            index !== 0 ? styles.rowText : [styles.rowText, {paddingLeft: 16}]
+          }>
+          {item.label}
+        </Text>
+      </View>
+    ))}
+  </View>
+);
+
 const Table = ({
   header,
   data,
@@ -99,31 +214,32 @@ const Table = ({
   activeFilter,
   fetchCommandsRequest,
   navigation,
+  touchable,
+  setopenModal,
+  openModal,
 }) => {
   return (
     <View style={styles.container}>
-      <ScrollView horizontal style={styles.item}>
-        {header.map((item, index) => (
-          <View key={index}>
-            <Text
-              style={
-                index !== 0 ? styles.text : [styles.text, {paddingLeft: 16}]
-              }>
-              {item.label}
-            </Text>
-            {data.map(command => {
-              return (
-                <Text
-                  key={command.id}
-                  style={
-                    index !== 0 ? styles.text : [styles.text, {paddingLeft: 16}]
-                  }>
-                  {dataForm(command, item.property)}
-                </Text>
-              );
-            })}
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.table}>
+        <View style={styles.header}>
+          <Header headerData={header} />
+        </View>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.table}>
+          <View style={styles.content}>
+            <Content
+              contentData={data}
+              headerData={header}
+              touchable={touchable}
+              setopenModal={setopenModal}
+              openModal={openModal}
+            />
           </View>
-        ))}
+        </ScrollView>
       </ScrollView>
       {totalPages !== 0 && (
         <Footer
@@ -145,27 +261,33 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 1)',
     elevation: 3,
     borderRadius: 2,
+    height: '72%',
   },
-  item: {
+  table: {
+    flexDirection: 'column',
+  },
+  headerRow: {
     flexDirection: 'row',
+    borderBottomWidth: 1,
+    paddingVertical: 14,
+    backgroundColor: 'rgba(200, 200, 200, 1)',
   },
-  text: {
-    paddingRight: 32,
-    paddingVertical: 10,
-    borderBottomWidth: 0.5,
+  contentRow: {
+    flexDirection: 'row',
+    paddingVertical: 16,
+    alignItems: 'center',
   },
-  line: {
-    borderWidth: 0.5,
+  rowItem: {
+    width: 100,
+    paddingRight: 20,
   },
   footer: {
     flexDirection: 'row',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-evenly',
     alignItems: 'center',
     paddingVertical: 14,
-    paddingRight: 16,
-  },
-  paginationbutton: {
-    paddingHorizontal: 20,
+    borderTopWidth: 4,
+    borderColor: 'rgba(100, 100, 100, 0.1)',
   },
 });
 

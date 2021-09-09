@@ -10,7 +10,7 @@ export const loginApi = async (username, password) => {
         },
         body: JSON.stringify({username, password}),
       });
-      const data = await response.text();
+      let data = await response.text();
       if (!JSON.parse(data).auth) {
         reject(JSON.parse(data));
       }

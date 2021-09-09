@@ -1,14 +1,7 @@
 import React, {useEffect} from 'react';
-import {
-  SafeAreaView,
-  View,
-  FlatList,
-  StyleSheet,
-  Text,
-  StatusBar,
-  Image,
-} from 'react-native';
+import {View, FlatList, StyleSheet, Text, StatusBar, Image} from 'react-native';
 import {API_HOSTA} from '@env';
+import AdminScreen from '../AdminScreen';
 
 const addNewItems = (currentUsers, fetchUsersRequest, _nextPage) => {
   if (_nextPage >= 0) {
@@ -50,21 +43,28 @@ const Users = ({
     });
   });
 
+  useEffect(() => {
+    navigation.addListener('focus', () => {
+      fetchUsersRequest(nextPage, users);
+    });
+  });
+
   const renderItem = ({item}) => {
     return <Item username={item.username} image={item.image} />;
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <AdminScreen navigation={navigation}>
       <FlatList
         data={users}
+        showsVerticalScrollIndicator={false}
         renderItem={renderItem}
         keyExtractor={item => item.id}
         numColumns={2}
         horizontal={false}
         onEndReached={() => addNewItems(users, fetchUsersRequest, nextPage)}
       />
-    </SafeAreaView>
+    </AdminScreen>
   );
 };
 

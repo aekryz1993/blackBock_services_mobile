@@ -20,7 +20,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     fetchcreditRequest: () => dispatch(fetchcreditRequest()),
     fetchCommandsRequest: ({page, isTreated}) =>
-      dispatch(fetchCommandsRequest({page, isTreated})),
+      dispatch(fetchCommandsRequest({page, isTreated, isAdmin: false})),
     fetchCommandsFinished: () => dispatch(fetchCommandsFinished()),
   };
 };

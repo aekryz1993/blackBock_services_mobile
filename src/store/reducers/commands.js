@@ -3,6 +3,10 @@ import {
   FETCHCOMMANDS_FAILED,
   FETCHCOMMANDS_REQUEST,
   FETCHCOMMANDS_ENDED,
+  SENDCOMMAND_SUCCEED,
+  SENDCOMMAND_FAILED,
+  SENDCOMMAND_REQUEST,
+  SENDCOMMAND_ENDED,
 } from '@actions/commands';
 
 const commandsReducer = (
@@ -40,4 +44,35 @@ const commandsReducer = (
   }
 };
 
-export default commandsReducer;
+const sendCommandReducer = (
+  state = {
+    message: null,
+  },
+  action,
+) => {
+  switch (action.type) {
+    case SENDCOMMAND_REQUEST:
+      return {
+        ...state,
+      };
+    case SENDCOMMAND_SUCCEED:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case SENDCOMMAND_FAILED:
+      return {
+        ...state,
+        message: action.payload.message,
+      };
+    case SENDCOMMAND_ENDED:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
+export default {sendCommandReducer, commandsReducer};

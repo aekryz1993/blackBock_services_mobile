@@ -155,6 +155,7 @@ const ProductItem = ({
 };
 
 const ProductCode = ({route, message, orderRequest, navigation}) => {
+  // eslint-disable-next-line no-unused-vars
   const [orderState, orderDispatch] = useContext(OrderContext);
   const [state] = useContext(CurrencyContext);
   const [clear, setclear] = useState(false);
