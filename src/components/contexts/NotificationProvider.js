@@ -17,9 +17,9 @@ export const reducer = (state, action) => {
         ...state,
         notifications:
           state.notifications.length === 0
-            ? [action.payload]
-            : [action.payload, ...state.notifications],
-        count: state.count + 1,
+            ? action.payload.notifications
+            : [...action.payload.notifications, ...state.notifications],
+        count: action.payload.notificationCount,
       };
     case 'SEEN':
       return {...state, count: 0};

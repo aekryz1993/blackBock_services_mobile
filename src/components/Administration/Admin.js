@@ -42,8 +42,11 @@ const Admin = ({
   useEffect(() => {
     const socket = io(`${API_HOSTA}/orderCommands`);
     socket.on('connect', () => {
-      socket.on('send_command_order', notification => {
-        notificationDispatch({type: 'ADD', payload: {...notification}});
+      socket.on('send_command_order', (notifications, notificationCount) => {
+        notificationDispatch({
+          type: 'ADD',
+          payload: {notifications, notificationCount},
+        });
       });
     });
     return () => socket.disconnect();

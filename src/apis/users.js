@@ -45,8 +45,8 @@ export const fetchNotificationCount = notificationDispatch => {
         notificationDispatch({
           type: 'INIT',
           payload: {
-            notificationCount: data.notificationCount,
-            notifications: data.notifications,
+            notificationCount: JSON.parse(data).notificationCount,
+            notifications: JSON.parse(data).notifications,
           },
         });
       }
