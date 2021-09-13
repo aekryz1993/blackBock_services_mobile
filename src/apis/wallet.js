@@ -1,6 +1,6 @@
 import {API_HOSTA} from '@env';
 
-export const fetchCredit = async () => {
+export const fetchCredit = () => {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await fetch(

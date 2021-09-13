@@ -6,6 +6,7 @@ import AdminCountainer from '@components/Administration/AdminContainer';
 import Login from '@components/Login';
 import Client from '@components/Client/ClientContainer';
 import Loading from '@components/Loading';
+import {NotificationProvider} from '../contexts/NotificationProvider';
 
 const Stack = createStackNavigator();
 
@@ -43,21 +44,25 @@ const Auth = ({
         ) : isAdmin ? (
           <Stack.Screen name="AdminCountainer">
             {props => (
-              <AdminCountainer
-                {...props}
-                profilePic={profilePic}
-                currentUser={currentUser}
-              />
+              <NotificationProvider>
+                <AdminCountainer
+                  {...props}
+                  profilePic={profilePic}
+                  currentUser={currentUser}
+                />
+              </NotificationProvider>
             )}
           </Stack.Screen>
         ) : (
           <Stack.Screen name="Client">
             {props => (
-              <Client
-                {...props}
-                profilePic={profilePic}
-                currentUser={currentUser}
-              />
+              <NotificationProvider>
+                <Client
+                  {...props}
+                  profilePic={profilePic}
+                  currentUser={currentUser}
+                />
+              </NotificationProvider>
             )}
           </Stack.Screen>
         )}

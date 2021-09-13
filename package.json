@@ -3,9 +3,11 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "android": "react-native run-android",
+    "android:pocox3": "react-native run-android --deviceId=93fe1233",
+    "android:emulator": "react-native run-android --deviceId=emulator-5554",
     "ios": "react-native run-ios",
     "start": "react-native start",
+    "start:8001": "react-native start --port=8001",
     "test": "jest",
     "lint": "eslint ."
   },

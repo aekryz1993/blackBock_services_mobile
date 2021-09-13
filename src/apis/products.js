@@ -1,6 +1,6 @@
 import {API_HOSTA} from '@env';
 
-export const fetchProductCodesOrder = async ({
+export const fetchProductCodesOrder = ({
   currency,
   order,
   amount,

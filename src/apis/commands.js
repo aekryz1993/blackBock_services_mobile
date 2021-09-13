@@ -1,7 +1,7 @@
 import {API_HOSTA} from '@env';
 import axios from 'axios';
 
-export const fetchCommands = async ({page, isTreated, isAdmin}) => {
+export const fetchCommands = ({page, isTreated, isAdmin}) => {
   return new Promise(async (resolve, reject) => {
     try {
       const api = isAdmin
@@ -29,7 +29,7 @@ export const fetchCommands = async ({page, isTreated, isAdmin}) => {
   });
 };
 
-export const sendCommands = async ({userId, commandId, categoryId, excel}) => {
+export const sendCommands = ({userId, commandId, categoryId, excel}) => {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await axios.post(

@@ -1,6 +1,6 @@
 import {API_HOSTA} from '@env';
 
-export const fetchTopUpServices = async () => {
+export const fetchTopUpServices = () => {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await fetch(
@@ -24,7 +24,7 @@ export const fetchTopUpServices = async () => {
   });
 };
 
-export const fetchCodeServices = async () => {
+export const fetchCodeServices = () => {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await fetch(

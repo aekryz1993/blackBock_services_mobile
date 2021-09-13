@@ -1,18 +1,18 @@
 import {combineReducers} from 'redux';
 import loginReducer from './auth';
-import fetchUsersReducer from './users';
-import service from './service';
+import userReducers from './users';
+import serviceReducers from './service';
 import orderReducer from './productCode';
 import fetchCreditReducer from './wallet';
-import commands from './commands';
+import commandsReducers from './commands';
 
 const rootReducer = combineReducers({
   loginReducer,
-  fetchUsersReducer,
-  ...service,
+  ...userReducers,
+  ...serviceReducers,
   orderReducer,
   fetchCreditReducer,
-  ...commands,
+  ...commandsReducers,
 });
 
 export default rootReducer;

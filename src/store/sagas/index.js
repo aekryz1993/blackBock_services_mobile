@@ -1,6 +1,6 @@
 import {all, fork} from 'redux-saga/effects';
 import {loginFlow} from './auth';
-import {watchFetchingUsers} from './users';
+import {watchFetchingNotifications, watchFetchingUsers} from './users';
 import {watchFetchingServices} from './service';
 import {watchOrderProductcode} from './productCode';
 import {watchFetchCredit} from './wallet';
@@ -13,4 +13,5 @@ export default function* rootSaga() {
   yield all([fork(watchOrderProductcode)]);
   yield all([fork(watchFetchCredit)]);
   yield all([fork(watchCommandOperations)]);
+  yield all([fork(watchFetchingNotifications)]);
 }

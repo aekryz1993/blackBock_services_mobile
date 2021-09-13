@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/EvilIcons';
 import MaterialIconsIcon from 'react-native-vector-icons/MaterialIcons';
-import IoniconsIcon from 'react-native-vector-icons/Ionicons';
+import Notification from '@components/material/Notification';
 
 const {height: windowHeight} = Dimensions.get('window');
 
@@ -31,13 +31,7 @@ const Header = ({navigation, back, backAction}) => {
         )}
       </View>
       <View style={styles.right}>
-        <TouchableOpacity activeOpacity={0.9}>
-          <IoniconsIcon
-            name="md-notifications-outline"
-            size={25}
-            color="#fff"
-          />
-        </TouchableOpacity>
+        <Notification />
         <TouchableOpacity
           onPress={() => navigation.toggleDrawer()}
           style={styles.navbutton}>

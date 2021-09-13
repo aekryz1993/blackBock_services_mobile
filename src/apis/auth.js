@@ -1,6 +1,6 @@
 import {API_HOSTA} from '@env';
 
-export const loginApi = async (username, password) => {
+export const loginApi = (username, password) => {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await fetch(`http://${API_HOSTA}/api/auth/login`, {
@@ -24,7 +24,7 @@ export const loginApi = async (username, password) => {
   });
 };
 
-export const logoutApi = async () => {
+export const logoutApi = () => {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await fetch(

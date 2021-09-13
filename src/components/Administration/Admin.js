@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {io} from 'socket.io-client';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -9,6 +9,8 @@ import CustomDrawerItems from '@components/CustomDrawerItems';
 import UsersContainer from './users/UsersContainer';
 import CommandsContainer from './Commands/CommandsContainer';
 import {API_HOSTA} from '@env';
+import {NotificationContext} from '@components/contexts/NotificationProvider';
+import {fetchNotificationCount} from '@apis/users';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -34,15 +36,29 @@ const Admin = ({
   profilePic,
   fetchUsersFinished,
 }) => {
+  const [notificationStat, notificationDispatch] =
+    useContext(NotificationContext);
+
   useEffect(() => {
     const socket = io(`${API_HOSTA}/orderCommands`);
     socket.on('connect', () => {
-      socket.on('send_command_order', command => {
-        console.log(command);
+      socket.on('send_command_order', notification => {
+        notificationDispatch({type: 'ADD', payload: {...notification}});
       });
     });
     return () => socket.disconnect();
   });
+
+  useEffect(() => {
+    (async () => {
+      try {
+        await fetchNotificationCount(notificationDispatch);
+      } catch (error) {
+        console.error(error);
+      }
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (loading) {
     return <Loading />;

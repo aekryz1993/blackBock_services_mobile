@@ -44,6 +44,7 @@ const Client = ({loading, logoutrequest, currentUser, profilePic}) => {
   useEffect(() => {
     const socket = io(`${API_HOSTA}/treatedCommands`);
     socket.on('connect', () => {
+      socket.emit('send_userId', currentUser.id);
       socket.on('send_command', command => {
         console.log(command);
       });
