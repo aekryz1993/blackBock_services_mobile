@@ -41,15 +41,15 @@ export const fetchNotificationCount = notificationDispatch => {
       if (!JSON.parse(data).success) {
         reject(JSON.parse(data));
       }
-      if (JSON.parse(data).notificationCount) {
-        notificationDispatch({
-          type: 'INIT',
-          payload: {
-            notificationCount: JSON.parse(data).notificationCount,
-            notifications: JSON.parse(data).notifications,
-          },
-        });
-      }
+      // if (JSON.parse(data).notificationCount !== 0) {
+      notificationDispatch({
+        type: 'INIT',
+        payload: {
+          notificationCount: JSON.parse(data).notificationCount,
+          notifications: JSON.parse(data).notifications,
+        },
+      });
+      // }
       resolve();
     } catch (e) {
       reject({
@@ -75,7 +75,7 @@ export const resetNotificationsCount = () => {
       if (!JSON.parse(data).success) {
         reject(JSON.parse(data));
       }
-      resolve();
+      resolve(JSON.parse(data).success);
     } catch (e) {
       reject({
         message: e.message,

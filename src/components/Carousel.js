@@ -22,7 +22,6 @@ const slideList = services =>
         ? service.ProductIDs
         : service.ProductCategories;
     const url = service.Image.url.split('/').slice(7).join('/');
-    // console.log(url)
     return {
       products,
       category: service.category,

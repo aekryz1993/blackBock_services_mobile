@@ -5,7 +5,7 @@ import IoniconsIcon from 'react-native-vector-icons/Ionicons';
 import {NotificationContext} from '@components/contexts/NotificationProvider';
 import {resetNotificationsCount} from '@apis/users';
 
-const Notification = ({}) => {
+const Notification = ({navigation}) => {
   const [notificationStat, notificationDispatch] =
     useContext(NotificationContext);
 
@@ -13,7 +13,10 @@ const Notification = ({}) => {
     notificationDispatch({type: 'SEEN'});
     (async () => {
       try {
-        await resetNotificationsCount();
+        const reset = await resetNotificationsCount();
+        if (reset) {
+          navigation.navigate('NotificationScreen');
+        }
       } catch (error) {
         console.error(error);
       }

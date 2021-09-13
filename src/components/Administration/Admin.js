@@ -11,22 +11,50 @@ import CommandsContainer from './Commands/CommandsContainer';
 import {API_HOSTA} from '@env';
 import {NotificationContext} from '@components/contexts/NotificationProvider';
 import {fetchNotificationCount} from '@apis/users';
+import NotificationScreen from '@components/NotificationScreen';
+// import NotificationScreen from '../NotificationScreen';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
-const Products = () => (
-  <Stack.Navigator
-    screenOptions={{
-      headerShown: false,
+// const Products = () => (
+//   <Stack.Navigator
+//     screenOptions={{
+//       headerShown: false,
+//     }}>
+//     <Stack.Group>
+//       <Stack.Screen name="CommandsScreen" component={CommandsContainer} />
+//       <Stack.Screen name="NotificationScreen" component={NotificationScreen} />
+//     </Stack.Group>
+//     {/* <Stack.Group screenOptions={{presentation: 'modal'}}>
+//       <Stack.Screen name="CommandDetail" component={CommandDetail} />
+//     </Stack.Group> */}
+//   </Stack.Navigator>
+// );
+const DrawerScreens = ({logout, currentUser, profilePic}) => (
+  <Drawer.Navigator
+    drawerStyle={{
+      backgroundColor: '#222',
+    }}
+    drawerPosition="right"
+    drawerType={'back'}
+    drawerContent={props => {
+      return (
+        <CustomDrawerItems
+          {...props}
+          logout={logout}
+          currentUser={currentUser}
+          profilePic={profilePic}
+        />
+      );
     }}>
-    <Stack.Group>
-      <Stack.Screen name="CommandsScreen" component={CommandsContainer} />
-    </Stack.Group>
-    {/* <Stack.Group screenOptions={{presentation: 'modal'}}>
-      <Stack.Screen name="CommandDetail" component={CommandDetail} />
-    </Stack.Group> */}
-  </Stack.Navigator>
+    <Drawer.Screen name="Users">
+      {props => <UsersContainer {...props} />}
+    </Drawer.Screen>
+    <Drawer.Screen name="Commands">
+      {props => <CommandsContainer {...props} />}
+    </Drawer.Screen>
+  </Drawer.Navigator>
 );
 
 const Admin = ({
@@ -73,29 +101,26 @@ const Admin = ({
   };
 
   return (
-    <Drawer.Navigator
-      drawerStyle={{
-        backgroundColor: '#222',
-      }}
-      drawerPosition="right"
-      drawerType={'back'}
-      drawerContent={props => {
-        return (
-          <CustomDrawerItems
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}>
+      <Stack.Screen name="DrawerScreens">
+        {props => (
+          <DrawerScreens
             {...props}
             logout={logout}
             currentUser={currentUser}
             profilePic={profilePic}
           />
-        );
-      }}>
-      <Drawer.Screen name="Users">
-        {props => <UsersContainer {...props} />}
-      </Drawer.Screen>
-      <Drawer.Screen name="Commands">
-        {props => <CommandsContainer {...props} />}
-      </Drawer.Screen>
-    </Drawer.Navigator>
+        )}
+      </Stack.Screen>
+      <Stack.Screen
+        name="NotificationScreen"
+        component={NotificationScreen}
+        options={{headerShown: true, title: 'Notifications'}}
+      />
+    </Stack.Navigator>
   );
 };
 

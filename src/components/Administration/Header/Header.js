@@ -31,7 +31,7 @@ const Header = ({navigation, back, backAction}) => {
         )}
       </View>
       <View style={styles.right}>
-        <Notification />
+        <Notification navigation={navigation} />
         <TouchableOpacity
           onPress={() => navigation.toggleDrawer()}
           style={styles.navbutton}>

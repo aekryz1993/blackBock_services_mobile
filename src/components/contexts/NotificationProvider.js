@@ -11,6 +11,7 @@ export const reducer = (state, action) => {
       return {
         ...state,
         count: action.payload.notificationCount,
+        notifications: action.payload.notifications,
       };
     case 'ADD':
       return {
