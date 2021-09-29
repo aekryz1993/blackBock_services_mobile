@@ -1,12 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {
-  StatusBar,
-  StyleSheet,
-  TouchableOpacity,
-  Text,
-  View,
-  Button,
-} from 'react-native';
+import React, {useState} from 'react';
+import {StyleSheet, TouchableOpacity, Text, View, Button} from 'react-native';
 import MaterialIconsIcon from 'react-native-vector-icons/MaterialIcons';
 import DocumentPicker from 'react-native-document-picker';
 
@@ -55,7 +48,6 @@ const ActionSec = ({
       const res = await DocumentPicker.pickSingle({
         type: DocumentPicker.types.xlsx,
       });
-      // const file = JSON.parse(JSON.stringify(res));
       let data = new FormData();
       data.append('file', res);
       setexcel(data);

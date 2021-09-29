@@ -4,7 +4,7 @@ export const fetchTopUpServices = () => {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await fetch(
-        `http://${API_HOSTA}/api/userSession/services/getAll/id`,
+        `${API_HOSTA}/api/userSession/services/getAll/id`,
         {
           method: 'GET',
           headers: {
@@ -28,7 +28,7 @@ export const fetchCodeServices = () => {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await fetch(
-        `http://${API_HOSTA}/api/userSession/services/getAll/code`,
+        `${API_HOSTA}/api/userSession/services/getAll/code`,
         {
           method: 'GET',
           headers: {

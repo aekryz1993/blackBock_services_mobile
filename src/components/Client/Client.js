@@ -3,6 +3,7 @@ import React, {useEffect} from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createStackNavigator} from '@react-navigation/stack';
 import FeatherIcon from 'react-native-vector-icons/Feather';
+import IconFontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {io} from 'socket.io-client';
 
 import Loading from '@components/Loading';
@@ -13,6 +14,8 @@ import {CurrencyProvider} from '@components/contexts/CurrencyProvider';
 import DisplayCodeContainer from './Services/productCode.js/DisplayCodeContainer';
 import {OrderProvider} from '@components/contexts/OrderProvider';
 import CommandsContainer from '@components/Client/Commands/CommandsContainer';
+import WalletContainer from '@components/Client/Wallet/WalletContainer';
+import CoinbasePanel from '@components/Client/Wallet/CoinbasePanel';
 import {API_HOSTA} from '@env';
 
 const Drawer = createDrawerNavigator();
@@ -37,6 +40,16 @@ const Service = () => (
     }}>
     <Stack.Screen name="Services" component={ServiceContainer} />
     <Stack.Screen name="Products" component={Products} />
+  </Stack.Navigator>
+);
+
+const Wallet = () => (
+  <Stack.Navigator
+    screenOptions={{
+      headerShown: false,
+    }}>
+    <Stack.Screen name="WalletScreen" component={WalletContainer} />
+    <Stack.Screen name="CoinbasePanel" component={CoinbasePanel} />
   </Stack.Navigator>
 );
 
@@ -93,6 +106,15 @@ const Client = ({loading, logoutrequest, currentUser, profilePic}) => {
             ),
           }}>
           {props => <CommandsContainer {...props} />}
+        </Drawer.Screen>
+        <Drawer.Screen
+          name="Wallet"
+          options={{
+            drawerIcon: ({color, size}) => (
+              <IconFontAwesome5 name="wallet" size={size} color={color} />
+            ),
+          }}>
+          {props => <Wallet {...props} />}
         </Drawer.Screen>
       </Drawer.Navigator>
     </CurrencyProvider>

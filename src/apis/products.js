@@ -12,7 +12,7 @@ export const fetchProductCodesOrder = ({
   return new Promise(async (resolve, reject) => {
     try {
       const response = await fetch(
-        `http://${API_HOSTA}/api/userSession/productCode/get/availableCodes/${currency}/${amount}/${order}/${serviceName}`,
+        `${API_HOSTA}/api/userSession/productCode/get/availableCodes/${currency}/${amount}/${order}/${serviceName}`,
         {
           method: 'GET',
           headers: {

@@ -27,7 +27,7 @@ const slideList = services =>
       category: service.category,
       id: service.id,
       serviceName: service.label,
-      image: `http://${API_HOSTA}/${url}`,
+      image: `${API_HOSTA}/${url}`,
     };
   });
 

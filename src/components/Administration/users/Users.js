@@ -17,7 +17,7 @@ const Item = ({username, image}) => {
       <Image
         style={styles.tinyLogo}
         source={{
-          uri: `http://${API_HOSTA}/${url}`,
+          uri: `${API_HOSTA}/${url}`,
         }}
       />
       <Text style={styles.username}>{username}</Text>

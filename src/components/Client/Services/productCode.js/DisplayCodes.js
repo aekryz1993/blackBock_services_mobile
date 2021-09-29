@@ -47,7 +47,7 @@ const DisplayCodes = ({fetchcreditRequest, walletCredit, orderFinished}) => {
   };
 
   const downloadFile = () => {
-    const url = `http://${API_HOSTA}/${fileCodes}`;
+    const url = `${API_HOSTA}/${fileCodes}`;
     const options = {
       fileCache: true,
       addAndroidDownloads: {

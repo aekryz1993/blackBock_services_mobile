@@ -3,7 +3,7 @@ import {API_HOSTA} from '@env';
 export const loginApi = (username, password) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const response = await fetch(`http://${API_HOSTA}/api/auth/login`, {
+      const response = await fetch(`${API_HOSTA}/api/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -27,15 +27,12 @@ export const loginApi = (username, password) => {
 export const logoutApi = () => {
   return new Promise(async (resolve, reject) => {
     try {
-      const response = await fetch(
-        `http://${API_HOSTA}/api/userSession/logout`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+      const response = await fetch(`${API_HOSTA}/api/userSession/logout`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
         },
-      );
+      });
       const data = await response.text();
       resolve(JSON.parse(data));
     } catch (e) {

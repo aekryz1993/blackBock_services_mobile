@@ -4,7 +4,7 @@ export const fetchAllUsersApi = (page, currentUsers) => {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await fetch(
-        `http://${API_HOSTA}/api/adminSession/users/getusers/${page}`,
+        `${API_HOSTA}/api/adminSession/users/getusers/${page}`,
         {
           method: 'GET',
           headers: {
@@ -29,7 +29,7 @@ export const fetchNotificationCount = notificationDispatch => {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await fetch(
-        `http://${API_HOSTA}/api/userSession/getNotifications`,
+        `${API_HOSTA}/api/userSession/getNotifications`,
         {
           method: 'GET',
           headers: {
@@ -63,7 +63,7 @@ export const resetNotificationsCount = () => {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await fetch(
-        `http://${API_HOSTA}/api/userSession/resetNotificationsCount`,
+        `${API_HOSTA}/api/userSession/resetNotificationsCount`,
         {
           method: 'PUT',
           headers: {

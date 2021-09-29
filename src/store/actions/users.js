@@ -38,39 +38,3 @@ export const fetchUsersFinished = () => ({
     totalUsers: 0,
   },
 });
-
-export const NOTIFICATIONS_REQUEST = 'NOTIFICATIONS_REQUEST';
-export const NOTIFICATIONS_SUCCEED = 'NOTIFICATIONS_SUCCEED';
-export const NOTIFICATIONS_FAILED = 'NOTIFICATIONS_FAILED';
-export const NOTIFICATIONS_REQUEST_ENDED = 'NOTIFICATIONS_REQUEST_ENDED';
-
-export const fetchNotificationsRequest = notificationDispatch => ({
-  type: NOTIFICATIONS_REQUEST,
-  payload: {
-    notificationDispatch,
-  },
-});
-
-export const fetchNotificationsSucced = response => ({
-  type: NOTIFICATIONS_SUCCEED,
-  payload: {
-    notifications: response.data.notifications,
-    notificationsCount: response.data.notificationCount,
-  },
-});
-
-export const fetchNotificationsFailed = response => ({
-  type: NOTIFICATIONS_FAILED,
-  payload: {
-    message: response.message,
-  },
-});
-
-export const fetchNotificationsFinished = () => ({
-  type: NOTIFICATIONS_REQUEST_ENDED,
-  payload: {
-    notifications: [],
-    notificationsCount: 0,
-    message: null,
-  },
-});

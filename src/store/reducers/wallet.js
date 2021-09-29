@@ -2,6 +2,9 @@ import {
   FETCHCREDIT_SUCCEED,
   FETCHCREDIT_FAILED,
   FETCHCREDIT_REQUEST,
+  CREATECOINBASECHARGE_REQUEST,
+  CREATECOINBASECHARGE_SUCCEED,
+  CREATECOINBASECHARGE_FAILED,
 } from '@actions/wallet';
 
 const fetchCreditReducer = (
@@ -31,4 +34,32 @@ const fetchCreditReducer = (
   }
 };
 
-export default fetchCreditReducer;
+const createCoinbaseChargeReducer = (
+  state = {
+    coinbasePayUrl: '',
+    message: null,
+    navigate: () => {},
+  },
+  action,
+) => {
+  switch (action.type) {
+    case CREATECOINBASECHARGE_REQUEST:
+      return {
+        ...state,
+      };
+    case CREATECOINBASECHARGE_SUCCEED:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case CREATECOINBASECHARGE_FAILED:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
+export default {fetchCreditReducer, createCoinbaseChargeReducer};

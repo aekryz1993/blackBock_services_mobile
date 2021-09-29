@@ -4,7 +4,7 @@ import {orderSucced, orderFailed, ORDER_REQUEST} from '@actions/productCode';
 
 function* orderProductcode($action) {
   try {
-    const token = yield call(fetchProductCodesOrder, {
+    const data = yield call(fetchProductCodesOrder, {
       currency: $action.payload.currency,
       order: $action.payload.order,
       amount: $action.payload.amount,
@@ -13,7 +13,7 @@ function* orderProductcode($action) {
       orderDispatch: $action.payload.orderDispatch,
       navigate: $action.payload.navigate,
     });
-    const _action = yield put(orderSucced(token));
+    const _action = yield put(orderSucced(data));
     if (_action.payload.success) {
       yield _action.payload.orderDispatch({
         type: 'SUCCESS',

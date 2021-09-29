@@ -5,8 +5,8 @@ export const fetchCommands = ({page, isTreated, isAdmin}) => {
   return new Promise(async (resolve, reject) => {
     try {
       const api = isAdmin
-        ? `http://${API_HOSTA}/api/adminSession/productCode/getCommands/${page}/${isTreated}`
-        : `http://${API_HOSTA}/api/userSession/productCode/get/commands/${page}/${isTreated}`;
+        ? `${API_HOSTA}/api/adminSession/productCode/getCommands/${page}/${isTreated}`
+        : `${API_HOSTA}/api/userSession/productCode/get/commands/${page}/${isTreated}`;
 
       const response = await fetch(api, {
         method: 'GET',
@@ -33,7 +33,7 @@ export const sendCommands = ({userId, commandId, categoryId, excel}) => {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await axios.post(
-        `http://${API_HOSTA}/api/adminSession/productCode/sendCommand/${userId}/${commandId}/${categoryId}`,
+        `${API_HOSTA}/api/adminSession/productCode/sendCommand/${userId}/${commandId}/${categoryId}`,
         excel,
         {
           headers: {

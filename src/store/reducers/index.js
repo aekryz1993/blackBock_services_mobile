@@ -3,7 +3,7 @@ import loginReducer from './auth';
 import userReducers from './users';
 import serviceReducers from './service';
 import orderReducer from './productCode';
-import fetchCreditReducer from './wallet';
+import walletReducers from './wallet';
 import commandsReducers from './commands';
 
 const rootReducer = combineReducers({
@@ -11,7 +11,7 @@ const rootReducer = combineReducers({
   ...userReducers,
   ...serviceReducers,
   orderReducer,
-  fetchCreditReducer,
+  ...walletReducers,
   ...commandsReducers,
 });
 

@@ -19,3 +19,32 @@ export const fetchcreditFailed = response => ({
     message: response.message,
   },
 });
+
+// ------------------ Create Coinbase Charge ------------------------
+export const CREATECOINBASECHARGE_REQUEST = 'CREATECOINBASECHARGE_REQUEST';
+export const CREATECOINBASECHARGE_SUCCEED = 'CREATECOINBASECHARGE_SUCCEED';
+export const CREATECOINBASECHARGE_FAILED = 'CREATECOINBASECHARGE_FAILED';
+
+export const createCoinbaseChargeRequest = ({amount, navigate}) => ({
+  type: CREATECOINBASECHARGE_REQUEST,
+  payload: {
+    amount,
+    navigate,
+  },
+});
+
+export const createCoinbaseChargeSucced = response => ({
+  type: CREATECOINBASECHARGE_SUCCEED,
+  payload: {
+    coinbasePayUrl: response.data.charge.hosted_url,
+    navigate: response.navigate,
+    success: response.data.success,
+  },
+});
+
+export const createCoinbaseChargeFailed = response => ({
+  type: CREATECOINBASECHARGE_FAILED,
+  payload: {
+    message: response.message,
+  },
+});
