@@ -25,6 +25,29 @@ export const fetchAllUsersApi = (page, currentUsers) => {
   });
 };
 
+export const addUserApi = ({body, navigate, setBody}) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await fetch(`${API_HOSTA}/api/adminSession/users/add`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      });
+      const data = await response.text();
+      if (!JSON.parse(data).success) {
+        reject(JSON.parse(data));
+      }
+      resolve({data: JSON.parse(data), navigate, setBody});
+    } catch (e) {
+      reject({
+        message: e.message,
+      });
+    }
+  });
+};
+
 export const fetchNotificationCount = notificationDispatch => {
   return new Promise(async (resolve, reject) => {
     try {

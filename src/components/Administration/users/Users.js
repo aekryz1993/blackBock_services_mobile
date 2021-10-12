@@ -1,7 +1,15 @@
-import React, {useEffect} from 'react';
-import {View, FlatList, StyleSheet, Text, StatusBar, Image} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  TouchableOpacity,
+  FlatList,
+  StyleSheet,
+  Text,
+  StatusBar,
+  Image,
+} from 'react-native';
 import {API_HOSTA} from '@env';
 import AdminScreen from '../AdminScreen';
+import ScreenContent from '../ScreenContent';
 
 const addNewItems = (currentUsers, fetchUsersRequest, _nextPage) => {
   if (_nextPage >= 0) {
@@ -10,10 +18,15 @@ const addNewItems = (currentUsers, fetchUsersRequest, _nextPage) => {
   return;
 };
 
-const Item = ({username, image}) => {
-  const url = image.split('/').slice(7).join('/');
+const Item = ({username, image, navigation}) => {
+  const url = image
+    .split('/')
+    .slice(image.split('/').indexOf('static'))
+    .join('/');
   return (
-    <View style={styles.item}>
+    <TouchableOpacity
+      style={styles.item}
+      onPress={() => navigation.navigate('UserScreen')}>
       <Image
         style={styles.tinyLogo}
         source={{
@@ -21,7 +34,7 @@ const Item = ({username, image}) => {
         }}
       />
       <Text style={styles.username}>{username}</Text>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -32,38 +45,58 @@ const Users = ({
   navigation,
   fetchUsersFinished,
 }) => {
+  const [text, onChangeText] = useState(null);
+
   useEffect(() => {
     fetchUsersRequest(nextPage, users);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    navigation.addListener('blur', () => {
-      fetchUsersFinished();
-    });
-  });
+  // useEffect(() => {
+  //   navigation.addListener('blur', () => {
+  //     fetchUsersFinished();
+  //   });
+  // });
 
-  useEffect(() => {
-    navigation.addListener('focus', () => {
-      fetchUsersRequest(nextPage, users);
-    });
-  });
+  // useEffect(() => {
+  //   navigation.addListener('focus', () => {
+  //     fetchUsersRequest(nextPage, users);
+  //   });
+  // });
 
   const renderItem = ({item}) => {
-    return <Item username={item.username} image={item.image} />;
+    return (
+      <Item
+        username={item.username}
+        image={item.Image.url}
+        navigation={navigation}
+      />
+    );
+  };
+
+  const navigateToAddUser = () => {
+    navigation.navigate('AddUserScreen', {
+      screen: 'UserInfoScreen',
+    });
   };
 
   return (
     <AdminScreen navigation={navigation}>
-      <FlatList
-        data={users}
-        showsVerticalScrollIndicator={false}
-        renderItem={renderItem}
-        keyExtractor={item => item.id}
-        numColumns={2}
-        horizontal={false}
-        onEndReached={() => addNewItems(users, fetchUsersRequest, nextPage)}
-      />
+      <ScreenContent
+        navigateTo={navigateToAddUser}
+        text={text}
+        onChangeText={onChangeText}
+        placeholder="Search">
+        <FlatList
+          data={users}
+          showsVerticalScrollIndicator={false}
+          renderItem={renderItem}
+          keyExtractor={item => item.id}
+          numColumns={2}
+          horizontal={false}
+          onEndReached={() => addNewItems(users, fetchUsersRequest, nextPage)}
+        />
+      </ScreenContent>
     </AdminScreen>
   );
 };

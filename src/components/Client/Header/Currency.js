@@ -1,19 +1,21 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import Dropdown from '@components/material/Dropdown';
-import {CurrencyContext} from '@components/contexts/CurrencyProvider';
 
-const Currency = ({fetchcreditRequest, walletCredit}) => {
-  const [state, dispatch] = useContext(CurrencyContext);
-
+const Currency = ({
+  fetchcreditRequest,
+  walletCredit,
+  modalVisible,
+  setModalVisible,
+  state,
+}) => {
   return (
     <>
       <Dropdown
-        text={`Wallet ${state.currency}`}
-        dispatch={dispatch}
-        currentCurrency={state.currency}
         walletCredit={walletCredit}
         fetchcreditRequest={fetchcreditRequest}
         state={state}
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
       />
     </>
   );

@@ -38,3 +38,46 @@ export const fetchUsersFinished = () => ({
     totalUsers: 0,
   },
 });
+
+// --------------------- Add User -------------------------------
+
+export const ADDUSER_REQUEST = 'ADDUSER_REQUEST';
+export const ADDUSER_SUCCEED = 'ADDUSER_SUCCEED';
+export const ADDUSER_FAILED = 'ADDUSER_FAILED';
+export const ADDUSER_REQUEST_ENDED = 'ADDUSER_REQUEST_ENDED';
+
+export const addUserRequest = ({body, navigate, setBody}) => ({
+  type: ADDUSER_REQUEST,
+  payload: {
+    body,
+    navigate,
+    setBody,
+  },
+});
+
+export const addUserSucced = response => ({
+  type: ADDUSER_SUCCEED,
+  payload: {
+    message: response.data.message,
+    success: true,
+    navigate: response.navigate,
+    setBody: response.setBody,
+  },
+});
+
+export const addUserFailed = response => ({
+  type: ADDUSER_FAILED,
+  payload: {
+    message: response.data.message,
+    success: false,
+  },
+});
+
+export const addUserFinished = () => ({
+  type: ADDUSER_REQUEST_ENDED,
+  payload: {
+    message: null,
+    success: false,
+    navigate: () => {},
+  },
+});

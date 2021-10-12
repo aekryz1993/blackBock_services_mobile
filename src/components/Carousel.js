@@ -21,7 +21,10 @@ const slideList = services =>
       service.category === 'id'
         ? service.ProductIDs
         : service.ProductCategories;
-    const url = service.Image.url.split('/').slice(7).join('/');
+    const url = service.Image.url
+      .split('/')
+      .slice(service.Image.url.split('/').indexOf('static'))
+      .join('/');
     return {
       products,
       category: service.category,

@@ -12,25 +12,23 @@ import {API_HOSTA} from '@env';
 import {NotificationContext} from '@components/contexts/NotificationProvider';
 import {fetchNotificationCount} from '@apis/users';
 import NotificationScreen from '@components/NotificationScreen';
-// import NotificationScreen from '../NotificationScreen';
+import AddUserContainer from './users/addUser/AddUserContainer';
+import UserContainer from './users/user/UserContainer';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
-// const Products = () => (
-//   <Stack.Navigator
-//     screenOptions={{
-//       headerShown: false,
-//     }}>
-//     <Stack.Group>
-//       <Stack.Screen name="CommandsScreen" component={CommandsContainer} />
-//       <Stack.Screen name="NotificationScreen" component={NotificationScreen} />
-//     </Stack.Group>
-//     {/* <Stack.Group screenOptions={{presentation: 'modal'}}>
-//       <Stack.Screen name="CommandDetail" component={CommandDetail} />
-//     </Stack.Group> */}
-//   </Stack.Navigator>
-// );
+const Users = () => (
+  <Stack.Navigator
+    screenOptions={{
+      headerShown: false,
+    }}>
+    <Stack.Screen name="UsersScreen" component={UsersContainer} />
+    <Stack.Screen name="AddUserScreen" component={AddUserContainer} />
+    <Stack.Screen name="UserScreen" component={UserContainer} />
+  </Stack.Navigator>
+);
+
 const DrawerScreens = ({logout, currentUser, profilePic}) => (
   <Drawer.Navigator
     drawerStyle={{
@@ -48,12 +46,8 @@ const DrawerScreens = ({logout, currentUser, profilePic}) => (
         />
       );
     }}>
-    <Drawer.Screen name="Users">
-      {props => <UsersContainer {...props} />}
-    </Drawer.Screen>
-    <Drawer.Screen name="Commands">
-      {props => <CommandsContainer {...props} />}
-    </Drawer.Screen>
+    <Drawer.Screen name="Users" component={Users} />
+    <Drawer.Screen name="Commands" component={CommandsContainer} />
   </Drawer.Navigator>
 );
 
@@ -68,16 +62,21 @@ const Admin = ({
     useContext(NotificationContext);
 
   useEffect(() => {
-    const socket = io(`${API_HOSTA}/orderCommands`);
-    socket.on('connect', () => {
-      socket.on('send_command_order', (notifications, notificationCount) => {
-        notificationDispatch({
-          type: 'ADD',
-          payload: {notifications, notificationCount},
+    try {
+      const socket = io(`${API_HOSTA}/orderCommands`);
+      socket.on('connect', () => {
+        console.log(notificationStat);
+        socket.on('send_command_order', (notifications, notificationCount) => {
+          notificationDispatch({
+            type: 'ADD',
+            payload: {notifications, notificationCount},
+          });
         });
       });
-    });
-    return () => socket.disconnect();
+      return () => socket.disconnect();
+    } catch (error) {
+      console.log(error);
+    }
   });
 
   useEffect(() => {

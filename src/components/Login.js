@@ -3,13 +3,13 @@ import React, {useState} from 'react';
 import {Button, SafeAreaView, Text, TextInput} from 'react-native';
 
 const Login = ({loginRequest, message, isAuth, isActive}) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState(null);
+  const [password, setPassword] = useState(null);
 
   const login = ($username, $password, $loginRequest) => {
     $loginRequest($username, $password);
-    setUsername('');
-    setPassword('');
+    setUsername(null);
+    setPassword(null);
   };
 
   return (
@@ -23,7 +23,7 @@ const Login = ({loginRequest, message, isAuth, isActive}) => {
           borderWidth: 1,
         }}
         placeholder="أدخل اسم المستخدم أو عنوان البريد الإلكتروني"
-        onChangeText={text => setUsername(text)}
+        onChangeText={setUsername}
         value={username}
       />
       <TextInput
@@ -34,7 +34,7 @@ const Login = ({loginRequest, message, isAuth, isActive}) => {
         }}
         placeholder="أدخل كلمة المرور"
         secureTextEntry={true}
-        onChangeText={text => setPassword(text)}
+        onChangeText={setPassword}
         value={password}
       />
       <Button

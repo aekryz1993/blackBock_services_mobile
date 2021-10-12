@@ -20,6 +20,9 @@ const Header = ({
   backAction,
   fetchcreditRequest,
   walletCredit,
+  modalVisible,
+  setModalVisible,
+  state,
 }) => {
   const onPressBack = () => {
     backAction();
@@ -37,11 +40,16 @@ const Header = ({
           </TouchableOpacity>
         )}
       </View>
-      <View style={styles.right}>
+      <View style={styles.center}>
         <Currency
           walletCredit={walletCredit}
           fetchcreditRequest={fetchcreditRequest}
+          modalVisible={modalVisible}
+          setModalVisible={setModalVisible}
+          state={state}
         />
+      </View>
+      <View style={styles.right}>
         <TouchableOpacity activeOpacity={0.9}>
           <IoniconsIcon
             name="md-notifications-outline"

@@ -7,11 +7,15 @@ import rootSaga from './sagas';
 
 const sagaMiddleware = createSagaMiddleware();
 
+const middlewares = [sagaMiddleware];
+
 export default function configureStore() {
-  const store = createStore(
-    rootReducer,
-    applyMiddleware(sagaMiddleware, createLogger()),
-  );
+  if (__DEV__) {
+    const createDebugger = require('redux-flipper').default;
+    middlewares.push(createDebugger());
+    middlewares.push(createLogger());
+  }
+  const store = createStore(rootReducer, applyMiddleware(...middlewares));
   sagaMiddleware.run(rootSaga);
   return store;
 }

@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  TouchableWithoutFeedback,
-  StyleSheet,
-  Modal,
-  View,
-  StatusBar,
-} from 'react-native';
+import {TouchableWithoutFeedback, Modal, View} from 'react-native';
 // import t from 'prop-types';
 
 const CustomModal = ({

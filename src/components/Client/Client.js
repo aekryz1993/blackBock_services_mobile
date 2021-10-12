@@ -55,14 +55,22 @@ const Wallet = () => (
 
 const Client = ({loading, logoutrequest, currentUser, profilePic}) => {
   useEffect(() => {
-    const socket = io(`${API_HOSTA}/treatedCommands`);
-    socket.on('connect', () => {
-      socket.emit('send_userId', currentUser.id);
-      socket.on('send_command', command => {
-        console.log(command);
+    try {
+      const socket = io(`${API_HOSTA}/treatedCommands`);
+      socket.on('connect', () => {
+        console.log(currentUser.id);
+        socket.emit('send_userId', currentUser.id);
+        socket.on('send_command', command => {
+          console.log(command);
+        });
+        socket.on('send_command', command => {
+          console.log(command);
+        });
       });
-    });
-    return () => socket.disconnect();
+      return () => socket.disconnect();
+    } catch (error) {
+      console.log(error);
+    }
   });
 
   if (loading) {
