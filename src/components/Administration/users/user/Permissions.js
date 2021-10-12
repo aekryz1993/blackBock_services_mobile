@@ -6,21 +6,12 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import {initPermissions} from '../objects/permissions';
 import PermissionsComponent from '../Permission';
 
 const Permissions = () => {
   const [isAdmin, setisAdmin] = useState(false);
-  const [permissions, setpermissions] = useState({
-    addProduct: false,
-    updateProductPrice: false,
-    updateProduct: false,
-    addUser: false,
-    viewUser: false,
-    updateUser: false,
-    updateCredit: false,
-    viewcmnd: false,
-    confirmPayment: false,
-  });
+  const [permissions, setpermissions] = useState(initPermissions);
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>

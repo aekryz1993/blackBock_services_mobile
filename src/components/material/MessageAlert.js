@@ -9,10 +9,12 @@ const MessageAlert = ({message, onCloseAlert, alertbcStyle}) => {
         <IoniconsIcon
           name="close-circle-sharp"
           size={20}
-          color="rgba(20,200,50,1)"
+          color={alertbcStyle.color}
         />
       </TouchableOpacity>
-      <Text>{message}</Text>
+      <Text style={[styles.message, {color: alertbcStyle.color}]}>
+        {message}
+      </Text>
     </View>
   );
 };
@@ -21,16 +23,18 @@ const styles = StyleSheet.create({
   container: {
     alignSelf: 'center',
     width: '90%',
-    height: 56,
+    height: '10%',
     marginTop: 20,
     borderWidth: 1,
-    justifyContent: 'center',
     alignItems: 'center',
   },
   closeAlert: {
-    alignSelf: 'flex-end',
-    marginRight: 6,
-    marginTop: 2,
+    position: 'relative',
+    left: '45%',
+    top: '4%',
+  },
+  message: {
+    fontSize: 16,
   },
 });
 

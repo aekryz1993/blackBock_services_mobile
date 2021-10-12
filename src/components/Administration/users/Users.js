@@ -18,22 +18,23 @@ const addNewItems = (currentUsers, fetchUsersRequest, _nextPage) => {
   return;
 };
 
-const Item = ({username, image, navigation}) => {
+const Item = ({user, image, navigation}) => {
+  const onNavigate = () => {
+    navigation.navigate('UserScreen', {title: user.username});
+  };
   const url = image
     .split('/')
     .slice(image.split('/').indexOf('static'))
     .join('/');
   return (
-    <TouchableOpacity
-      style={styles.item}
-      onPress={() => navigation.navigate('UserScreen')}>
+    <TouchableOpacity style={styles.item} onPress={onNavigate}>
       <Image
         style={styles.tinyLogo}
         source={{
           uri: `${API_HOSTA}/${url}`,
         }}
       />
-      <Text style={styles.username}>{username}</Text>
+      <Text style={styles.username}>{user.username}</Text>
     </TouchableOpacity>
   );
 };
@@ -65,19 +66,11 @@ const Users = ({
   // });
 
   const renderItem = ({item}) => {
-    return (
-      <Item
-        username={item.username}
-        image={item.Image.url}
-        navigation={navigation}
-      />
-    );
+    return <Item user={item} image={item.Image.url} navigation={navigation} />;
   };
 
   const navigateToAddUser = () => {
-    navigation.navigate('AddUserScreen', {
-      screen: 'UserInfoScreen',
-    });
+    navigation.navigate('AddUserScreen');
   };
 
   return (

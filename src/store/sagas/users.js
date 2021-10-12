@@ -26,14 +26,8 @@ function* addUser($action) {
   try {
     const data = yield call(addUserApi, {
       body: $action.payload.body,
-      navigate: $action.payload.navigate,
-      setBody: $action.payload.setBody,
     });
-    const _action = yield put(addUserSucced(data));
-    if (_action.payload.success) {
-      yield _action.payload.setBody();
-      yield _action.payload.navigate();
-    }
+    yield put(addUserSucced(data));
   } catch (error) {
     yield put(addUserFailed(error));
   }

@@ -21,11 +21,27 @@ const Stack = createStackNavigator();
 const Users = () => (
   <Stack.Navigator
     screenOptions={{
-      headerShown: false,
+      headerShown: true,
+      headerStyle: {
+        backgroundColor: '#000',
+      },
+      headerTintColor: '#fff',
     }}>
-    <Stack.Screen name="UsersScreen" component={UsersContainer} />
-    <Stack.Screen name="AddUserScreen" component={AddUserContainer} />
-    <Stack.Screen name="UserScreen" component={UserContainer} />
+    <Stack.Screen
+      options={{headerShown: false}}
+      name="UsersScreen"
+      component={UsersContainer}
+    />
+    <Stack.Screen
+      options={{title: 'إضافة عميل'}}
+      name="AddUserScreen"
+      component={AddUserContainer}
+    />
+    <Stack.Screen
+      options={({route}) => ({title: route.params.title})}
+      name="UserScreen"
+      component={UserContainer}
+    />
   </Stack.Navigator>
 );
 

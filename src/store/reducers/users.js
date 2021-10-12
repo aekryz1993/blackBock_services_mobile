@@ -48,8 +48,6 @@ const addUserReducer = (
   state = {
     message: null,
     success: false,
-    navigate: () => {},
-    setBody: () => {},
   },
   action,
 ) => {

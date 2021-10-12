@@ -1,17 +1,6 @@
 import React from 'react';
 import {View, StyleSheet, ScrollView, Text, Switch} from 'react-native';
-
-const permissionsBody = [
-  {key: 'addProduct', label: 'إضافة منتج'},
-  {key: 'updateProductPrice', label: 'تغيير سعر منتج'},
-  {key: 'updateProduct', label: 'تعديل منتج'},
-  {key: 'addUser', label: 'إضافة عميل'},
-  {key: 'viewUser', label: 'مشاهدة العملاء'},
-  {key: 'updateUser', label: 'تعديل عميل'},
-  {key: 'updateCredit', label: 'تعديل محفظة العميل'},
-  {key: 'viewcmnd', label: 'مشاهدة الطلبات'},
-  {key: 'confirmPayment', label: 'تأكيد الدفع'},
-];
+import {permissionsBody} from './objects/permissions';
 
 const Permissions = ({isAdmin, setisAdmin, permissions, setpermissions}) => {
   return (

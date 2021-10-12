@@ -25,7 +25,7 @@ export const fetchAllUsersApi = (page, currentUsers) => {
   });
 };
 
-export const addUserApi = ({body, navigate, setBody}) => {
+export const addUserApi = ({body}) => {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await fetch(`${API_HOSTA}/api/adminSession/users/add`, {
@@ -39,7 +39,7 @@ export const addUserApi = ({body, navigate, setBody}) => {
       if (!JSON.parse(data).success) {
         reject(JSON.parse(data));
       }
-      resolve({data: JSON.parse(data), navigate, setBody});
+      resolve(JSON.parse(data));
     } catch (e) {
       reject({
         message: e.message,

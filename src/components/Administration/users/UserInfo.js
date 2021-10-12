@@ -1,20 +1,12 @@
 import React from 'react';
 import {StyleSheet, ScrollView, TextInput, View} from 'react-native';
 import IoniconsIcon from 'react-native-vector-icons/dist/Ionicons';
+import {userBodyP1, userBodyP2, userBodyP3} from './objects/user';
 
-export const userBody = [
-  {placeholder: 'First Name', key: 'firstname'},
-  {placeholder: 'Last Name', key: 'lastname'},
-  {placeholder: 'Username', key: 'username'},
-  {placeholder: 'Email', key: 'email'},
-  {placeholder: 'Phone Number', key: 'phone'},
-  {placeholder: 'Password', key: 'password'},
-];
-
-const UserInfo = ({infoUserBody, setBody, isEmpty}) => {
+export const Page1 = ({infoUserBody, setBody, isEmpty}) => {
   return (
     <ScrollView>
-      {userBody.map((item, index) => (
+      {userBodyP1.map((item, index) => (
         <View key={index.toString()} style={styles.inputContainer}>
           <TextInput
             style={[
@@ -25,7 +17,65 @@ const UserInfo = ({infoUserBody, setBody, isEmpty}) => {
             onChangeText={text => setBody({...infoUserBody, [item.key]: text})}
             value={infoUserBody[item.key]}
             placeholderTextColor="#bbb"
-            secureTextEntry={item.key === 'password' ? true : false}
+          />
+          {isEmpty.includes(item.key) && (
+            <IoniconsIcon
+              style={styles.empty}
+              name="close-circle"
+              size={20}
+              color="rgba(255,20,50,1)"
+            />
+          )}
+        </View>
+      ))}
+    </ScrollView>
+  );
+};
+
+export const Page2 = ({infoUserBody, setBody, isEmpty}) => {
+  return (
+    <ScrollView>
+      {userBodyP2.map((item, index) => (
+        <View key={index.toString()} style={styles.inputContainer}>
+          <TextInput
+            style={[
+              styles.input,
+              isEmpty.includes(item.key) && styles.emptybclr,
+            ]}
+            placeholder={item.placeholder}
+            onChangeText={text => setBody({...infoUserBody, [item.key]: text})}
+            value={infoUserBody[item.key]}
+            placeholderTextColor="#bbb"
+          />
+          {isEmpty.includes(item.key) && (
+            <IoniconsIcon
+              style={styles.empty}
+              name="close-circle"
+              size={20}
+              color="rgba(255,20,50,1)"
+            />
+          )}
+        </View>
+      ))}
+    </ScrollView>
+  );
+};
+
+export const Page3 = ({infoUserBody, setBody, isEmpty}) => {
+  return (
+    <ScrollView>
+      {userBodyP3.map((item, index) => (
+        <View key={index.toString()} style={styles.inputContainer}>
+          <TextInput
+            style={[
+              styles.input,
+              isEmpty.includes(item.key) && styles.emptybclr,
+            ]}
+            placeholder={item.placeholder}
+            onChangeText={text => setBody({...infoUserBody, [item.key]: text})}
+            value={infoUserBody[item.key]}
+            placeholderTextColor="#bbb"
+            secureTextEntry={true}
           />
           {isEmpty.includes(item.key) && (
             <IoniconsIcon
@@ -62,5 +112,3 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-
-export default UserInfo;

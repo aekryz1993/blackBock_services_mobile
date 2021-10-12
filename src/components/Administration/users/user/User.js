@@ -59,7 +59,7 @@ const User = ({navigation}) => {
             style={
               screen === 'permissions' ? styles.label_active : styles.label
             }>
-            التراخيص
+            الرخص
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
