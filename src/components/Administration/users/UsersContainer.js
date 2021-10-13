@@ -3,9 +3,8 @@ import {fetchUsersRequest, fetchUsersFinished} from '@actions/users';
 import Users from './Users';
 
 const mapStateToProps = (state, ownProps) => {
-  const {users, nextPage, message} = state.fetchUsersReducer;
+  const {nextPage, message} = state.fetchUsersReducer;
   return {
-    users,
     nextPage,
     message,
     navigation: ownProps.navigation,
@@ -14,8 +13,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    fetchUsersRequest: (page, currentUsers) =>
-      dispatch(fetchUsersRequest(page, currentUsers)),
+    fetchUsersRequest: ({page, usersDispatch}) =>
+      dispatch(fetchUsersRequest({page, usersDispatch})),
     fetchUsersFinished: () => dispatch(fetchUsersFinished()),
   };
 };

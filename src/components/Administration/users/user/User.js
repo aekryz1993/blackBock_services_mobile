@@ -11,15 +11,58 @@ import EditUserInfo from './EditUserInfo';
 import Permissions from './Permissions';
 import Wallet from './Wallet';
 
-const User = ({navigation}) => {
+const User = ({
+  userMsg,
+  userSuccess,
+  permMsg,
+  permSuccess,
+  walletMsg,
+  walletSuccess,
+  updateUserRequest,
+  updateUserFinished,
+  updatePermissionsRequest,
+  updatePermissionsFinished,
+  updateWalletRequest,
+  updateWalletFinished,
+  route,
+}) => {
   const [screen, setScreen] = useState('userInfo');
+  const {permissions, wallet, userId} = route.params;
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
-        {screen === 'userInfo' && <EditUserInfo />}
-        {screen === 'permissions' && <Permissions />}
-        {screen === 'wallet' && <Wallet />}
+        {screen === 'userInfo' && (
+          <EditUserInfo
+            userId={userId}
+            message={userMsg}
+            success={userSuccess}
+            updateUserRequest={updateUserRequest}
+            updateUserFinished={updateUserFinished}
+          />
+        )}
+        {screen === 'permissions' && (
+          <Permissions
+            permissions={permissions}
+            permMsg={permMsg}
+            permSuccess={permSuccess}
+            userMsg={userMsg}
+            userSuccess={userSuccess}
+            updateUserRequest={updateUserRequest}
+            updateUserFinished={updateUserFinished}
+            updatePermissionsRequest={updatePermissionsRequest}
+            updatePermissionsFinished={updatePermissionsFinished}
+          />
+        )}
+        {screen === 'wallet' && (
+          <Wallet
+            wallet={wallet}
+            message={walletMsg}
+            success={walletSuccess}
+            updateWalletRequest={updateWalletRequest}
+            updateWalletFinished={updateWalletFinished}
+          />
+        )}
       </View>
       <View style={styles.tabNav}>
         <TouchableOpacity

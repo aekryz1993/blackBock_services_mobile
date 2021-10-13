@@ -14,6 +14,7 @@ import {fetchNotificationCount} from '@apis/users';
 import NotificationScreen from '@components/NotificationScreen';
 import AddUserContainer from './users/addUser/AddUserContainer';
 import UserContainer from './users/user/UserContainer';
+import {UsersContext} from '@components/contexts/Users';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -74,6 +75,7 @@ const Admin = ({
   profilePic,
   fetchUsersFinished,
 }) => {
+  const [usersState, usersDispatch] = useContext(UsersContext);
   const [notificationStat, notificationDispatch] =
     useContext(NotificationContext);
 
@@ -112,6 +114,7 @@ const Admin = ({
 
   const logout = () => {
     fetchUsersFinished();
+    usersDispatch({type: 'END'});
     logoutrequest();
   };
 

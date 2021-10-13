@@ -7,6 +7,18 @@ import {
   ADDUSER_FAILED,
   ADDUSER_REQUEST,
   ADDUSER_REQUEST_ENDED,
+  UPDATEUSER_SUCCEED,
+  UPDATEUSER_FAILED,
+  UPDATEUSER_REQUEST,
+  UPDATEUSER_REQUEST_ENDED,
+  UPDATEPERMISSIONS_SUCCEED,
+  UPDATEPERMISSIONS_FAILED,
+  UPDATEPERMISSIONS_REQUEST,
+  UPDATEPERMISSIONS_REQUEST_ENDED,
+  UPDATEWALLET_SUCCEED,
+  UPDATEWALLET_FAILED,
+  UPDATEWALLET_REQUEST,
+  UPDATEWALLET_REQUEST_ENDED,
 } from '@actions/users';
 
 const fetchUsersReducer = (
@@ -16,6 +28,7 @@ const fetchUsersReducer = (
     message: null,
     nextPage: 0,
     totalUsers: 0,
+    usersDispatch: () => {},
   },
   action,
 ) => {
@@ -48,6 +61,7 @@ const addUserReducer = (
   state = {
     message: null,
     success: false,
+    usersDispatch: () => {},
   },
   action,
 ) => {
@@ -76,4 +90,106 @@ const addUserReducer = (
   }
 };
 
-export default {fetchUsersReducer, addUserReducer};
+const updateUserReducer = (
+  state = {
+    message: null,
+    success: false,
+  },
+  action,
+) => {
+  switch (action.type) {
+    case UPDATEUSER_REQUEST:
+      return {
+        ...state,
+      };
+    case UPDATEUSER_SUCCEED:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case UPDATEUSER_FAILED:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case UPDATEUSER_REQUEST_ENDED:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
+const updatePermissionsReducer = (
+  state = {
+    message: null,
+    success: false,
+  },
+  action,
+) => {
+  switch (action.type) {
+    case UPDATEPERMISSIONS_REQUEST:
+      return {
+        ...state,
+      };
+    case UPDATEPERMISSIONS_SUCCEED:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case UPDATEPERMISSIONS_FAILED:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case UPDATEPERMISSIONS_REQUEST_ENDED:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
+const updateWalletReducer = (
+  state = {
+    message: null,
+    success: false,
+  },
+  action,
+) => {
+  switch (action.type) {
+    case UPDATEWALLET_REQUEST:
+      return {
+        ...state,
+      };
+    case UPDATEWALLET_SUCCEED:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case UPDATEWALLET_FAILED:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case UPDATEWALLET_REQUEST_ENDED:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
+export default {
+  fetchUsersReducer,
+  addUserReducer,
+  updateUserReducer,
+  updatePermissionsReducer,
+  updateWalletReducer,
+};

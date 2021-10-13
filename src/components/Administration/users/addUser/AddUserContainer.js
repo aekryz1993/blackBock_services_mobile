@@ -12,7 +12,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    addUserRequest: ({body}) => dispatch(addUserRequest({body})),
+    addUserRequest: ({body, usersDispatch}) =>
+      dispatch(addUserRequest({body, usersDispatch})),
     addUserFinished: () => dispatch(addUserFinished()),
   };
 };

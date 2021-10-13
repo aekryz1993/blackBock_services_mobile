@@ -1,6 +1,6 @@
 import {API_HOSTA} from '@env';
 
-export const fetchAllUsersApi = (page, currentUsers) => {
+export const fetchAllUsersApi = ({page, usersDispatch}) => {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await fetch(
@@ -13,9 +13,13 @@ export const fetchAllUsersApi = (page, currentUsers) => {
         },
       );
       const data = await response.text();
+      console.log(JSON.parse(data));
+      if (!JSON.parse(data).success) {
+        reject(JSON.parse(data));
+      }
       resolve({
         data: JSON.parse(data),
-        currentUsers,
+        usersDispatch,
       });
     } catch (e) {
       reject({
@@ -25,7 +29,7 @@ export const fetchAllUsersApi = (page, currentUsers) => {
   });
 };
 
-export const addUserApi = ({body}) => {
+export const addUserApi = ({body, usersDispatch}) => {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await fetch(`${API_HOSTA}/api/adminSession/users/add`, {
@@ -35,6 +39,84 @@ export const addUserApi = ({body}) => {
         },
         body: JSON.stringify(body),
       });
+      const data = await response.text();
+      if (!JSON.parse(data).success) {
+        reject(JSON.parse(data));
+      }
+      resolve({data: JSON.parse(data), usersDispatch});
+    } catch (e) {
+      reject({
+        message: e.message,
+      });
+    }
+  });
+};
+
+export const updateUserApi = ({body, id}) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await fetch(
+        `${API_HOSTA}/api/adminSession/users/update/${id}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(body),
+        },
+      );
+      const data = await response.text();
+      if (!JSON.parse(data).success) {
+        reject(JSON.parse(data));
+      }
+      resolve(JSON.parse(data));
+    } catch (e) {
+      reject({
+        message: e.message,
+      });
+    }
+  });
+};
+
+export const updatePermissionsApi = ({body, id}) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await fetch(
+        `${API_HOSTA}/api/adminSession/users/permissions/update/${id}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(body),
+        },
+      );
+      const data = await response.text();
+      if (!JSON.parse(data).success) {
+        reject(JSON.parse(data));
+      }
+      resolve(JSON.parse(data));
+    } catch (e) {
+      reject({
+        message: e.message,
+      });
+    }
+  });
+};
+
+export const updateWalletApi = ({body, id}) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await fetch(
+        `${API_HOSTA}/api/adminSession/users/wallet/update/${id}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(body),
+        },
+      );
       const data = await response.text();
       if (!JSON.parse(data).success) {
         reject(JSON.parse(data));

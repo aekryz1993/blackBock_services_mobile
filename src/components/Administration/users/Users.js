@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   TouchableOpacity,
   FlatList,
@@ -10,21 +10,20 @@ import {
 import {API_HOSTA} from '@env';
 import AdminScreen from '../AdminScreen';
 import ScreenContent from '../ScreenContent';
+import {UsersContext} from '@components/contexts/Users';
 
-const addNewItems = (currentUsers, fetchUsersRequest, _nextPage) => {
-  if (_nextPage >= 0) {
-    fetchUsersRequest(_nextPage, currentUsers);
-  }
-  return;
-};
-
-const Item = ({user, image, navigation}) => {
+const Item = ({user, navigation}) => {
   const onNavigate = () => {
-    navigation.navigate('UserScreen', {title: user.username});
+    navigation.navigate('UserScreen', {
+      title: user.username,
+      permissions: user.Permission,
+      wallet: user.Wallet,
+      userId: user.id,
+    });
   };
-  const url = image
+  const url = user.Image.url
     .split('/')
-    .slice(image.split('/').indexOf('static'))
+    .slice(user.Image.url.split('/').indexOf('static'))
     .join('/');
   return (
     <TouchableOpacity style={styles.item} onPress={onNavigate}>
@@ -39,34 +38,24 @@ const Item = ({user, image, navigation}) => {
   );
 };
 
-const Users = ({
-  users,
-  nextPage,
-  fetchUsersRequest,
-  navigation,
-  fetchUsersFinished,
-}) => {
+const Users = ({nextPage, fetchUsersRequest, navigation}) => {
   const [text, onChangeText] = useState(null);
+  const [usersState, usersDispatch] = useContext(UsersContext);
 
   useEffect(() => {
-    fetchUsersRequest(nextPage, users);
+    fetchUsersRequest({page: nextPage, usersDispatch});
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // useEffect(() => {
-  //   navigation.addListener('blur', () => {
-  //     fetchUsersFinished();
-  //   });
-  // });
-
-  // useEffect(() => {
-  //   navigation.addListener('focus', () => {
-  //     fetchUsersRequest(nextPage, users);
-  //   });
-  // });
+  const onScroll = () => {
+    if (nextPage >= 0) {
+      fetchUsersRequest({page: nextPage, usersDispatch});
+    }
+    return;
+  };
 
   const renderItem = ({item}) => {
-    return <Item user={item} image={item.Image.url} navigation={navigation} />;
+    return <Item user={item} navigation={navigation} />;
   };
 
   const navigateToAddUser = () => {
@@ -81,13 +70,13 @@ const Users = ({
         onChangeText={onChangeText}
         placeholder="Search">
         <FlatList
-          data={users}
+          data={usersState.users}
           showsVerticalScrollIndicator={false}
           renderItem={renderItem}
           keyExtractor={item => item.id}
           numColumns={2}
           horizontal={false}
-          onEndReached={() => addNewItems(users, fetchUsersRequest, nextPage)}
+          onEndReached={onScroll}
         />
       </ScreenContent>
     </AdminScreen>
