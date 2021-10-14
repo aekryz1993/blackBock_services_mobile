@@ -14,7 +14,6 @@ export const fetchUsersRequest = ({page, usersDispatch}) => ({
 export const fetchUsersSucced = response => ({
   type: FETCHUSERS_SUCCEED,
   payload: {
-    // users: [...response.currentUsers, ...response.data.users],
     users: response.data.users,
     totalPages: response.data.totalPages,
     nextPage: response.data.nextPage,

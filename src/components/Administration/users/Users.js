@@ -38,7 +38,7 @@ const Item = ({user, navigation}) => {
   );
 };
 
-const Users = ({nextPage, fetchUsersRequest, navigation}) => {
+const Users = ({nextPage, totalUsers, fetchUsersRequest, navigation}) => {
   const [text, onChangeText] = useState(null);
   const [usersState, usersDispatch] = useContext(UsersContext);
 
@@ -48,7 +48,7 @@ const Users = ({nextPage, fetchUsersRequest, navigation}) => {
   }, []);
 
   const onScroll = () => {
-    if (nextPage >= 0) {
+    if (nextPage >= 0 && totalUsers !== 0) {
       fetchUsersRequest({page: nextPage, usersDispatch});
     }
     return;
