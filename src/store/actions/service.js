@@ -1,47 +1,43 @@
-export const FETCHTopUpServices_REQUEST = 'FETCHTopUpServices_REQUEST';
-export const FETCHTopUpServices_SUCCEED = 'FETCHTopUpServices_SUCCEED';
-export const FETCHTopUpServices_FAILED = 'FETCHTopUpServices_FAILED';
+export const FETCHPRODUCTS_REQUEST = 'FETCHPRODUCTS_REQUEST';
+export const FETCHPRODUCTS_SUCCEED = 'FETCHPRODUCTS_SUCCEED';
+export const FETCHPRODUCTS_FAILED = 'FETCHPRODUCTS_FAILED';
+export const FETCHPRODUCTS_ENDED = 'FETCHPRODUCTS_ENDED';
 
-export const FETCHCodeServices_REQUEST = 'FETCHCodeServices_REQUEST';
-export const FETCHCodeServices_SUCCEED = 'FETCHCodeServices_SUCCEED';
-export const FETCHCodeServices_FAILED = 'FETCHCodeServices_FAILED';
-
-// --------------- TOP UP SERVICES ------------------------
-
-export const fetchTopUpServicesRequest = () => ({
-  type: FETCHTopUpServices_REQUEST,
-});
-
-export const fetchTopUpServicesSucced = response => ({
-  type: FETCHTopUpServices_SUCCEED,
+export const fetchProductsRequest = ({productsDispatch, label, category}) => ({
+  type: FETCHPRODUCTS_REQUEST,
   payload: {
-    services: response.data.services,
+    productsDispatch,
+    label,
+    category,
   },
 });
 
-export const fetchTopUpServicesFailed = response => ({
-  type: FETCHTopUpServices_FAILED,
+export const fetchProductsSucced = response => ({
+  type: FETCHPRODUCTS_SUCCEED,
   payload: {
-    message: response.message,
+    [response.label]: response.data.services,
+    productsDispatch: response.productsDispatch,
+    label: response.label,
   },
 });
 
-// --------------- CODE SERVICES ------------------------
-
-export const fetchCodeServicesRequest = () => ({
-  type: FETCHCodeServices_REQUEST,
-});
-
-export const fetchCodeServicesSucced = response => ({
-  type: FETCHCodeServices_SUCCEED,
+export const fetchProductsFailed = response => ({
+  type: FETCHPRODUCTS_FAILED,
   payload: {
-    services: response.data.services,
+    [response.label]: response.message,
   },
 });
 
-export const fetchCodeServicesFailed = response => ({
-  type: FETCHCodeServices_FAILED,
-  payload: {
-    message: response.message,
-  },
-});
+export const fetchProductsFinished = () => {
+  return {
+    type: FETCHPRODUCTS_ENDED,
+    payload: {
+      topupProducts: [],
+      codeProducts: [],
+      topUpMessage: null,
+      codeMessage: null,
+      productsDispatch: () => {},
+      label: null,
+    },
+  };
+};

@@ -13,7 +13,6 @@ export const fetchAllUsersApi = ({page, usersDispatch}) => {
         },
       );
       const data = await response.text();
-      console.log(JSON.parse(data));
       if (!JSON.parse(data).success) {
         reject(JSON.parse(data));
       }

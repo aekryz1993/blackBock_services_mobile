@@ -15,6 +15,8 @@ import NotificationScreen from '@components/NotificationScreen';
 import AddUserContainer from './users/addUser/AddUserContainer';
 import UserContainer from './users/user/UserContainer';
 import {UsersContext} from '@components/contexts/Users';
+import {ProductsContext} from '@components/contexts/ProductsProvider';
+import ProductsContainer from './products/ProductsContainer';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -46,6 +48,33 @@ const Users = () => (
   </Stack.Navigator>
 );
 
+const Products = ({category, name}) => (
+  <Stack.Navigator
+    screenOptions={{
+      headerShown: true,
+      headerStyle: {
+        backgroundColor: '#000',
+      },
+      headerTintColor: '#fff',
+    }}>
+    <Stack.Screen options={{headerShown: false}} name="ProductsScreen">
+      {props => (
+        <ProductsContainer {...props} category={category} parent={name} />
+      )}
+    </Stack.Screen>
+    {/* <Stack.Screen
+      options={{title: 'إضافة عميل'}}
+      name="AddProductScreen"
+      component={AddProductContainer}
+    /> */}
+    {/* <Stack.Screen
+      options={({route}) => ({title: route.params.title})}
+      name="Productcreen"
+      component={ProductContainer}
+    /> */}
+  </Stack.Navigator>
+);
+
 const DrawerScreens = ({logout, currentUser, profilePic}) => (
   <Drawer.Navigator
     drawerStyle={{
@@ -65,6 +94,9 @@ const DrawerScreens = ({logout, currentUser, profilePic}) => (
     }}>
     <Drawer.Screen name="Users" component={Users} />
     <Drawer.Screen name="Commands" component={CommandsContainer} />
+    <Drawer.Screen name="Products">
+      {props => <Products {...props} />}
+    </Drawer.Screen>
   </Drawer.Navigator>
 );
 
@@ -74,8 +106,11 @@ const Admin = ({
   currentUser,
   profilePic,
   fetchUsersFinished,
+  fetchProductsFinished,
 }) => {
   const [usersState, usersDispatch] = useContext(UsersContext);
+  const [productsState, productsDispatch] = useContext(ProductsContext);
+
   const [notificationStat, notificationDispatch] =
     useContext(NotificationContext);
 
@@ -116,6 +151,9 @@ const Admin = ({
     fetchUsersFinished();
     usersDispatch({type: 'END'});
     logoutrequest();
+    fetchProductsFinished();
+    productsDispatch({type: 'END', payload: {label: 'topupProducts'}});
+    productsDispatch({type: 'END', payload: {label: 'codeProducts'}});
   };
 
   return (

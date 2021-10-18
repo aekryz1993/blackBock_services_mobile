@@ -1,60 +1,40 @@
 import {
-  FETCHTopUpServices_SUCCEED,
-  FETCHTopUpServices_FAILED,
-  FETCHTopUpServices_REQUEST,
-  FETCHCodeServices_SUCCEED,
-  FETCHCodeServices_FAILED,
-  FETCHCodeServices_REQUEST,
+  FETCHPRODUCTS_REQUEST,
+  FETCHPRODUCTS_SUCCEED,
+  FETCHPRODUCTS_FAILED,
+  FETCHPRODUCTS_ENDED,
 } from '@actions/service';
 
-const fetchTopUpReducer = (
+const fetchProductsReducer = (
   state = {
-    topUpServices: [],
-    topUpMessage: '',
+    topupProducts: [],
+    codeProducts: [],
+    topUpMessage: null,
+    codeMessage: null,
+    productsDispatch: () => {},
+    label: null,
   },
   action,
 ) => {
   switch (action.type) {
-    case FETCHTopUpServices_REQUEST:
+    case FETCHPRODUCTS_REQUEST:
       return {
         ...state,
       };
-    case FETCHTopUpServices_SUCCEED:
+    case FETCHPRODUCTS_SUCCEED:
       return {
         ...state,
-        topUpServices: action.payload.services,
+        ...action.payload,
       };
-    case FETCHTopUpServices_FAILED:
+    case FETCHPRODUCTS_FAILED:
       return {
         ...state,
-        topUpMessage: action.payload.message,
+        ...action.payload,
       };
-    default:
-      return state;
-  }
-};
-
-const fetchCodeReducer = (
-  state = {
-    codeServices: [],
-    message: '',
-  },
-  action,
-) => {
-  switch (action.type) {
-    case FETCHCodeServices_REQUEST:
+    case FETCHPRODUCTS_ENDED:
       return {
         ...state,
-      };
-    case FETCHCodeServices_SUCCEED:
-      return {
-        ...state,
-        codeServices: action.payload.services,
-      };
-    case FETCHCodeServices_FAILED:
-      return {
-        ...state,
-        codeMessage: action.payload.message,
+        ...action.payload,
       };
     default:
       return state;
@@ -62,6 +42,5 @@ const fetchCodeReducer = (
 };
 
 export default {
-  fetchTopUpReducer,
-  fetchCodeReducer,
+  fetchProductsReducer,
 };

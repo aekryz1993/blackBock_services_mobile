@@ -11,6 +11,7 @@ import {API_HOSTA} from '@env';
 import AdminScreen from '../AdminScreen';
 import ScreenContent from '../ScreenContent';
 import {UsersContext} from '@components/contexts/Users';
+import IoniconsIcon from 'react-native-vector-icons/dist/Ionicons';
 
 const Item = ({user, navigation}) => {
   const onNavigate = () => {
@@ -28,7 +29,7 @@ const Item = ({user, navigation}) => {
   return (
     <TouchableOpacity style={styles.item} onPress={onNavigate}>
       <Image
-        style={styles.tinyLogo}
+        style={styles.userImage}
         source={{
           uri: `${API_HOSTA}/${url}`,
         }}
@@ -68,7 +69,9 @@ const Users = ({nextPage, totalUsers, fetchUsersRequest, navigation}) => {
         navigateTo={navigateToAddUser}
         text={text}
         onChangeText={onChangeText}
-        placeholder="Search">
+        placeholder="Search"
+        Icon={IoniconsIcon}
+        iconName="person-add">
         <FlatList
           data={usersState.users}
           showsVerticalScrollIndicator={false}
@@ -88,7 +91,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: StatusBar.currentHeight || 0,
   },
-  tinyLogo: {
+  userImage: {
     width: 100,
     height: 100,
   },

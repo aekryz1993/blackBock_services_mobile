@@ -36,19 +36,31 @@ const slideList = services =>
 
 const navigateToNext = ({
   navigation,
+  navigateTo,
   products,
   category,
   image,
   serviceName,
 }) => {
-  navigation.navigate('Products', {
-    screen: 'ProductScreen',
-    params: {products, category, image, serviceName},
+  navigation.navigate(navigateTo.parent, {
+    screen: navigateTo.child,
+    params: {
+      products,
+      category,
+      image,
+      serviceName,
+    },
   });
   return;
 };
 
-const Slide = memo(function Slide({data, navigation, setProducts, styles}) {
+const Slide = memo(function Slide({
+  data,
+  navigation,
+  navigateTo,
+  setProducts,
+  styles,
+}) {
   return (
     <View style={styles.slide}>
       <TouchableHighlight
@@ -62,6 +74,7 @@ const Slide = memo(function Slide({data, navigation, setProducts, styles}) {
             image: data.image,
             serviceName: data.serviceName,
             setProducts,
+            navigateTo,
           })
         }>
         <Image source={{uri: data.image}} style={styles.slideImage} />
@@ -96,7 +109,7 @@ function Pagination({index, setIndex, flatlistRef, services, styles}) {
   );
 }
 
-const Carousel = ({services, navigation}) => {
+const Carousel = ({services, navigation, navigateTo}) => {
   const [layout, setlayout] = useState({
     orientation: isPortrait('window') ? 'portrait' : 'landscape',
     devicetype: isTablet('window') ? 'tablet' : 'phone',
@@ -156,6 +169,7 @@ const Carousel = ({services, navigation}) => {
       <Slide
         data={item}
         navigation={navigation}
+        navigateTo={navigateTo}
         layout={layout}
         styles={styles}
       />

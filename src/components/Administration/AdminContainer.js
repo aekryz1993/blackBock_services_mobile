@@ -2,8 +2,10 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {logoutrequest} from '@actions/auth';
 import {fetchUsersFinished} from '@actions/users';
+import {fetchProductsFinished} from '@actions/service';
 import Admin from './Admin';
-import {UsersProvider} from '../contexts/Users';
+import {UsersProvider} from '@components/contexts/Users';
+import {ProductsProvider} from '@components/contexts/ProductsProvider';
 
 const mapStateToProps = (state, ownProps) => {
   const {loading} = state.loginReducer;
@@ -15,6 +17,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => ({
   logoutrequest: () => dispatch(logoutrequest()),
   fetchUsersFinished: () => dispatch(fetchUsersFinished()),
+  fetchProductsFinished: () => dispatch(fetchProductsFinished()),
 });
 
 const AdminContainer = connect(
@@ -22,7 +25,9 @@ const AdminContainer = connect(
   mapDispatchToProps,
 )(props => (
   <UsersProvider>
-    <Admin {...props} />
+    <ProductsProvider>
+      <Admin {...props} />
+    </ProductsProvider>
   </UsersProvider>
 ));
 

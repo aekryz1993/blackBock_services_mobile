@@ -2,7 +2,6 @@ import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import SearchBar from '@components/material/SearchBar';
 import FAB from '@components/material/FAB';
-import IoniconsIcon from 'react-native-vector-icons/dist/Ionicons';
 
 const ScreenContent = ({
   children,
@@ -10,17 +9,21 @@ const ScreenContent = ({
   onChangeText,
   placeholder,
   navigateTo,
+  Icon,
+  iconName,
 }) => {
   return (
     <View style={styles.container}>
-      <SearchBar
-        text={text}
-        onChangeText={onChangeText}
-        placeholder={placeholder}
-      />
+      {placeholder && (
+        <SearchBar
+          text={text}
+          onChangeText={onChangeText}
+          placeholder={placeholder}
+        />
+      )}
       <View style={styles.content}>{children}</View>
       <FAB navigateTo={navigateTo}>
-        <IoniconsIcon name="person-add" size={20} color="#fff" />
+        <Icon name={iconName} size={20} color="#fff" />
       </FAB>
     </View>
   );

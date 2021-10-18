@@ -1,33 +1,31 @@
 import {call, put, takeEvery} from 'redux-saga/effects';
-import {fetchCodeServices, fetchTopUpServices} from '@apis/service';
+import {fetchProducts} from '@apis/service';
 import {
-  fetchTopUpServicesSucced,
-  fetchTopUpServicesFailed,
-  fetchCodeServicesSucced,
-  fetchCodeServicesFailed,
-  FETCHTopUpServices_REQUEST,
-  FETCHCodeServices_REQUEST,
+  fetchProductsSucced,
+  fetchProductsFailed,
+  FETCHPRODUCTS_REQUEST,
 } from '@actions/service';
 
-function* fetchingTopUpServices() {
+function* fetchingProducts($action) {
   try {
-    const data = yield call(fetchTopUpServices);
-    yield put(fetchTopUpServicesSucced(data));
+    const data = yield call(fetchProducts, {
+      productsDispatch: $action.payload.productsDispatch,
+      label: $action.payload.label,
+      category: $action.payload.category,
+    });
+    const _action = yield put(fetchProductsSucced(data));
+    yield _action.payload.productsDispatch({
+      type: 'ADDMULTI',
+      payload: {
+        label: _action.payload.label,
+        products: _action.payload[_action.payload.label],
+      },
+    });
   } catch (error) {
-    yield put(fetchTopUpServicesFailed(error));
-  }
-}
-
-function* fetchingCodeServices() {
-  try {
-    const data = yield call(fetchCodeServices);
-    yield put(fetchCodeServicesSucced(data));
-  } catch (error) {
-    yield put(fetchCodeServicesFailed(error));
+    yield put(fetchProductsFailed(error));
   }
 }
 
 export function* watchFetchingServices() {
-  yield takeEvery(FETCHTopUpServices_REQUEST, fetchingTopUpServices);
-  yield takeEvery(FETCHCodeServices_REQUEST, fetchingCodeServices);
+  yield takeEvery(FETCHPRODUCTS_REQUEST, fetchingProducts);
 }

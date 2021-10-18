@@ -6,7 +6,7 @@ import AdminCountainer from '@components/Administration/AdminContainer';
 import Login from '@components/Login';
 import Client from '@components/Client/ClientContainer';
 import Loading from '@components/Loading';
-import {NotificationProvider} from '../contexts/NotificationProvider';
+import {NotificationProvider} from '@components/contexts/NotificationProvider';
 
 const Stack = createStackNavigator();
 

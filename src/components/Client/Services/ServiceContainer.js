@@ -1,27 +1,22 @@
 import {connect} from 'react-redux';
-import {
-  fetchTopUpServicesRequest,
-  fetchCodeServicesRequest,
-} from '@actions/service';
+import {fetchProductsRequest} from '@actions/service';
 import Service from './Service';
 import {fetchcreditRequest} from '@actions/wallet';
 
 const mapStateToProps = (state, ownProps) => {
-  const {topUpServices} = state.fetchTopUpReducer;
-  const {codeServices} = state.fetchCodeReducer;
+  const {topupProducts, codeProducts} = state.fetchProductsReducer;
   const {wallet} = state.fetchCreditReducer;
   return {
-    topUpServices,
-    codeServices,
+    topupProducts,
+    codeProducts,
     walletCredit: wallet,
-    navigation: ownProps.navigation,
   };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    fetchTopUpServicesRequest: () => dispatch(fetchTopUpServicesRequest()),
-    fetchCodeServicesRequest: () => dispatch(fetchCodeServicesRequest()),
+    fetchProductsRequest: ({productsDispatch, label, category}) =>
+      dispatch(fetchProductsRequest({productsDispatch, label, category})),
     fetchcreditRequest: () => dispatch(fetchcreditRequest()),
   };
 };

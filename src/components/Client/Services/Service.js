@@ -1,22 +1,32 @@
-import React, {useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {StyleSheet, StatusBar, View, ScrollView} from 'react-native';
 
 import Carousel from '@components/Carousel';
 import Bar from '@components/Bar';
 import ClientScreen from '@components/Client/ClientScreen';
+import {ProductsContext} from '@components/contexts/ProductsProvider';
 
 const Service = ({
-  topUpServices,
-  codeServices,
-  fetchTopUpServicesRequest,
-  fetchCodeServicesRequest,
+  // topupProducts,
+  // codeProducts,
+  fetchProductsRequest,
   fetchcreditRequest,
   walletCredit,
   navigation,
 }) => {
+  const [productsState, productsDispatch] = useContext(ProductsContext);
+
   useEffect(() => {
-    fetchTopUpServicesRequest();
-    fetchCodeServicesRequest();
+    fetchProductsRequest({
+      productsDispatch,
+      label: 'topupProducts',
+      category: 'id',
+    });
+    fetchProductsRequest({
+      productsDispatch,
+      label: 'codeProducts',
+      category: 'code',
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -29,21 +39,23 @@ const Service = ({
         <View style={styles.carousel}>
           <Bar title={'Top Up'} />
           <Carousel
-            services={topUpServices}
+            services={productsState.topupProducts}
             navigation={navigation}
             category={'id'}
             fetchcreditRequest={fetchcreditRequest}
             walletCredit={walletCredit}
+            navigateTo={{parent: 'Products', child: 'ProductScreen'}}
           />
         </View>
         <View style={styles.carousel}>
           <Bar title={'Card'} />
           <Carousel
-            services={codeServices}
+            services={productsState.codeProducts}
             navigation={navigation}
             category={'code'}
             fetchcreditRequest={fetchcreditRequest}
             walletCredit={walletCredit}
+            navigateTo={{parent: 'Products', child: 'ProductScreen'}}
           />
         </View>
       </ScrollView>

@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createStackNavigator} from '@react-navigation/stack';
 import FeatherIcon from 'react-native-vector-icons/Feather';
@@ -16,6 +16,7 @@ import {OrderProvider} from '@components/contexts/OrderProvider';
 import CommandsContainer from '@components/Client/Commands/CommandsContainer';
 import WalletContainer from '@components/Client/Wallet/WalletContainer';
 import CoinbasePanel from '@components/Client/Wallet/CoinbasePanel';
+import {ProductsContext} from '@components/contexts/ProductsProvider';
 import {API_HOSTA} from '@env';
 
 const Drawer = createDrawerNavigator();
@@ -53,7 +54,15 @@ const Wallet = () => (
   </Stack.Navigator>
 );
 
-const Client = ({loading, logoutrequest, currentUser, profilePic}) => {
+const Client = ({
+  loading,
+  logoutrequest,
+  currentUser,
+  profilePic,
+  fetchProductsFinished,
+}) => {
+  const [productsState, productsDispatch] = useContext(ProductsContext);
+
   useEffect(() => {
     try {
       const socket = io(`${API_HOSTA}/treatedCommands`);
@@ -79,6 +88,9 @@ const Client = ({loading, logoutrequest, currentUser, profilePic}) => {
 
   const logout = () => {
     logoutrequest();
+    fetchProductsFinished();
+    productsDispatch({type: 'END', payload: {label: 'topupProducts'}});
+    productsDispatch({type: 'END', payload: {label: 'codeProducts'}});
   };
 
   return (
