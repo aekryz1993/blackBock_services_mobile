@@ -17,9 +17,15 @@ import UserContainer from './users/user/UserContainer';
 import {UsersContext} from '@components/contexts/Users';
 import {ProductsContext} from '@components/contexts/ProductsProvider';
 import ProductsContainer from './products/ProductsContainer';
+import ProductContainer from './products/product/ProductContainer';
+import {CategoryProvider} from '@components/contexts/CategoryProduct';
+import AddProductContainer from './products/product/addProduct/AddProductContainer';
+import EditProductContainer from './products/product/editProduct/EditProductContainer';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
+
+// ---------------------- Users ------------------------------------------
 
 const Users = () => (
   <Stack.Navigator
@@ -48,32 +54,37 @@ const Users = () => (
   </Stack.Navigator>
 );
 
-const Products = ({category, name}) => (
-  <Stack.Navigator
-    screenOptions={{
-      headerShown: true,
-      headerStyle: {
-        backgroundColor: '#000',
-      },
-      headerTintColor: '#fff',
-    }}>
-    <Stack.Screen options={{headerShown: false}} name="ProductsScreen">
-      {props => (
-        <ProductsContainer {...props} category={category} parent={name} />
-      )}
-    </Stack.Screen>
-    {/* <Stack.Screen
-      options={{title: 'إضافة عميل'}}
-      name="AddProductScreen"
-      component={AddProductContainer}
-    /> */}
-    {/* <Stack.Screen
-      options={({route}) => ({title: route.params.title})}
-      name="Productcreen"
-      component={ProductContainer}
-    /> */}
-  </Stack.Navigator>
+// ---------------------- Products ------------------------------------------
+
+const Products = () => (
+  <CategoryProvider>
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: true,
+        headerStyle: {
+          backgroundColor: '#000',
+        },
+        headerTintColor: '#fff',
+      }}>
+      <Stack.Screen options={{headerShown: false}} name="ProductsScreen">
+        {props => <ProductsContainer {...props} />}
+      </Stack.Screen>
+      <Stack.Screen
+        options={({route}) => ({title: route.params.serviceName})}
+        name="ProductScreen">
+        {props => <ProductContainer {...props} />}
+      </Stack.Screen>
+      <Stack.Screen options={{title: 'إضافة صنف'}} name="AddProductScreen">
+        {props => <AddProductContainer {...props} />}
+      </Stack.Screen>
+      <Stack.Screen options={{title: 'تعديل الصنف'}} name="EditProductScreen">
+        {props => <EditProductContainer {...props} />}
+      </Stack.Screen>
+    </Stack.Navigator>
+  </CategoryProvider>
 );
+
+// ---------------------- DrawerScreens ------------------------------------------
 
 const DrawerScreens = ({logout, currentUser, profilePic}) => (
   <Drawer.Navigator
@@ -99,6 +110,8 @@ const DrawerScreens = ({logout, currentUser, profilePic}) => (
     </Drawer.Screen>
   </Drawer.Navigator>
 );
+
+// ---------------------- Admin ------------------------------------------
 
 const Admin = ({
   loading,

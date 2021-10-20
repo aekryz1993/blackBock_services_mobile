@@ -7,12 +7,7 @@ import IoniconsIcon from 'react-native-vector-icons/dist/Ionicons';
 import Carousel from '@components/Carousel';
 import Bar from '@components/Bar';
 
-const Products = ({
-  navigation,
-  // topupProducts,
-  // codeProducts,
-  fetchProductsRequest,
-}) => {
+const Products = ({navigation, fetchProductsRequest}) => {
   const [productsState, productsDispatch] = useContext(ProductsContext);
 
   useEffect(() => {

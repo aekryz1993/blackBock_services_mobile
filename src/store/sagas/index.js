@@ -5,6 +5,7 @@ import {watchFetchingServices} from './service';
 import {watchOrderProductcode} from './productCode';
 import {watchCreateCoinbaseCharge, watchFetchCredit} from './wallet';
 import {watchCommandOperations} from './commands';
+import {watchAddingProductCategory} from './productCategory';
 
 export default function* rootSaga() {
   yield all([fork(loginFlow)]);
@@ -14,4 +15,5 @@ export default function* rootSaga() {
   yield all([fork(watchFetchCredit)]);
   yield all([fork(watchCommandOperations)]);
   yield all([fork(watchCreateCoinbaseCharge)]);
+  yield all([fork(watchAddingProductCategory)]);
 }

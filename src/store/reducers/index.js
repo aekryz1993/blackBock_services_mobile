@@ -5,6 +5,7 @@ import serviceReducers from './service';
 import orderReducer from './productCode';
 import walletReducers from './wallet';
 import commandsReducers from './commands';
+import productCategoryReducers from './productCategory';
 
 const rootReducer = combineReducers({
   loginReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   orderReducer,
   ...walletReducers,
   ...commandsReducers,
+  ...productCategoryReducers,
 });
 
 export default rootReducer;

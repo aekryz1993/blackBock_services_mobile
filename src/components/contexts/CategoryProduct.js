@@ -1,8 +1,8 @@
 import React, {useReducer, createContext} from 'react';
 
 const initialCategoryState = {
-  topupCategory: [],
-  codeCategory: [],
+  topupCategory: {},
+  codeCategory: {},
 };
 
 export const reducer = (state, action) => {
@@ -10,26 +10,24 @@ export const reducer = (state, action) => {
     case 'ADD':
       return {
         ...state,
-        [action.payload.label]: [
-          action.payload.product,
+        [action.payload.label]: {
           ...state[action.payload.label],
-        ],
-      };
-    case 'ADDMULTI':
-      return {
-        ...state,
-        [action.payload.label]: [
-          ...state[action.payload.label],
-          ...action.payload.categoryProduct,
-        ],
+          [action.payload.serviceName]: [
+            ...state[action.payload.label][action.payload.serviceName],
+            action.payload.product,
+          ],
+        },
       };
     case 'UPDATE':
       return {
         ...state,
-        [action.payload.label]: [...action.payload.categoryProduct],
+        [action.payload.label]: {
+          ...state[action.payload.label],
+          [action.payload.serviceName]: action.payload.products,
+        },
       };
     case 'END':
-      return {...state, [action.payload.label]: []};
+      return {...state, topupCategory: {}, codeCategory: {}};
     default:
       return {...state};
   }
