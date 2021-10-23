@@ -121,7 +121,7 @@ const Category = ({product, category, navigation, serviceName}) => {
 };
 
 const Product = ({route, navigation}) => {
-  const {serviceName, products, category, image} = route.params;
+  const {serviceName, products, category, image, serviceId} = route.params;
   const [categoryState, categoryDispatch] = useContext(CategoryContext);
   const categoryLabel = useRef(
     category === 'id'
@@ -155,17 +155,36 @@ const Product = ({route, navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
       <Head serviceName={serviceName} image={image} />
-      <TouchableOpacity
-        style={styles.addButton}
-        onPress={() =>
-          navigation.navigate('AddProductScreen', {
-            category,
-            serviceName,
-          })
-        }>
-        <Text style={styles.addLabel}>إضافة صنف جديد</Text>
-        <Ionicons name="add" size={32} color="rgba(255,255,255,1)" />
-      </TouchableOpacity>
+      <View style={styles.addBtnsContainer}>
+        <TouchableOpacity
+          style={
+            category === 'code'
+              ? styles.addButton
+              : [styles.addButton, {width: '100%'}]
+          }
+          onPress={() =>
+            navigation.navigate('AddProductScreen', {
+              category,
+              serviceName,
+            })
+          }>
+          <Text style={styles.addLabel}>إضافة صنف جديد</Text>
+          <Ionicons name="add" size={32} color="rgba(255,255,255,1)" />
+        </TouchableOpacity>
+        {category === 'code' && (
+          <TouchableOpacity
+            style={styles.addButton}
+            onPress={() =>
+              navigation.navigate('AddCodesScreen', {
+                serviceName,
+                serviceId,
+              })
+            }>
+            <Text style={styles.addLabel}>إضافة أكواد</Text>
+            <Ionicons name="add" size={32} color="rgba(255,255,255,1)" />
+          </TouchableOpacity>
+        )}
+      </View>
       <View style={styles.content}>
         <FlatList
           data={categoryState[categoryLabel][serviceName]}
@@ -191,18 +210,22 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     elevation: 1,
   },
-  addButton: {
-    flex: 0.5,
-    backgroundColor: 'rgba(0, 0, 0, 1)',
+  addBtnsContainer: {
+    flex: 0.7,
     width: '90%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  addButton: {
+    backgroundColor: 'rgba(0, 0, 0, 1)',
+    width: '49%',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 4,
     flexDirection: 'row',
     borderRadius: 5,
   },
   content: {
-    flex: 6.5,
+    flex: 6.3,
     width: '90%',
     marginTop: 20,
   },
@@ -251,7 +274,7 @@ const styles = StyleSheet.create({
   addLabel: {
     marginRight: 6,
     color: 'rgba(255, 255, 255, 1)',
-    fontSize: 20,
+    fontSize: 16,
   },
   categoryContainer: {
     paddingVertical: 10,

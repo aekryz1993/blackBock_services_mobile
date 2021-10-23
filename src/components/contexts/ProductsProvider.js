@@ -11,8 +11,8 @@ export const reducer = (state, action) => {
       return {
         ...state,
         [action.payload.label]: [
-          action.payload.product,
           ...state[action.payload.label],
+          action.payload.product,
         ],
       };
     case 'ADDMULTI':

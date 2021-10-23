@@ -18,6 +18,17 @@ export const reducer = (state, action) => {
           ],
         },
       };
+    case 'ADDMULTI':
+      return {
+        ...state,
+        [action.payload.label]: {
+          ...state[action.payload.label],
+          [action.payload.serviceName]: [
+            ...state[action.payload.label][action.payload.serviceName],
+            ...action.payload.products,
+          ],
+        },
+      };
     case 'UPDATE':
       return {
         ...state,

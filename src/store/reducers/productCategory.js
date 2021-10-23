@@ -85,7 +85,53 @@ const updateProductCategoryReducer = (
   }
 };
 
+// --------------------- Add Codes -------------------------------
+
+import {
+  ADDCODES_REQUEST,
+  ADDCODES_SUCCEED,
+  ADDCODES_FAILED,
+  ADDCODES_REQUEST_ENDED,
+} from '@actions/productCategory';
+
+const addCodesReducer = (
+  state = {
+    message: null,
+    label: null,
+    serviceName: null,
+    success: false,
+    newCategories: [],
+    categoryDispatch: () => {},
+  },
+  action,
+) => {
+  switch (action.type) {
+    case ADDCODES_REQUEST:
+      return {
+        ...state,
+      };
+    case ADDCODES_SUCCEED:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case ADDCODES_FAILED:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case ADDCODES_REQUEST_ENDED:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
 export default {
   addProductCategoryReducer,
   updateProductCategoryReducer,
+  addCodesReducer,
 };

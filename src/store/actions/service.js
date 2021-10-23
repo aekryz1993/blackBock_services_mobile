@@ -41,3 +41,57 @@ export const fetchProductsFinished = () => {
     },
   };
 };
+
+//---------------------------- Add Service ---------------------------------------
+
+export const ADDSERVICE_REQUEST = 'ADDSERVICE_REQUEST';
+export const ADDSERVICE_SUCCEED = 'ADDSERVICE_SUCCEED';
+export const ADDSERVICE_FAILED = 'ADDSERVICE_FAILED';
+export const ADDSERVICE_ENDED = 'ADDSERVICE_ENDED';
+
+export const addServiceRequest = ({
+  dataForm,
+  productsDispatch,
+  category,
+  name,
+}) => ({
+  type: ADDSERVICE_REQUEST,
+  payload: {
+    dataForm,
+    productsDispatch,
+    category,
+    name,
+  },
+});
+
+export const addServiceSucced = response => ({
+  type: ADDSERVICE_SUCCEED,
+  payload: {
+    productsDispatch: response.productsDispatch,
+    label: response.label,
+    product: response.data.product,
+    success: response.data.success,
+    message: response.data.message,
+  },
+});
+
+export const addServiceFailed = response => ({
+  type: ADDSERVICE_FAILED,
+  payload: {
+    message: response.message,
+    success: false,
+  },
+});
+
+export const addServiceFinished = () => {
+  return {
+    type: ADDSERVICE_ENDED,
+    payload: {
+      productsDispatch: () => {},
+      label: null,
+      product: [],
+      success: false,
+      message: null,
+    },
+  };
+};

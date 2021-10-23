@@ -41,7 +41,8 @@ const ActionSec = ({
   categoryId,
 }) => {
   const [excel, setexcel] = useState([]);
-  const [openModal, setopenModal] = useState(new FormData());
+  const [openModal, setopenModal] = useState(false);
+  // const [openModal, setopenModal] = useState(new FormData());
 
   const uploadFile = async () => {
     try {

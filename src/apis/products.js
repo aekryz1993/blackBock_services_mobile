@@ -1,4 +1,5 @@
 import {API_HOSTA} from '@env';
+import axios from 'axios';
 
 export const fetchProductCodesOrder = ({
   currency,
@@ -126,6 +127,36 @@ export const updateProductCategoryApi = ({
             : '',
         serviceName,
         categoryState,
+      });
+    } catch (e) {
+      reject({
+        message: e.message,
+      });
+    }
+  });
+};
+
+export const addCodesApi = ({dataForm, categoryDispatch, serviceName}) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await axios.post(
+        `${API_HOSTA}/api/adminSession/productCode/addMulti`,
+        dataForm,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        },
+      );
+      const data = await response.data;
+      if (!data.success) {
+        reject(data);
+      }
+      resolve({
+        data: data,
+        categoryDispatch,
+        serviceName,
+        label: 'codeCategory',
       });
     } catch (e) {
       reject({

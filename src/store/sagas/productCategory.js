@@ -6,8 +6,15 @@ import {
   UPDATEPRODUCTCATEGORY_REQUEST,
   updateProductCategorySucced,
   updateProductCategoryFailed,
+  ADDCODES_REQUEST,
+  addCodesSucced,
+  addCodesFailed,
 } from '@actions/productCategory';
-import {addProductCategoryApi, updateProductCategoryApi} from '@apis/products';
+import {
+  addProductCategoryApi,
+  updateProductCategoryApi,
+  addCodesApi,
+} from '@apis/products';
 
 function* addProductCategory($action) {
   try {
@@ -60,7 +67,30 @@ function* updateProductCategory($action) {
   }
 }
 
+function* addCodes($action) {
+  try {
+    const data = yield call(addCodesApi, {
+      dataForm: $action.payload.dataForm,
+      categoryDispatch: $action.payload.categoryDispatch,
+      serviceName: $action.payload.serviceName,
+    });
+    const _action = yield put(addCodesSucced(data));
+
+    yield _action.payload.categoryDispatch({
+      type: 'ADDMULTI',
+      payload: {
+        label: _action.payload.label,
+        products: _action.payload.newCategories,
+        serviceName: _action.payload.serviceName,
+      },
+    });
+  } catch (error) {
+    yield put(addCodesFailed(error));
+  }
+}
+
 export function* watchAddingProductCategory() {
   yield takeEvery(ADDPRODUCTCATEGORY_REQUEST, addProductCategory);
   yield takeEvery(UPDATEPRODUCTCATEGORY_REQUEST, updateProductCategory);
+  yield takeEvery(ADDCODES_REQUEST, addCodes);
 }

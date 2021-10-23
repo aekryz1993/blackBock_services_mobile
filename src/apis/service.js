@@ -1,6 +1,7 @@
 import {API_HOSTA} from '@env';
+import axios from 'axios';
 
-export const fetchProducts = ({productsDispatch, label, category}) => {
+export const fetchProductsApi = ({productsDispatch, label, category}) => {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await fetch(
@@ -25,6 +26,42 @@ export const fetchProducts = ({productsDispatch, label, category}) => {
       reject({
         message: e.message,
         label,
+      });
+    }
+  });
+};
+
+export const addServiceApi = ({dataForm, productsDispatch, category, name}) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      dataForm.append('category', category);
+      dataForm.append('label', name);
+      const response = await axios.post(
+        `${API_HOSTA}/api/adminSession/services/add`,
+        dataForm,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        },
+      );
+      const data = await response.data;
+      if (!data.success) {
+        reject({message: data.message});
+      }
+      resolve({
+        data: data,
+        productsDispatch,
+        label:
+          category === 'id'
+            ? 'topupProducts'
+            : category === 'code'
+            ? 'codeProducts'
+            : '',
+      });
+    } catch (e) {
+      reject({
+        message: e.message,
       });
     }
   });

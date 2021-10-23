@@ -27,7 +27,9 @@ const Products = ({navigation, fetchProductsRequest}) => {
   return (
     <AdminScreen navigation={navigation}>
       <ScreenContent
-        navigateTo={navigation}
+        navigateTo={() => {
+          navigation.navigate('AddServiceScreen');
+        }}
         Icon={IoniconsIcon}
         iconName="add-outline">
         <ScrollView showsVerticalScrollIndicator={false}>

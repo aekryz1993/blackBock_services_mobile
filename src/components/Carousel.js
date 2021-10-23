@@ -41,6 +41,7 @@ const navigateToNext = ({
   category,
   image,
   serviceName,
+  serviceId,
 }) => {
   navigation.navigate(navigateTo.parent, {
     screen: navigateTo.child,
@@ -49,6 +50,7 @@ const navigateToNext = ({
       category,
       image,
       serviceName,
+      serviceId,
     },
   });
   return;
@@ -73,6 +75,7 @@ const Slide = memo(function Slide({
             products: data.products,
             image: data.image,
             serviceName: data.serviceName,
+            serviceId: data.id,
             setProducts,
             navigateTo,
           })

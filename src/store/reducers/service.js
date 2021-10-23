@@ -41,6 +41,51 @@ const fetchProductsReducer = (
   }
 };
 
+//---------------------------- Add Service ---------------------------------------
+
+import {
+  ADDSERVICE_REQUEST,
+  ADDSERVICE_SUCCEED,
+  ADDSERVICE_FAILED,
+  ADDSERVICE_ENDED,
+} from '@actions/service';
+
+const addServiceReducer = (
+  state = {
+    productsDispatch: () => {},
+    label: null,
+    product: [],
+    success: false,
+    message: null,
+  },
+  action,
+) => {
+  switch (action.type) {
+    case ADDSERVICE_REQUEST:
+      return {
+        ...state,
+      };
+    case ADDSERVICE_SUCCEED:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case ADDSERVICE_FAILED:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case ADDSERVICE_ENDED:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
 export default {
   fetchProductsReducer,
+  addServiceReducer,
 };

@@ -104,3 +104,47 @@ export const updateProductCategoryFinished = () => ({
     success: false,
   },
 });
+
+// --------------------- Add Codes -------------------------------
+
+export const ADDCODES_REQUEST = 'ADDCODES_REQUEST';
+export const ADDCODES_SUCCEED = 'ADDCODES_SUCCEED';
+export const ADDCODES_FAILED = 'ADDCODES_FAILED';
+export const ADDCODES_REQUEST_ENDED = 'ADDCODES_REQUEST_ENDED';
+
+export const addCodesRequest = ({dataForm, categoryDispatch, serviceName}) => ({
+  type: ADDCODES_REQUEST,
+  payload: {
+    dataForm,
+    categoryDispatch,
+    serviceName,
+  },
+});
+
+export const addCodesSucced = response => ({
+  type: ADDCODES_SUCCEED,
+  payload: {
+    message: response.data.message,
+    newCategories: response.data.newCategories,
+    categoryDispatch: response.categoryDispatch,
+    label: response.label,
+    serviceName: response.serviceName,
+    success: response.data.success,
+  },
+});
+
+export const addCodesFailed = response => ({
+  type: ADDCODES_FAILED,
+  payload: {
+    message: response.message,
+    success: false,
+  },
+});
+
+export const addCodesFinished = () => ({
+  type: ADDCODES_REQUEST_ENDED,
+  payload: {
+    message: null,
+    success: false,
+  },
+});

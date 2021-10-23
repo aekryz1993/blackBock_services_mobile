@@ -21,6 +21,8 @@ import ProductContainer from './products/product/ProductContainer';
 import {CategoryProvider} from '@components/contexts/CategoryProduct';
 import AddProductContainer from './products/product/addProduct/AddProductContainer';
 import EditProductContainer from './products/product/editProduct/EditProductContainer';
+import AddCodesContainer from './products/product/addCodes/AddCodesContainer';
+import AddServiceContainer from './products/addService/AddServiceContainer';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -69,6 +71,9 @@ const Products = () => (
       <Stack.Screen options={{headerShown: false}} name="ProductsScreen">
         {props => <ProductsContainer {...props} />}
       </Stack.Screen>
+      <Stack.Screen name="AddServiceScreen">
+        {props => <AddServiceContainer {...props} />}
+      </Stack.Screen>
       <Stack.Screen
         options={({route}) => ({title: route.params.serviceName})}
         name="ProductScreen">
@@ -79,6 +84,9 @@ const Products = () => (
       </Stack.Screen>
       <Stack.Screen options={{title: 'تعديل الصنف'}} name="EditProductScreen">
         {props => <EditProductContainer {...props} />}
+      </Stack.Screen>
+      <Stack.Screen options={{title: 'إضافة أكواد'}} name="AddCodesScreen">
+        {props => <AddCodesContainer {...props} />}
       </Stack.Screen>
     </Stack.Navigator>
   </CategoryProvider>
