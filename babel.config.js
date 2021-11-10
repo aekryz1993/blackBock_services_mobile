@@ -25,6 +25,7 @@ module.exports = {
           '@apis': './src/apis',
           '@actions': './src/store/actions',
           '@components': './src/components',
+          '@images': './static/images',
         },
       },
     ],

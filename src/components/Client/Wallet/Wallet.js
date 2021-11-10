@@ -36,10 +36,10 @@ const Wallet = ({
       fetchcreditRequest={fetchcreditRequest}
       walletCredit={walletCredit}>
       <View style={styles.container}>
-        <View style={styles.credit}>
+        {/* <View style={styles.credit}>
           <Text>555</Text>
-        </View>
-        {/* <TextInput
+        </View> */}
+        <TextInput
           style={styles.input}
           placeholder="أدخل السعر الذي تريد إضافته"
           onChangeText={text => setamount(text)}
@@ -47,7 +47,7 @@ const Wallet = ({
         />
         <TouchableOpacity style={styles.button} onPress={() => onSubmit()}>
           <Text style={styles.label}>إدفع</Text>
-        </TouchableOpacity> */}
+        </TouchableOpacity>
       </View>
     </ClientScreen>
   );

@@ -137,7 +137,9 @@ const Admin = ({
 
   useEffect(() => {
     try {
-      const socket = io(`${API_HOSTA}/orderCommands`);
+      const socket = io(`${API_HOSTA}/orderCommands`, {
+        transports: ['websocket'],
+      });
       socket.on('connect', () => {
         console.log(notificationStat);
         socket.on('send_command_order', (notifications, notificationCount) => {

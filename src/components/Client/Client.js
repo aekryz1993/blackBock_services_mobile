@@ -65,7 +65,9 @@ const Client = ({
 
   useEffect(() => {
     try {
-      const socket = io(`${API_HOSTA}/treatedCommands`);
+      const socket = io(`${API_HOSTA}/treatedCommands`, {
+        transports: ['websocket'],
+      });
       socket.on('connect', () => {
         console.log(currentUser.id);
         socket.emit('send_userId', currentUser.id);

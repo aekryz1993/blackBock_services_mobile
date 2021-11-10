@@ -6,6 +6,7 @@ import {
   Text,
   StatusBar,
   Image,
+  View,
 } from 'react-native';
 import {API_HOSTA} from '@env';
 import AdminScreen from '../AdminScreen';
@@ -22,17 +23,21 @@ const Item = ({user, navigation}) => {
       userId: user.id,
     });
   };
-  const url = user.Image.url
-    .split('/')
-    .slice(user.Image.url.split('/').indexOf('static'))
-    .join('/');
+  const url =
+    user.Image.url &&
+    user.Image.url
+      .split('/')
+      .slice(user.Image.url.split('/').indexOf('static'))
+      .join('/');
   return (
     <TouchableOpacity style={styles.item} onPress={onNavigate}>
       <Image
         style={styles.userImage}
-        source={{
-          uri: `${API_HOSTA}/${url}`,
-        }}
+        source={
+          url
+            ? {uri: `${API_HOSTA}/${url}`}
+            : require('@images/user-placeholder.png')
+        }
       />
       <Text style={styles.username}>{user.username}</Text>
     </TouchableOpacity>
@@ -72,15 +77,17 @@ const Users = ({nextPage, totalUsers, fetchUsersRequest, navigation}) => {
         placeholder="Search"
         Icon={IoniconsIcon}
         iconName="person-add">
-        <FlatList
-          data={usersState.users}
-          showsVerticalScrollIndicator={false}
-          renderItem={renderItem}
-          keyExtractor={item => item.id}
-          numColumns={2}
-          horizontal={false}
-          onEndReached={onScroll}
-        />
+        <View style={styles.content}>
+          <FlatList
+            data={usersState.users}
+            showsVerticalScrollIndicator={false}
+            renderItem={renderItem}
+            keyExtractor={item => item.id}
+            numColumns={2}
+            horizontal={false}
+            onEndReached={onScroll}
+          />
+        </View>
       </ScreenContent>
     </AdminScreen>
   );
@@ -94,14 +101,24 @@ const styles = StyleSheet.create({
   userImage: {
     width: 100,
     height: 100,
+    borderRadius: 200,
+    borderWidth: 2,
+    borderColor: 'rgba(0, 0, 0,1)',
+  },
+  content: {
+    alignItems: 'center',
   },
   item: {
-    padding: 50,
-    marginVertical: 10,
-    marginHorizontal: 10,
+    alignItems: 'center',
+    paddingHorizontal: 50,
+    paddingVertical: 40,
   },
   title: {
     fontSize: 15,
+  },
+  username: {
+    fontSize: 15,
+    marginTop: 10,
   },
 });
 

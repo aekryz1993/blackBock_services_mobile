@@ -5,13 +5,12 @@ import {
   View,
   TouchableOpacity,
   Text,
-  Image,
   TextInput,
   ImageBackground,
 } from 'react-native';
 import MessageAlert from '@components/material/MessageAlert';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
-import ImagePicker from 'react-native-image-crop-picker';
+// import ImagePicker from 'react-native-image-crop-picker';
 import {ProductsContext} from '@components/contexts/ProductsProvider';
 import DocumentPicker from 'react-native-document-picker';
 
@@ -71,9 +70,13 @@ const AddService = ({
       <View style={styles.content}>
         <View style={styles.imageContainer}>
           <ImageBackground
-            source={{
-              uri: image,
-            }}
+            source={
+              image
+                ? {
+                    uri: image,
+                  }
+                : require('@images/product-placeholder.png')
+            }
             style={styles.image}
             imageStyle={styles.imageDim}>
             <View style={styles.uploadImgBtnContainer}>
