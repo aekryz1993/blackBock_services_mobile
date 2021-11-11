@@ -10,20 +10,10 @@ import {
 import Icon from 'react-native-vector-icons/EvilIcons';
 import MaterialIconsIcon from 'react-native-vector-icons/MaterialIcons';
 import IoniconsIcon from 'react-native-vector-icons/Ionicons';
-import Currency from './Currency';
 
 const {height: windowHeight} = Dimensions.get('window');
 
-const Header = ({
-  navigation,
-  back,
-  backAction,
-  fetchcreditRequest,
-  walletCredit,
-  modalVisible,
-  setModalVisible,
-  state,
-}) => {
+const Header = ({navigation, back, backAction}) => {
   const onPressBack = () => {
     backAction();
     navigation.goBack();
@@ -39,15 +29,6 @@ const Header = ({
             <MaterialIconsIcon name="arrow-back" size={25} color="#fff" />
           </TouchableOpacity>
         )}
-      </View>
-      <View style={styles.center}>
-        <Currency
-          walletCredit={walletCredit}
-          fetchcreditRequest={fetchcreditRequest}
-          modalVisible={modalVisible}
-          setModalVisible={setModalVisible}
-          state={state}
-        />
       </View>
       <View style={styles.right}>
         <TouchableOpacity activeOpacity={0.9}>

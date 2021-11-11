@@ -9,15 +9,13 @@ const Currency = ({
   state,
 }) => {
   return (
-    <>
-      <Dropdown
-        walletCredit={walletCredit}
-        fetchcreditRequest={fetchcreditRequest}
-        state={state}
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
-      />
-    </>
+    <Dropdown
+      walletCredit={walletCredit}
+      fetchcreditRequest={fetchcreditRequest}
+      state={state}
+      modalVisible={modalVisible}
+      setModalVisible={setModalVisible}
+    />
   );
 };
 

@@ -17,22 +17,24 @@ const Dropdown = ({
   }, []);
 
   return (
-    <>
-      <TouchableOpacity
-        activeOpacity={5}
-        style={[styles.container]}
-        onPress={() => setModalVisible(!modalVisible)}>
-        <View style={styles.leftside}>
-          <IconFontAwesome5 name="wallet" size={15} color="#ffff" />
-          <Text style={styles.text}>{`${walletCredit[state.attribute]} ${
-            state.currency
-          }`}</Text>
-        </View>
-        <View style={styles.rightside}>
-          <IconAntDesign name="down" size={12} color="#fff" />
-        </View>
-      </TouchableOpacity>
-    </>
+    <TouchableOpacity
+      activeOpacity={5}
+      style={[styles.container]}
+      onPress={() => setModalVisible(!modalVisible)}>
+      <View style={styles.leftside}>
+        <IconFontAwesome5
+          style={styles.icon}
+          name="wallet"
+          size={18}
+          color="#ffff"
+        />
+        <Text style={styles.text}>{`${walletCredit[state.attribute]}`}</Text>
+        <Text style={styles.symbol}>{`${state.symbol}`}</Text>
+      </View>
+      <View style={styles.rightside}>
+        <IconAntDesign name="down" size={12} color="#fff" />
+      </View>
+    </TouchableOpacity>
   );
 };
 
@@ -40,30 +42,44 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 10,
+    justifyContent: 'center',
   },
   leftside: {
     flexDirection: 'row',
+    justifyContent: 'center',
     alignItems: 'center',
-    height: 36,
+    height: 38,
     paddingHorizontal: 16,
+    width: '60%',
     borderRadius: 20,
     backgroundColor: 'rgba(20, 20 , 20, 1)',
   },
   rightside: {
     justifyContent: 'center',
+    alignItems: 'center',
+    width: '18%',
     backgroundColor: 'rgba(100, 100 , 100, 1)',
     marginLeft: -16,
-    height: 36,
+    height: 38,
     paddingRight: 10,
     paddingLeft: 20,
     borderTopRightRadius: 20,
     borderBottomRightRadius: 20,
     zIndex: -1,
   },
+  icon: {
+    position: 'absolute',
+    left: 20,
+  },
   text: {
-    marginRight: 6,
-    marginLeft: 6,
+    fontSize: 18,
+    color: '#ffff',
+    textAlign: 'center',
+  },
+  symbol: {
+    position: 'absolute',
+    right: 30,
+    fontSize: 18,
     color: '#ffff',
   },
 });

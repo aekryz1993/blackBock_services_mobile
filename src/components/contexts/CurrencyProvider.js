@@ -1,15 +1,15 @@
 import React, {useReducer, createContext} from 'react';
 
-const initialState = {currency: 'USD', attribute: 'dollar'};
+const initialState = {currency: '$', attribute: 'dollar'};
 
 export const reducer = (state, action) => {
   switch (action.type) {
-    case 'EUR':
-      return {currency: 'EUR', attribute: 'euro'};
-    case 'USD':
-      return {currency: 'USD', attribute: 'dollar'};
-    case 'DZD':
-      return {currency: 'DZD', attribute: 'dinnar'};
+    case '€':
+      return {currency: '€', attribute: 'euro', symbol: '€'};
+    case '$':
+      return {currency: '$', attribute: 'dollar', symbol: '$'};
+    case 'دج':
+      return {currency: 'دج', attribute: 'dinnar', symbol: 'دج'};
     default:
       return {...state};
   }
