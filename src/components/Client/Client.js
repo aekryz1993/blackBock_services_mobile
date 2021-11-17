@@ -15,7 +15,7 @@ import DisplayCodeContainer from './Services/productCode.js/DisplayCodeContainer
 import {OrderProvider} from '@components/contexts/OrderProvider';
 import CommandsContainer from '@components/Client/Commands/CommandsContainer';
 import WalletContainer from '@components/Client/Wallet/WalletContainer';
-import CoinbasePanel from '@components/Client/Wallet/CoinbasePanel';
+import PeyMethodPanel from '@components/Client/Wallet/PeyMethodPanel';
 import {ProductsContext} from '@components/contexts/ProductsProvider';
 import {API_HOSTA} from '@env';
 
@@ -50,7 +50,7 @@ const Wallet = () => (
       headerShown: false,
     }}>
     <Stack.Screen name="WalletScreen" component={WalletContainer} />
-    <Stack.Screen name="CoinbasePanel" component={CoinbasePanel} />
+    <Stack.Screen name="PeyMethodPanel" component={PeyMethodPanel} />
   </Stack.Navigator>
 );
 

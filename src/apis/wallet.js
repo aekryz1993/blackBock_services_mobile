@@ -24,13 +24,41 @@ export const fetchCredit = () => {
   });
 };
 
-export const createCoinbaseCharge = ({amount, navigate}) => {
+export const createOrderApi = ({amount, method}) => {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await fetch(
-        `${API_HOSTA}/api/userSession/payment/coinbase/${amount}`,
+        `${API_HOSTA}/api/userSession/payment/${method}`,
         {
           method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({amount}),
+        },
+      );
+      const data = await response.text();
+      if (!JSON.parse(data).success) {
+        reject({message: JSON.parse(data).message});
+      }
+      resolve({
+        data: JSON.parse(data),
+      });
+    } catch (e) {
+      reject({
+        message: e.message,
+      });
+    }
+  });
+};
+
+export const fetchPaymentsOfUserApi = ({currency}) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await fetch(
+        `${API_HOSTA}/api/userSession/payment/payments/${currency}`,
+        {
+          method: 'GET',
           headers: {
             'Content-Type': 'application/json',
           },
@@ -38,15 +66,14 @@ export const createCoinbaseCharge = ({amount, navigate}) => {
       );
       const data = await response.text();
       if (!JSON.parse(data).success) {
-        reject(JSON.parse(data));
+        reject({message: JSON.parse(data).message});
       }
       resolve({
         data: JSON.parse(data),
-        navigate,
       });
-    } catch (e) {
+    } catch (error) {
       reject({
-        message: e.message,
+        message: error.message,
       });
     }
   });

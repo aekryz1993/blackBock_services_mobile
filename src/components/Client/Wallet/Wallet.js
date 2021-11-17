@@ -48,6 +48,7 @@ const Wallet = ({navigation, walletCredit, fetchcreditRequest}) => {
             state={state}
             modalVisible={modalVisible}
             setModalVisible={setModalVisible}
+            navigation={navigation}
           />
         )}
         {screen === 'support' && <Support />}

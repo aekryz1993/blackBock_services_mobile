@@ -72,7 +72,10 @@ const Permissions = ({
         />
       </View>
       <View style={styles.submitClmnn}>
-        <TouchableOpacity style={styles.confirmBtn} onPress={onConfirm}>
+        <TouchableOpacity
+          activeOpacity={0.7}
+          style={styles.confirmBtn}
+          onPress={onConfirm}>
           <Text style={styles.confirmBtnLbl}>حفظ</Text>
         </TouchableOpacity>
       </View>

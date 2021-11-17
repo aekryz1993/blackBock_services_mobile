@@ -117,7 +117,10 @@ const UserOperation = ({
         )}
       </View>
       <View style={styles.bottomColumn}>
-        <TouchableOpacity style={styles.submit} onPress={onClickNext}>
+        <TouchableOpacity
+          activeOpacity={0.7}
+          style={styles.submit}
+          onPress={onClickNext}>
           <Text style={styles.submitLabel}>
             {(page === 2 && userId) || page === 3 ? 'تأكيد' : 'التالي'}
           </Text>

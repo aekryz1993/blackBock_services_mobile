@@ -30,7 +30,10 @@ const Item = ({user, navigation}) => {
       .slice(user.Image.url.split('/').indexOf('static'))
       .join('/');
   return (
-    <TouchableOpacity style={styles.item} onPress={onNavigate}>
+    <TouchableOpacity
+      activeOpacity={0.7}
+      style={styles.item}
+      onPress={onNavigate}>
       <Image
         style={styles.userImage}
         source={

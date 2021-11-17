@@ -1,6 +1,6 @@
 import React, {useReducer, createContext} from 'react';
 
-const initialState = {currency: '$', attribute: 'dollar'};
+const initialState = {currency: '$', attribute: 'dollar', symbol: '$'};
 
 export const reducer = (state, action) => {
   switch (action.type) {

@@ -6165,6 +6165,11 @@
   dependencies:
     "dotenv" "^10.0.0"
 
+"react-native-encrypted-storage@^4.0.2":
+  "integrity" "sha512-vneDkHGDuTvLQjUBztqb2YI8QoH1zxdJonPGTS+g57lfJZff9fAjoLSSb6NgMBebpXFcK3I3sEresGyL+3AArw=="
+  "resolved" "https://registry.npmjs.org/react-native-encrypted-storage/-/react-native-encrypted-storage-4.0.2.tgz"
+  "version" "4.0.2"
+
 "react-native-flipper@^0.114.0", "react-native-flipper@>=0.100.0":
   "integrity" "sha512-/D87UlXE0k4elX0Cn3Ip73InBdn3IXx37efqVLzWCxL5cqWU5eUFY9RVvXQgmjS5o9YHzllfZjqvJqtiInKnkA=="
   "resolved" "https://registry.npmjs.org/react-native-flipper/-/react-native-flipper-0.114.0.tgz"
