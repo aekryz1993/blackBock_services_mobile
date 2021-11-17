@@ -1,4 +1,6 @@
 import {
+  AUTHEDSESSION,
+  NOTAUTHEDSESSION,
   LOGIN_SUCCEED,
   LOGIN_FAILED,
   LOGIN_REQUEST_ENDED,
@@ -11,7 +13,7 @@ import {
 
 const loginReducer = (
   state = {
-    loading: false,
+    loading: true,
     isAuth: false,
     message: null,
     currentUser: {},
@@ -24,6 +26,18 @@ const loginReducer = (
       return {
         ...state,
         loading: true,
+      };
+    case AUTHEDSESSION:
+      return {
+        ...state,
+        ...action.payload,
+        loading: false,
+      };
+    case NOTAUTHEDSESSION:
+      return {
+        ...state,
+        ...action.payload,
+        loading: false,
       };
     case LOGIN_SUCCEED:
       return {

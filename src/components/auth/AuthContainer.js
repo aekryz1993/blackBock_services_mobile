@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import {loginRequest, loginRequestEnded} from '@actions/auth';
+import {loginRequest, checkSessionRequest} from '@actions/auth';
 import Auth from './Auth';
 
 const mapStateToProps = (state, ownProps) => {
@@ -19,7 +19,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => ({
   loginRequest: (username, password) =>
     dispatch(loginRequest(username, password)),
-  loginRequestEnded: () => dispatch(loginRequestEnded()),
+  checkSessionRequest: () => dispatch(checkSessionRequest()),
 });
 
 const AuthContainer = connect(mapStateToProps, mapDispatchToProps)(Auth);

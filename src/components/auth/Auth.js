@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
@@ -7,6 +7,7 @@ import Login from '@components/Login';
 import Client from '@components/Client/ClientContainer';
 import Loading from '@components/Loading';
 import {NotificationProvider} from '@components/contexts/NotificationProvider';
+import EncryptedStorage from 'react-native-encrypted-storage';
 
 const Stack = createStackNavigator();
 
@@ -19,7 +20,19 @@ const Auth = ({
   loginRequest,
   currentUser,
   profilePic,
+  checkSessionRequest,
 }) => {
+  useEffect(() => {
+    (async () => {
+      try {
+        checkSessionRequest();
+      } catch (error) {
+        console.console(error);
+      }
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   if (loading) {
     return <Loading />;
   }
