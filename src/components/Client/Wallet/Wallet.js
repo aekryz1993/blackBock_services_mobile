@@ -13,11 +13,7 @@ import Payingoff from './Payingoff';
 import Support from './Support';
 import {CurrencyContext} from '@components/contexts/CurrencyProvider';
 import SwipModal from '@components/material/SwipModal';
-
-const currentCurrencyStyle = (_currency, _state) => ({
-  backgroundColor:
-    _currency === _state.symbol ? 'rgba(0, 0 , 0, 1)' : '#505050',
-});
+import {currentCurrencyStyle} from '@components/contexts/wallet/walletWatcher';
 
 const Wallet = ({navigation, walletCredit, fetchcreditRequest}) => {
   const [screen, setScreen] = useState('payments');

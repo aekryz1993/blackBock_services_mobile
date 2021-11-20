@@ -154,10 +154,17 @@ const ProductItem = ({
   );
 };
 
-const ProductCode = ({route, message, orderRequest, navigation}) => {
+const ProductCode = ({
+  route,
+  message,
+  orderRequest,
+  navigation,
+  walletCredit,
+  fetchcreditRequest,
+}) => {
   // eslint-disable-next-line no-unused-vars
   const [orderState, orderDispatch] = useContext(OrderContext);
-  const [state] = useContext(CurrencyContext);
+  const [state, dispatch] = useContext(CurrencyContext);
   const [clear, setclear] = useState(false);
   const [totalAmount, settotalAmount] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
@@ -206,7 +213,7 @@ const ProductCode = ({route, message, orderRequest, navigation}) => {
   };
 
   return (
-    <>
+    <View style={styles.topcontainer}>
       <TouchableOpacity style={styles.actionbutton} onPress={openModal}>
         <Text>confirm</Text>
       </TouchableOpacity>
@@ -245,7 +252,7 @@ const ProductCode = ({route, message, orderRequest, navigation}) => {
           </Modal>
         </View>
       </KeyboardAvoidingView>
-    </>
+    </View>
   );
 };
 

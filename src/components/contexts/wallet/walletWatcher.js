@@ -20,3 +20,8 @@ export const fetchPayment = ({currency, dispatch}) => {
     }
   })();
 };
+
+export const currentCurrencyStyle = (_currency, _state) => ({
+  backgroundColor:
+    _currency === _state.symbol ? 'rgba(0, 0 , 0, 1)' : '#505050',
+});

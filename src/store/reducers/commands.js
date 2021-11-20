@@ -28,6 +28,7 @@ const commandsReducer = (
       return {
         ...state,
         ...action.payload,
+        commands: [...state.commands, ...action.payload.newCommands],
       };
     case FETCHCOMMANDS_FAILED:
       return {

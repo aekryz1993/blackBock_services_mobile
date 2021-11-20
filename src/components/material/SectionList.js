@@ -22,12 +22,13 @@ const RenderItem = ({item, InnerComponent, currency}) => {
   );
 };
 
-const SectionList = ({data, InnerComponent, currency}) => {
+const SectionList = ({data, InnerComponent, currency, onScroll}) => {
   return (
     <FlatList
       data={data}
       keyExtractor={item => item.section}
       renderItem={({item}) => RenderItem({item, InnerComponent, currency})}
+      onEndReached={onScroll}
     />
   );
 };

@@ -20,7 +20,7 @@ export const fetchCommandsRequest = ({page, isTreated, isAdmin}) => ({
 export const fetchCommandsSucced = response => ({
   type: FETCHCOMMANDS_SUCCEED,
   payload: {
-    commands: response.data.commands,
+    newCommands: response.data.commands,
     totalItems: response.data.totalItems,
     totalPages: response.data.totalPages,
     nextPage: response.data.nextPage,

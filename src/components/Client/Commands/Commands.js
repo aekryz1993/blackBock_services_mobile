@@ -1,15 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import ClientScreen from '@components/Client/ClientScreen';
-import Table from '@components/material/Table';
-
-const tableHeader = [
-  {label: 'Status', property: 'treated'},
-  {label: 'Service', property: 'serviceName'},
-  {label: 'Product', property: 'category'},
-  {label: 'Quantity', property: 'quantity'},
-  {label: 'Date', property: 'createdAt'},
-];
+import SectionList from '@components/material/SectionList';
+import commandsData from './helper/commandsData';
+import InnerCommandsComponent from './helper/InnerCommandsComponent';
 
 const Commands = ({
   navigation,
@@ -19,22 +13,29 @@ const Commands = ({
   fetchCommandsRequest,
   totalItems,
   nextPage,
-  totalPages,
   fetchCommandsFinished,
 }) => {
   const [activeFilter, setactiveFilter] = useState('right');
 
   useEffect(
-    () =>
-      navigation.addListener('focus', () => {
-        activeFilter === 'right'
-          ? fetchCommandsRequest({page: 0, isTreated: false})
-          : fetchCommandsRequest({page: 0, isTreated: true});
-        return;
-      }),
+    () => {
+      activeFilter === 'right'
+        ? fetchCommandsRequest({page: 0, isTreated: false})
+        : fetchCommandsRequest({page: 0, isTreated: true});
+      return;
+    },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
+
+  const onScroll = () => {
+    if (nextPage > 0 && totalItems !== 0) {
+      activeFilter === 'right'
+        ? fetchCommandsRequest({page: nextPage, isTreated: false})
+        : fetchCommandsRequest({page: nextPage, isTreated: true});
+    }
+    return;
+  };
 
   const buttonStyle = item => {
     if (item === 'left') {
@@ -84,19 +85,11 @@ const Commands = ({
             <Text style={textStyle('right')}>لم تعالج بعد</Text>
           </TouchableOpacity>
         </View>
-        <>
-          <Table
-            header={tableHeader}
-            data={commands}
-            totalData={totalItems}
-            totalPages={totalPages}
-            nextPage={nextPage}
-            currentPage={nextPage + 1}
-            activeFilter={activeFilter}
-            fetchCommandsRequest={fetchCommandsRequest}
-            navigation={navigation}
-          />
-        </>
+        <SectionList
+          data={commandsData(commands)}
+          InnerComponent={InnerCommandsComponent}
+          onScroll={onScroll}
+        />
       </View>
     </ClientScreen>
   );
@@ -104,7 +97,7 @@ const Commands = ({
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 20,
+    flex: 1,
   },
   top: {
     flexDirection: 'row',

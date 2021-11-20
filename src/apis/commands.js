@@ -4,6 +4,7 @@ import axios from 'axios';
 export const fetchCommands = ({page, isTreated, isAdmin}) => {
   return new Promise(async (resolve, reject) => {
     try {
+      // if (page > -1) {
       const api = isAdmin
         ? `${API_HOSTA}/api/adminSession/productCode/getCommands/${page}/${isTreated}`
         : `${API_HOSTA}/api/userSession/productCode/get/commands/${page}/${isTreated}`;
@@ -16,11 +17,14 @@ export const fetchCommands = ({page, isTreated, isAdmin}) => {
       });
       const data = await response.text();
       if (!JSON.parse(data).success) {
-        reject(JSON.parse(data));
+        reject({message: JSON.parse(data).message});
       }
       resolve({
         data: JSON.parse(data),
       });
+      // } else {
+      //   reject({message: 'end'});
+      // }
     } catch (e) {
       reject({
         message: e.message,

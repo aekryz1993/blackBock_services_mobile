@@ -1,11 +1,14 @@
 import {connect} from 'react-redux';
 import ProductCode from './ProductCode';
 import {orderRequest} from '@actions/productCode';
+import {fetchcreditRequest} from '@actions/wallet';
 
 const mapStateToProps = (state, ownProps) => {
   const {message} = state.orderReducer;
+  const {wallet} = state.fetchCreditReducer;
   return {
     message,
+    walletCredit: wallet,
   };
 };
 
@@ -31,6 +34,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
           navigate,
         }),
       ),
+    fetchcreditRequest: () => dispatch(fetchcreditRequest()),
   };
 };
 
