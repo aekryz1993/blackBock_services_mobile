@@ -11,11 +11,9 @@ const Commands = ({
   fetchCommandsRequest,
   totalItems,
   nextPage,
-  totalPages,
   fetchCommandsFinished,
 }) => {
   const [activeFilter, setactiveFilter] = useState('right');
-  const [openModal, setopenModal] = useState(false);
 
   useEffect(
     () => {

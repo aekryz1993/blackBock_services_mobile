@@ -13,7 +13,7 @@ const RenderItem = ({item, InnerComponent, currency}) => {
       </View>
       <FlatList
         data={item.innerData}
-        keyExtractor={_item => _item.id}
+        keyExtractor={_item => _item.createdAt}
         renderItem={({item: _item}) =>
           RenderInnerItem({item: _item, InnerComponent, currency})
         }
