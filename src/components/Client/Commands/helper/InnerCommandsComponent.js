@@ -7,7 +7,6 @@ export default ({data}) => {
       <View style={styles.leftSide}>
         <Text style={styles.main}>{data.category}</Text>
         <Text style={styles.sub}>{data.serviceName}</Text>
-        {/* <Text style={styles.sub}>{data.createdAt.split('T')[1]}</Text> */}
       </View>
       <View style={styles.rightSide}>
         <Text style={styles.main}>{data.quantity}</Text>
@@ -19,7 +18,7 @@ export default ({data}) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    paddingVertical: 70,
+    paddingVertical: 20,
     borderBottomWidth: 0.3,
     borderColor: 'rgba(200, 200, 200, 1)',
     alignItems: 'center',

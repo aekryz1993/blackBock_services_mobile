@@ -35,7 +35,6 @@ const InfoItem = ({item, property, last}) => (
 const ActionSec = ({
   message,
   sendCommandRequest,
-  sendCommandFinished,
   userId,
   commandId,
   categoryId,
@@ -99,7 +98,7 @@ const ActionSec = ({
 const CommandDetail = ({
   openModal,
   setopenModal,
-  row,
+  command,
   sendCommandRequest,
   sendCommandFinished,
   message,
@@ -114,26 +113,30 @@ const CommandDetail = ({
         modalOverlay: styles.modalOverlay,
       }}
       dismiss={() => {
-        setopenModal(!openModal);
+        setopenModal(false);
       }}>
       <>
         <Header openModal={openModal} setopenModal={setopenModal} />
         <View style={styles.content}>
           <Section title="User Info" last={false}>
-            <InfoItem property="Full Name" item={row.user} last={false} />
-            <InfoItem property="Email" item={row.email} last={false} />
-            <InfoItem property="Phone" item={row.phone} last={true} />
+            <InfoItem property="Full Name" item={command.user} last={false} />
+            <InfoItem property="Email" item={command.email} last={false} />
+            <InfoItem property="Phone" item={command.phone} last={true} />
           </Section>
           <Section title="Product Info" last={true}>
             <InfoItem
               property="Product Name"
-              item={row.serviceName}
+              item={command.serviceName}
               last={false}
             />
-            <InfoItem property="Category" item={row.category} last={false} />
+            <InfoItem
+              property="Category"
+              item={command.category}
+              last={false}
+            />
             <InfoItem
               property="Quantity"
-              item={`${row.quantity} Codes`}
+              item={`${command.quantity} Codes`}
               last={true}
             />
           </Section>
@@ -141,9 +144,9 @@ const CommandDetail = ({
             message={message}
             sendCommandRequest={sendCommandRequest}
             sendCommandFinished={sendCommandFinished}
-            userId={row.UserId}
-            commandId={row.id}
-            categoryId={row.ProductCategoryId}
+            userId={command.UserId}
+            commandId={command.id}
+            categoryId={command.ProductCategoryId}
           />
         </View>
       </>

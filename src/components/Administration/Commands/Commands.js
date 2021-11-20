@@ -1,21 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  SafeAreaView,
-} from 'react-native';
-import Table from '@components/material/Table';
+import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import AdminScreen from '../AdminScreen';
-
-const tableHeader = [
-  {label: 'User', property: 'user'},
-  {label: 'Service', property: 'serviceName'},
-  {label: 'Product', property: 'category'},
-  {label: 'Quantity', property: 'quantity'},
-  {label: 'Date', property: 'createdAt'},
-];
+import commandsData from '@components/Client/Commands/helper/commandsData';
+import InnerCommandsComponent from './helper/InnerCommandsComponent';
+import SectionList from '@components/material/SectionList';
 
 const Commands = ({
   navigation,
@@ -30,13 +18,12 @@ const Commands = ({
   const [openModal, setopenModal] = useState(false);
 
   useEffect(
-    () =>
-      navigation.addListener('focus', () => {
-        activeFilter === 'right'
-          ? fetchCommandsRequest({page: 0, isTreated: false})
-          : fetchCommandsRequest({page: 0, isTreated: true});
-        return;
-      }),
+    () => {
+      activeFilter === 'right'
+        ? fetchCommandsRequest({page: 0, isTreated: false})
+        : fetchCommandsRequest({page: 0, isTreated: true});
+      return;
+    },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
@@ -67,9 +54,18 @@ const Commands = ({
     }
   };
 
+  const onScroll = () => {
+    if (nextPage > 0 && totalItems !== 0) {
+      activeFilter === 'right'
+        ? fetchCommandsRequest({page: nextPage, isTreated: false})
+        : fetchCommandsRequest({page: nextPage, isTreated: true});
+    }
+    return;
+  };
+
   return (
     <AdminScreen navigation={navigation}>
-      <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
         <View style={styles.top}>
           <TouchableOpacity
             style={buttonStyle('left')}
@@ -84,33 +80,18 @@ const Commands = ({
             <Text style={textStyle('right')}>لم تعالج بعد</Text>
           </TouchableOpacity>
         </View>
-        <>
-          <Table
-            header={tableHeader}
-            data={commands}
-            totalData={totalItems}
-            totalPages={totalPages}
-            nextPage={nextPage}
-            currentPage={nextPage + 1}
-            activeFilter={activeFilter}
-            fetchCommandsRequest={fetchCommandsRequest}
-            navigation={navigation}
-            touchable={true}
-            setopenModal={setopenModal}
-            openModal={openModal}
-          />
-        </>
-      </SafeAreaView>
+        <SectionList
+          data={commandsData(commands)}
+          InnerComponent={InnerCommandsComponent}
+          onScroll={onScroll}
+        />
+      </View>
     </AdminScreen>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 20,
-    flex: 1,
-  },
-  safeArea: {
     flex: 1,
   },
   top: {
@@ -166,22 +147,6 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: '600',
-  },
-  tableheader: {
-    flexDirection: 'row',
-  },
-  tableheadertext: {
-    flex: 2,
-  },
-  item: {
-    flexDirection: 'row',
-    // paddingHorizontal: 20,
-    // paddingVertical: 15,
-    // marginBottom: 10,
-    // backgroundColor: '#999',
-  },
-  itemtext: {
-    // flex: 1,
   },
 });
 
